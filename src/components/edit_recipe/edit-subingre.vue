@@ -58,21 +58,18 @@
 </template>
 
 <script>
-
 import router from '@/router'
 import { mapState } from "vuex";
-
 export default {
   name: "Subingre",
   data() {
     return {
-
     };
   },
   methods: {
     add2() {
       this.sIngredients.push({
-        categoryID: "2",
+        categoryID: "ic002",
         ingredientsName: "",
         quantityValue: "",
         calories: "",

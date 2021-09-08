@@ -75,7 +75,6 @@
             flat
             label="กดเพื่อเปิดเผยสูตรต่อสาธารณะ"
           ></v-switch>
-
     </v-container>
     <v-btn elevation="2" color="success" fab dark @click="addDetail()">
       <v-icon> mdi-content-save </v-icon>

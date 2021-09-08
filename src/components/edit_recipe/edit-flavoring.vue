@@ -60,7 +60,6 @@
 <script>
 import router from '@/router'
 import { mapState } from "vuex";
-
 export default {
   name: "Flavoring",
   data() {
@@ -73,7 +72,7 @@ export default {
   methods: {
     add3() {
       this.flavoring.push({
-        categoryID: "3",
+        categoryID: "ic003",
         ingredientsName: "",
         quantityValue: "",
         calories: "",

@@ -59,7 +59,7 @@ export default {
   name: "Subingre",
   data() {
     return {
-      categoryID: "2",
+      categoryID: "ic002",
     };
   },
   methods: {

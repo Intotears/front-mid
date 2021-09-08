@@ -62,9 +62,6 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      //mIngredients: [],
-      //categoryID: "1",
-      //calories:"",
     };
   },
   name: "Mainingre",

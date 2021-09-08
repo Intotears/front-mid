@@ -496,7 +496,7 @@ export default {
       this.mIngredients.push({
         ingredientsName: "",
         quantityValue: "",
-        categoryID: "1",
+        categoryID: "ic001",
       });
     },
     remove(index) {
@@ -513,7 +513,7 @@ export default {
       this.sIngredients.push({
         ingredientsName: "",
         quantityValue: "",
-        categoryID: "2",
+        categoryID: "ic002",
       });
     },
     remove2(index) {
@@ -529,7 +529,7 @@ export default {
       this.flavoring.push({
         ingredientsName: "",
         quantityValue: "",
-        categoryID: "3",
+        categoryID: "ic003",
       });
     },
     remove3(index) {

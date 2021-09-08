@@ -3,17 +3,16 @@
     <v-container>
       <h3>Food tags</h3>
       <v-combobox
-        v-model="model"
-        :filter="filter"
-        :hide-no-data="!search"
-        :items="items"
-        :search-input.sync="search"
-        hide-selected
-        label="Search for an option"
         hint="Maximum of 5 tags"
         multiple
-        small-chips
-        solo
+        outlined
+        dense
+        :filter="filter"
+        :search-input.sync="search"
+        v-model="model"
+        :items="thisFoodtag"
+        item-text="tagName"
+        name="selectTag"
       >
         <template v-slot:no-data>
           <v-list-item>

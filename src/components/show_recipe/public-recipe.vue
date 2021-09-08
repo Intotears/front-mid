@@ -1,11 +1,15 @@
 <template>
   <div>
+    <v-container>
+      <h1>Homepage</h1>
+    </v-container>
     <div v-for="all in allRecipes" :key="all.recipeID">
       <v-card
         class="mx-auto ma-5 elevation-5"
         color="purple"
         dark
         style="max-width: 550px;"
+        v-on:click.stop="ViewRecipe(all.recipeID)"
       >
         <v-card-actions class="pa-4">
           <v-spacer></v-spacer>
@@ -109,6 +113,10 @@ export default {
     removeFromCollection(id) {
       this.$store.dispatch("mycollection/StoreUserID", this.currentUser.userID);
       this.$store.dispatch("mycollection/RemoveFromCollectionn", id);
+    },
+     ViewRecipe(id) {
+      this.$store.dispatch("viewRecipe/storeID", id),
+        this.$router.push({ path: `/viewRecipe/${id}` });
     },
   },
 };

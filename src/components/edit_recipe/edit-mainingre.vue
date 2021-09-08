@@ -58,10 +58,8 @@
 </template>
 
 <script>
-
 import router from '@/router'
 //import { mapState } from "vuex";
-
 export default {
   name: "Mainingre",
   data() {
@@ -76,7 +74,7 @@ export default {
   methods: {
     add() {
       this.thisMIngredients.push({
-        categoryID: "1",
+        categoryID: "ic001",
         ingredientsName: "",
         quantityValue: "",
         calories: "",

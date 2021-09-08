@@ -1,10 +1,10 @@
 <template>
   <v-container fluid>
-    <h3>Choose your Foodtag</h3>
+    <h3>Choose your Food Tag</h3>
     <v-row>
       <v-col cols="12">
         <v-combobox
-          label="Maximum of 5 tags"
+          hint="Maximum of 5 tags"
           multiple
           outlined
           dense
@@ -25,9 +25,7 @@ import { mapState } from "vuex";
 export default {
   name: "Foodtag",
   data() {
-    return {
-
-    };
+    return {};
   },
   computed: {
     //...mapState("showFoodtag", ["foodtag"]),
@@ -71,8 +69,10 @@ export default {
       const text = hasValue(itemText);
       const query = hasValue(queryText);
       return (
-        text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) >
-        -1
+        text
+          .toString()
+          .toLowerCase()
+          .indexOf(query.toString().toLowerCase()) > -1
       );
     },
   },
