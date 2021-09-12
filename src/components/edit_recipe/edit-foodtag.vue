@@ -1,103 +1,64 @@
 <template>
-  <div>
-    <v-container>
-      <h3>Food tags</h3>
-      <v-combobox
-        hint="Maximum of 5 tags"
-        multiple
-        outlined
-        dense
-        :filter="filter"
-        :search-input.sync="search"
-        v-model="model"
-        :items="thisFoodtag"
-        item-text="tagName"
-        name="selectTag"
-      >
-        <template v-slot:no-data>
-          <v-list-item>
-            <span class="subheading">Create</span>
-            <v-chip :color="`${colors[nonce - 1]} lighten-3`" label small>
-              {{ search }}
-            </v-chip>
-          </v-list-item>
-        </template>
-        <template v-slot:selection="{ attrs, item, parent, selected }">
-          <v-chip
-            v-if="item === Object(item)"
-            v-bind="attrs"
-            :color="`${item.color} lighten-3`"
-            :input-value="selected"
-            label
-            small
-          >
-            <span class="pr-2">
-              {{ item.text }}
-            </span>
-            <v-icon small @click="parent.selectItem(item)">
-              mdi-close
-            </v-icon>
-          </v-chip>
-        </template>
-        <template v-slot:item="{ index, item }">
-          <v-text-field
-            v-if="editing === item"
-            v-model="editing.text"
-            autofocus
-            flat
-            background-color="transparent"
-            hide-details
-            solo
-            @keyup.enter="edit(index, item)"
-          ></v-text-field>
-          <v-chip v-else :color="`${item.color} lighten-3`" dark label small>
-            {{ item.text }}
-          </v-chip>
-          <v-spacer></v-spacer>
-          <v-list-item-action @click.stop>
-            <v-btn icon @click.stop.prevent="edit(index, item)">
-              <v-icon>{{
-                editing !== item ? "mdi-pencil" : "mdi-check"
-              }}</v-icon>
-            </v-btn>
-          </v-list-item-action>
-        </template>
-      </v-combobox>
-    </v-container>
-  </div>
+  <v-container fluid>
+    <h3>Choose your Foodtag</h3>
+    <v-row>
+      <v-col cols="12">
+        <v-combobox
+          label="Maximum of 5 tags"
+          multiple
+          outlined
+          dense
+          v-model="selectTag"
+          :items="thisFoodtag"
+          item-text="tagName"
+          name="selectTag"
+        >
+        </v-combobox>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
+// import { mapState } from "vuex";
+//import {mapGetters} from "vuex";
 export default {
   name: "Foodtag",
   data() {
     return {
-      editing: null,
-      editingIndex: -1,
-      search: null,
-      nonce: 1,
-      tagItems: ["เนื้อ", "หมู", "ไก่", "อาหารอีสาน"],
-      colors: ["green", "purple", "indigo", "cyan", "teal", "orange"],
-      items: [
-        { header: "Select an option or create one" },
-        {
-          text: "เมนูไก่",
-          color: "blue",
-        },
-        {
-          text: "เมนูหมู",
-          color: "red",
-        },
-      ],
-      model: [
-        {
-          text: "เมนูไก่",
-          color: "blue",
-        },
-      ],
+      selectTag: [],
     };
   },
+  computed: {
+    // ...mapState("editFoodtag", ["selectTag"]),
+    thisFoodtag() {
+      return this.$store.state.editFoodtag.foodtag;
+    },
+    // thisSelectTag : function(){
+    //   return this.selectTag;
+    // },
+    // thisFoodtag() {
+    //   return this.foodtag.find((v) => v.tagName);
+    // },
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+  created() {
+    this.$store.dispatch("editFoodtag/loadFoodtag");
+  },
   methods: {
+    // addSelectTag() {
+    //   const selectTag = this.selectTag;
+    //   console.log(this.selectTag);
+    //   this.$store.dispatch("showFoodtag/selectFoodTag", selectTag);
+    //   console.log(this.$store.state.selectTag);
+    // },
+    selectFoodTag() {
+      const selectTag = this.selectTag;
+      console.log(this.selectTag);
+      this.$store.dispatch("editFoodtag/selectFoodTag", selectTag);
+    },
     edit(index, item) {
       if (!this.editing) {
         this.editing = item;
@@ -113,10 +74,8 @@ export default {
       const text = hasValue(itemText);
       const query = hasValue(queryText);
       return (
-        text
-          .toString()
-          .toLowerCase()
-          .indexOf(query.toString().toLowerCase()) > -1
+        text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) >
+        -1
       );
     },
   },
@@ -132,7 +91,7 @@ export default {
             text: v,
             color: this.colors[this.nonce - 1],
           };
-          this.items.push(v);
+          this.thisFoodtag.tagName.push(v);
           this.nonce++;
         }
         return v;

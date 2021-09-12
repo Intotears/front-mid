@@ -1,63 +1,109 @@
 <template>
-  <v-card
-    class="mx-auto elevation-5"
-    color="purple"
-    dark
-    style="max-width: 550px;"
-    ><v-card-actions class="pa-4">
-      Rate this album
-      <v-spacer></v-spacer>
-      <span class="grey--text text--lighten-2 text-caption mr-2">
-        ({{ rating }})
-      </span>
-      <v-rating
-        v-model="rating"
-        background-color="white"
-        color="yellow accent-4"
-        dense
-        half-increments
-        hover
-        size="18"
-        icon
-      ></v-rating>
-      
-        <v-btn icon>
-          <v-icon>mdi-bookmark-outline</v-icon>
-        </v-btn>
-      
-    </v-card-actions>
-    <v-divider dark class="mb-2"></v-divider>
+  <div>
+    <v-container>
+      <h4>Main ingredient</h4>
+    </v-container>
+    <v-container class="ma-2">
+      <div id="Mainingredient" class="text-center">
+        <v-row
+          v-for="(mIngredient, i) in mIngredients"
+          :key="i"
+          align-content-center
+          num = i
+        >
+          <v-col cols="1" lg="1" md="1" sm="1">
+            <v-text-field readonly v-text="num = i+1"></v-text-field>
+          </v-col>
+          <v-col cols="12" lg="4" md="4" sm="3">
+            <v-text-field
+              v-model="mIngredient.ingredientName"
+              label="วัตถุดิบหลัก"
+            >
+              </v-text-field
+            >
+          </v-col>
 
-    <v-row justify="space-between">
-      <v-img
-        class="shrink ma-2"
-        height="150px"
-        src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
-        style="flex-basis: 150px"
-        tile
-      ></v-img>
+          <v-col cols="12" lg="3" md="3" sm="2">
+            <v-text-field
+              v-model="mIngredient.quantityValue"
+              label="ปริมาณ"
+            ></v-text-field>
+          </v-col>
 
-      <v-col cols="8">
-        <v-card-title>
-          <div>
-            <div class="text-h5">
-              Halycon Days
-            </div>
-            <div>Ellie Goulding</div>
-          </div>
-        </v-card-title>
-        <v-card-subtitle>
-          <div>(2013)</div>
-        </v-card-subtitle>
-      </v-col>
-    </v-row>
-  </v-card>
+          <v-col cols="12" lg="2" md="2" sm="2">
+            <v-text-field
+              v-model="mIngredient.calories"
+              label="Calories"
+              readonly
+            ></v-text-field>
+          </v-col>
+          <v-col cols="1" lg="1" md="1" sm="1">
+            <v-btn @click="remove(i ,mIngredient.re_IngredientsID)" class="error"
+              ><v-icon>mdi-delete</v-icon>delete</v-btn
+            >
+          </v-col>
+        </v-row>
+        <br>
+      </div>
+      <!-- <div class="text-center">
+        <v-btn @click="add" width="100px" rounded class="primary" 
+          ><v-icon>mdi-plus </v-icon>add</v-btn
+        >
+      </div> -->
+    </v-container>
+    <v-btn elevation="2" color="success" fab dark @click="DeleteIngredients()">
+            <v-icon> mdi-content-save </v-icon>
+    </v-btn>
+  </div>
 </template>
 
 <script>
+import axios from 'axios'
+import router from "@/router";
+
 export default {
   name: "test",
-  
+  data() {
+    return {
+      deleteID:[],
+      mIngredients:[],
+    }
+  },
+  computed:{ 
+    
+  },
+  created() { //action load ข้อมูล
+   this.loadMainIngre();
+  },
+  methods: {
+    remove(index, id) {
+      if (id != null) {
+        this.deleteID.push({
+          re_IngredientsID: id,
+        });
+      }
+      this.mIngredients.splice(index, 1);      
+    },
+    async loadMainIngre() {
+      await axios
+        .get(`${process.env.VUE_APP_BACKEND}/api/find/MainIngre/` + router.currentRoute.params.id)
+        .then((response) => {
+          this.mIngredients = response.data;
+          console.log("loadMainIngre",response.data);
+        })
+        .catch((error) => console.log(error));
+    },
+    async DeleteIngredients() {
+        console.log("Before delete ID",this.deleteID);
+        await axios
+        .delete(`${process.env.VUE_APP_BACKEND}/api/ingredient/deleteByRecipeIngreID` , this.deleteID)
+        .then((response) => {
+          console.log("Delete ingre",response.data);
+          console.log("After delete ID",this.deleteID);
+        })
+        .catch((error) => console.log(error));   
+    },
+  },
 };
 
 </script>

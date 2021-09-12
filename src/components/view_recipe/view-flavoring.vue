@@ -17,7 +17,7 @@
           </v-col>
 
           <v-col cols="12" md="4" sm="3">
-            <p class="font-weight-regular">{{flavoring.ingredientsName}}</p>
+            <p class="font-weight-regular">{{flavoring.ingredientName}}</p>
           </v-col>
 
           <v-col cols="12" md="3" sm="2">
@@ -54,7 +54,7 @@ export default {
     add3() {
       this.Flavoring.push({
         number: null,
-        ingredientsName: "",
+        ingredientName: "",
         quantityValue: "",
         calories: "",
       });

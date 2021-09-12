@@ -56,6 +56,7 @@
                     solo
                     type="input"
                     v-model="recipeName"
+                    :rules="nameRules"
                   ></v-text-field>
                 </v-container>
                 <v-container>
@@ -107,7 +108,7 @@
               <br />
 
               <v-col class="text-right">
-                <v-btn color="primary" @click="(step = 2), addDetail()">
+                <v-btn color="primary" @click="(step = 2)">
                   Next step <v-icon>mdi-menu-right</v-icon>
                 </v-btn>
               </v-col>
@@ -141,7 +142,7 @@
                           </v-col>
                           <v-col cols="12" lg="4" md="4" sm="3">
                             <v-text-field
-                              v-model="mIngredient.ingredientsName"
+                              v-model="mIngredient.ingredientName"
                               label="วัตถุดิบหลัก"
                             >
                             </v-text-field>
@@ -196,7 +197,7 @@
                           </v-col>
                           <v-col cols="12" md="4" sm="3">
                             <v-text-field
-                              v-model="sIngredient.ingredientsName"
+                              v-model="sIngredient.ingredientName"
                               label="วัตถุดิบรอง"
                             >
                             </v-text-field>
@@ -250,7 +251,7 @@
                           </v-col>
                           <v-col cols="12" md="4" sm="3">
                             <v-text-field
-                              v-model="flavoring.ingredientsName"
+                              v-model="flavoring.ingredientName"
                               label="เครื่องปรุง"
                             >
                             </v-text-field>
@@ -288,12 +289,12 @@
 
               <v-row>
                 <v-col class="text-left">
-                  <v-btn color="error" @click="step = 1, RemoveRecipeID()"
+                  <v-btn color="error" @click="step = 1"
                     ><v-icon>mdi-menu-left</v-icon> Back to step 1
                   </v-btn>
                 </v-col>
                 <v-col class="text-right">
-                  <v-btn color="primary" @click="step = 3">
+                  <v-btn color="primary" @click="step = 3 , addDetail()">
                     Next step <v-icon>mdi-menu-right</v-icon></v-btn
                   >
                 </v-col>
@@ -432,7 +433,7 @@
                         <v-btn
                           color="green darken-1"
                           text
-                          @click="dialog = false , RemoveRecipeID()"
+                          @click="dialog = false "
                           to="/"
                         >
                           Go to Home
@@ -471,6 +472,8 @@ export default {
       selectTag: [],
       dialog: false,
       activator: null,
+
+      nameRules: [(v) => !!v || "Recipe name cannot be null"],
     };
   },
   methods: {
@@ -489,12 +492,9 @@ export default {
       this.$store.dispatch("createRecipe/StoreUserID", this.currentUser.userID);
       this.$store.dispatch("createRecipe/CreateDetail", recipe);
     },
-    RemoveRecipeID() {
-      this.$store.dispatch("createRecipe/RemoveRecipeID");
-    },
     add() {
       this.mIngredients.push({
-        ingredientsName: "",
+        ingredientName: "",
         quantityValue: "",
         categoryID: "ic001",
       });
@@ -511,7 +511,7 @@ export default {
     },
     add2() {
       this.sIngredients.push({
-        ingredientsName: "",
+        ingredientName: "",
         quantityValue: "",
         categoryID: "ic002",
       });
@@ -527,7 +527,7 @@ export default {
     },
     add3() {
       this.flavoring.push({
-        ingredientsName: "",
+        ingredientName: "",
         quantityValue: "",
         categoryID: "ic003",
       });
@@ -559,10 +559,10 @@ export default {
       this.$store.dispatch("createRecipe/CreateCookingprocess", processes);
       console.log(this.$store.state.recipe);
     },
-    selectFoodTag() {
+      selectFoodTag() {
       const selectTag = this.selectTag;
       console.log(this.selectTag);
-      this.$store.dispatch("showFoodtag/selectFoodTag", selectTag);
+      this.$store.dispatch("createRecipe/selectFoodTag", selectTag);
     },
     edit(index, item) {
       if (!this.editing) {

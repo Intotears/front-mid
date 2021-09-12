@@ -17,7 +17,7 @@
           </v-col>
 
           <v-col cols="12" md="4" sm="3">
-            <p class="font-weight-regular">{{sIngredient.ingredientsName}}</p>
+            <p class="font-weight-regular">{{sIngredient.ingredientName}}</p>
           </v-col>
 
           <v-col cols="12" md="3" sm="2">
@@ -51,7 +51,7 @@ export default {
     add2() {
       this.SIngredients.push({
         number: null,
-        ingredientsName: "",
+        ingredientName: "",
         quantityValue: "",
         calories: "",
       });

@@ -17,7 +17,7 @@
           </v-col>
           <v-col cols="12" md="4" sm="3">
             <v-text-field
-              v-model="flavoring.ingredientsName"
+              v-model="flavoring.ingredientName"
               label="เครื่องปรุง"
             >
               </v-text-field
@@ -73,7 +73,7 @@ export default {
     add3() {
       this.flavoring.push({
         categoryID: "ic003",
-        ingredientsName: "",
+        ingredientName: "",
         quantityValue: "",
         calories: "",
       });

@@ -27,6 +27,8 @@
         solo
         type="input"
         v-model="thisRecipe.recipeName"
+        required
+        :rules="isRecipeName"
       ></v-text-field>
     </v-container>
     <v-container>
@@ -70,14 +72,12 @@
       <foodtag />
     </v-container>
     <v-container>
-      <v-container>
-        <h3>Share option</h3>
-        <v-switch
-          v-model="thisRecipe.shareOption"
-          flat
-          label="กดเพื่อเปิดเผยสูตรต่อสาธารณะ"
-        ></v-switch>
-      </v-container>
+      <h3>Share option</h3>
+      <v-switch
+        v-model="thisRecipe.shareOption"
+        flat
+        label="กดเพื่อเปิดเผยสูตรต่อสาธารณะ"
+      ></v-switch>
     </v-container>
     <v-btn elevation="2" color="success" fab dark @click="addDetail()">
       <v-icon> mdi-content-save </v-icon>
@@ -88,7 +88,6 @@
 <script>
 import router from "@/router";
 import { mapState } from "vuex";
-
 export default {
   name: "Detail",
   data() {
@@ -96,6 +95,7 @@ export default {
       url: null,
       image: null,
       isPreviewUpload: false,
+      isRecipeName: [(v) => !!v || "Recipe name is required"],
     };
   },
   components: {
@@ -109,9 +109,11 @@ export default {
       console.log("url : " + this.url);
     },
     addDetail() {
-      console.log("editdetail recipe", this.thisRecipe);
-      this.$store.dispatch("editRecipe/storeRecipeID", this.$route.params.id),
-        this.$store.dispatch("editRecipe/EditDetail", this.thisRecipe);
+      if (this.thisRecipe.recipeName != "") {
+        console.log("editdetail recipe", this.thisRecipe);
+        this.$store.dispatch("editRecipe/storeRecipeID", this.$route.params.id),
+          this.$store.dispatch("editRecipe/EditDetail", this.thisRecipe);
+      }
     },
   },
   computed: {

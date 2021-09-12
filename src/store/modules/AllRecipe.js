@@ -23,13 +23,10 @@ const allrecipes = {
 },
   actions: {
     async loadAllRecipes({ commit }) {
-      await axios
+      let response = await axios
         .get(`${process.env.VUE_APP_BACKEND}/api/findAll/recipe`)
-        .then((response) => {
-          commit("LOAD_ALL_RECIPES", response.data);
+        await commit("LOAD_ALL_RECIPES", response.data);
           console.log(response.data);
-        })
-        .catch((error) => console.log(error));
     },
     async loadRating() {
       // await axios

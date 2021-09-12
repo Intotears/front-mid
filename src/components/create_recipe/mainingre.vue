@@ -17,7 +17,7 @@
           </v-col>
           <v-col cols="12" md="4" sm="2">
             <v-text-field
-              v-model="mIngredient.ingredientsName"
+              v-model="mIngredient.ingredientName"
               label="Your ingredients"
             >
               ></v-text-field
@@ -69,7 +69,7 @@ export default {
     add() {
       this.mIngredients.push({
         categoryName: "Main",
-        ingredientsName: "",
+        ingredientName: "",
         quantityValue: "",
         calories: "",
       });
