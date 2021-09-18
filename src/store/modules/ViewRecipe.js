@@ -43,18 +43,12 @@ const viewRecipe = {
     storeID({ commit }, id) {
       commit("recipeID", id);
     },
-    // gotoEditRecipe({getters}) {
-    //   const id = getters.findRecipeID;
-    //   // vm.$router.push({ path: `/EditRecipe/${id}` }); //อันนี้มันรับเลข id จากหน้าที่แล้วมาได้เพราะว่าคลิ๊กแล้วเลขตรงกับ recipeID ใน DB
-    //   // vm.$router.push({ path: `/EditRecipe/${id}` }); 
-    // },
     async loadDetailByID({ commit }, id) {
-      // const id = getters.findRecipeID;
       await axios
-        .get(`${process.env.VUE_APP_BACKEND}/api/find/recipe/`+ id ) 
+        .get(`${process.env.VUE_APP_BACKEND}/api/find/viewRecipe/${id}` ) 
         .then((response) => {
           commit("LOAD_DETAIL", response.data);
-          console.log(response.data);
+          console.log("view loadDetailByID ",response.data);
         })
         .catch((error) => console.log(error));  
     },
@@ -63,7 +57,7 @@ const viewRecipe = {
         .get(`${process.env.VUE_APP_BACKEND}/api/find/MainIngre/`+ id ) 
         .then((response) => {
           commit("LOAD_MAIN_INGRE", response.data);
-          console.log(response.data);
+          console.log("view loadMainIngre",response.data);
         })
         .catch((error) => console.log(error));  
     },
@@ -72,7 +66,7 @@ const viewRecipe = {
         .get(`${process.env.VUE_APP_BACKEND}/api/find/SubIngre/`+ id )  
         .then((response) => {
           commit("LOAD_SUB_INGRE", response.data);
-          console.log(response.data);
+          console.log("view loadSubIngre",response.data);
         })
         .catch((error) => console.log(error));  
     },
@@ -81,7 +75,7 @@ const viewRecipe = {
         .get(`${process.env.VUE_APP_BACKEND}/api/find/Flavoring/`+ id )
         .then((response) => {
           commit("LOAD_FLAV", response.data);
-          console.log(response.data);
+          console.log("view loadFlavoring",response.data);
         })
         .catch((error) => console.log(error));  
     },
@@ -90,7 +84,7 @@ const viewRecipe = {
         .get(`${process.env.VUE_APP_BACKEND}/api/find/cooking_process/recipeID/` + id) 
         .then((response) => {
           commit("LOAD_PROCESS", response.data);
-          console.log(response.data);
+          console.log("view loadProcess",response.data);
         })
         .catch((error) => console.log(error));  
     },

@@ -7,6 +7,7 @@ const myrecipes = {
     ingredient:[],
     process:[],
     recipeProfile: [],
+    user:[],
   },
   getters: {
     allMyRecipes: (state) => state.recipe,
@@ -24,12 +25,8 @@ const myrecipes = {
     LOAD_PROCESS: (state, process)=>{
       state.process = process;
     },
-    EDIT_MYRECIPES: (state, recipe)=>{
-        state.recipe = recipe;
-        // var todos = state.todos
-        // todos.splice(todos.indexOf(todo), 1)
-        // state.todos = todos
-        // state.newTodo = todo.body
+    LOAD_USER: (state, user)=>{
+      state.user = user;
     },
     DELETE_DETAIL: (state, id)=>{
         const index = state.recipe.findIndex(r => r.recipeID == id)
@@ -61,6 +58,15 @@ const myrecipes = {
         .then((response) => {
           commit("LOAD_RECIPEPROFILE", response.data);
           console.log(response.data);
+        })
+        .catch((error) => console.log(error));
+    },
+    async loadUser({ commit }, userID) {
+      await axios
+        .get(`${process.env.VUE_APP_BACKEND}/api/find/UserInUserProfile/${userID}`)
+        .then((response) => {
+          commit("LOAD_USER", response.data);
+          console.log("myrecipes LOAD_USER",response.data);
         })
         .catch((error) => console.log(error));
     },

@@ -21,32 +21,37 @@ const routes = [
     component: () => import("@/views/test.vue"),
   },
   {
-    path: "/MyRecipe",
+    path: "/myRecipe",
     name: "MyRecipe",
     component: () => import("@/views/MyRecipe.vue"),
   },
   {
-    path: "/Register",
+    path: "/register",
     name: "Register",
     component: () => import("@/views/Register.vue"),
   },
   {
-    path: "/Login",
+    path: "/login",
     name: "Login",
     component: () => import("@/views/Login.vue"),
   },
   {
-    path: "/EditRecipe/:id", 
+    path: "/editRecipe/:id", 
     name: "EditRecipe",
     component: () => import("@/views/EditRecipe.vue"),
   },
   {
-    path: "/Profile", 
+    path: "/profile/", 
     name: "Profile",
     component: () => import("@/views/Profile.vue"),
   },
   {
-    path: "/ViewRecipe/:id", 
+    path: "/userProfile/:id", 
+    name: "userProfile",
+    component: () => import("@/views/ProfileOfOtherUser.vue"),
+  },
+  {
+    path: "/viewRecipe/:id", 
     name: "ViewRecipe",
     component: () => import("@/views/ViewRecipe.vue"),
   },

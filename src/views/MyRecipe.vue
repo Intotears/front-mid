@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     EditRecipe(id) {
-      this.$router.push({ path: `/test/${id}` });
+      this.$router.push({ path: `/editRecipe/${id}` });
     },
     DeleteRecipe() {
       console.log("recipeIDToDelete ", this.recipeIDToDelete);

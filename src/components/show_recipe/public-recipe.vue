@@ -60,12 +60,19 @@
                   <p>{{ all.recipeName }}</p>
                 </div>
               </div>
-            </v-card-title>
-            <v-card-subtitle>
-              <p class="text-overline">
-                By {{ all.user ? all.user.userName : "-" }}
-              </p>
+            </v-card-title> 
+            <!-- <v-hover> -->
+            <v-card-subtitle>            
+              <p class="text-overline">   
+                <router-link v-if="all.userID!=currentUser.userID" :to="{ path: '/userProfile/' + all.userID}" class="text-decoration-none white--text">
+                  By {{ all.user ? all.user.userName : "-" }}
+                </router-link>
+                <router-link v-else :to="{ path: '/profile/'}" class="text-decoration-none white--text">
+                  By {{ all.user ? all.user.userName : "-" }}
+                </router-link>
+              </p>  
             </v-card-subtitle>
+            <!-- </v-hover> -->
             <v-card-text>
               <p>{{ all.description }}</p>
             </v-card-text>
