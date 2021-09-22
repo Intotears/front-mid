@@ -44,19 +44,7 @@
       </div>
 
       <br />
-
-      <div style="margin-top: 10px">
-        <v-container>
-          <v-card-title>
-            <h3 >ความคิดเห็น</h3>
-          </v-card-title>
-        </v-container>
-      </div>
-
-      <br />
-
-
-
+      
     </v-container>
   </v-app>
 </template>
