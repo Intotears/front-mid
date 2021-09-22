@@ -11,6 +11,7 @@ const viewRecipe = {
     Flavoring: [], 
     cookingprocess: [],
     recipesfoodtag: [],
+ 
   },
   getters: {
     editDetail: (state) => state.recipe,
@@ -37,6 +38,9 @@ const viewRecipe = {
     },
     LOAD_PROCESS:(state, process )=>{
       state.cookingprocess = process;
+    },
+    LOAD_FOODTAG:(state, foodtag )=>{
+      state.recipesfoodtag = foodtag;
     },
 },
   actions: { 
@@ -88,6 +92,16 @@ const viewRecipe = {
         })
         .catch((error) => console.log(error));  
     },
+    async loadFoodtag({ commit }, id) {
+      await axios
+        .get(`${process.env.VUE_APP_BACKEND}/api/findAll/foodtag/` + id) 
+        .then((response) => {
+          commit("LOAD_FOODTAG", response.data);
+          console.log("view loadFoodtag",response.data);
+        })
+        .catch((error) => console.log(error));  
+    },
+  
   },
 };
 
