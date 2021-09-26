@@ -38,6 +38,7 @@
               required
               type="password"
               :rules="passwordRules"
+              @keyup.enter="handleRegister"
             />
             <!-- <v-text-field
               label="Confirm Password"
@@ -115,7 +116,8 @@ export default {
     }
   },
   methods: {
-    handleRegister() {
+    handleRegister(e) {
+      e.preventDefault();
       this.message = "";
       this.submitted = true;
       this.snarkbar = true;

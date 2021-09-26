@@ -22,10 +22,11 @@
               required
               type="password"
               :rules="passwordRules"
+              @keyup.enter="handleLogin"
             />
             <hr />
             <p>forget password</p>
-            <v-btn color="primary" @click="handleLogin"
+            <v-btn color="primary"  @click="handleLogin"
               >Login</v-btn
             >
           </v-form>
@@ -61,7 +62,8 @@ export default {
     }
   },
   methods: {
-    handleLogin() {
+    handleLogin(e) {
+       e.preventDefault();
       this.loading = true;
       
       if (this.user.username && this.user.password) {
