@@ -38,7 +38,7 @@
             ></v-text-field>
           </v-col>
           <v-col cols="1" lg="1" md="1" sm="1">
-            <v-btn @click="remove(i ,mIngredient.re_IngredientsID)" class="error"
+            <v-btn @click="remove(i ,mIngredient.re_IngredientID)" class="error"
               ><v-icon>mdi-delete</v-icon>delete</v-btn
             >
           </v-col>
@@ -79,7 +79,7 @@ export default {
     remove(index, id) {
       if (id != null) {
         this.deleteID.push({
-          re_IngredientsID: id,
+          re_IngredientID: id,
         });
       }
       this.mIngredients.splice(index, 1);      

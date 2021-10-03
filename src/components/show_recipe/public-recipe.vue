@@ -9,7 +9,7 @@
         color="purple"
         dark
         style="max-width: 550px;"
-        v-on:click.stop="ViewRecipe(all.recipeID)"
+        
       >
         <v-card-actions class="pa-4">
           <v-spacer></v-spacer>
@@ -46,7 +46,7 @@
             <v-img
             class="shrink ma-2"
             height="150px"
-            src="https://cdn.vuetifyjs.com/images/cards/halcyon.png"
+            :src="all.img"
             style="flex-basis: 150px"
             tile
           ></v-img>

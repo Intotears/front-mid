@@ -395,7 +395,6 @@
 
                 <v-col class="text-right">
                   <v-dialog v-model="dialog" persistent max-width="290">
-                    //ปุ่มเซฟ
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
                         elevation="2"
@@ -433,7 +432,7 @@
                         <v-btn
                           color="green darken-1"
                           text
-                          @click="dialog = false "
+                          @click="dialog = false"
                           to="/"
                         >
                           Go to Home
@@ -622,7 +621,11 @@ export default {
   mounted() {},
   created() {
     this.$store.dispatch("showFoodtag/loadFoodtag");
+    
   },
+  destroyed(){
+     window.location.reload();
+  }
 };
 </script>
 

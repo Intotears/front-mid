@@ -67,21 +67,21 @@ const editRecipe = {
     },
     EDIT_MIngredients: (state, mainIngre) => {
       state.mIngredients.forEach((m) => {
-        if (m.re_IngredientsID == mainIngre.re_IngredientsID) {
+        if (m.re_IngredientID == mainIngre.re_IngredientID) {
           m = mainIngre;
         }
       });
     },
     EDIT_SIngredients: (state, subIngre) => {
       state.sIngredients.forEach((s) => {
-        if (s.re_IngredientsID == subIngre.re_IngredientsID) {
+        if (s.re_IngredientID == subIngre.re_IngredientID) {
           s = subIngre;
         }
       });
     },
     EDIT_Flavoring: (state, flavoring) => {
       state.flavoring.forEach((f) => {
-        if (f.re_IngredientsID == flavoring.re_IngredientsID) {
+        if (f.re_IngredientID == flavoring.re_IngredientID) {
           f = flavoring;
         }
       });
@@ -114,28 +114,28 @@ const editRecipe = {
     //Delete
     DeleteIngredients: (state, id)=>{
       // const index = state.deleteIngredientsID.forEach((f) => {
-      //   if (f.re_IngredientsID == id.re_IngredientsID) {
+      //   if (f.re_IngredientID == id.re_IngredientID) {
       //     state.deleteIngredientsID.splice(index, 1)
       //   }
       // });
  
       // state.deleteIngredientsID.splice(state.deleteIngredientsID.indexOf(id), 1);
 
-      const index = state.deleteIngredientsID.findIndex(r => r.deleteIngredientsID == id.re_IngredientsID)
+      const index = state.deleteIngredientsID.findIndex(r => r.deleteIngredientsID == id.re_IngredientID)
       state.deleteIngredientsID.splice(index, 1)
       
     
     },
     DELETE_MIngredient: (state, id)=>{
-      const index = state.mIngredients.findIndex(r => r.re_IngredientsID == id)
+      const index = state.mIngredients.findIndex(r => r.re_IngredientID == id)
       state.mIngredients.splice(index, 1)
     },
     DELETE_SIngredient: (state, id)=>{ //ยังไม่แก้
-      const index = state.ingredient.findIndex(r => r.re_IngredientsID == id)
+      const index = state.ingredient.findIndex(r => r.re_IngredientID == id)
       state.ingredient.splice(index, 1)
     },
     DELETE_Flavoring: (state, id)=>{ //ยังไม่แก้
-      const index = state.ingredient.findIndex(r => r.re_IngredientsID == id)
+      const index = state.ingredient.findIndex(r => r.re_IngredientID == id)
       state.ingredient.splice(index, 1)
     },
     DELETE_PROCESS: (state, id)=>{ //ยังไม่แก้

@@ -40,7 +40,7 @@
           </v-col>
           <v-col cols="1" lg="1" md="1" sm="1">
             <v-btn
-              @click="remove(i, mIngredient.re_IngredientsID)"
+              @click="remove(i, mIngredient.re_IngredientID)"
               class="error"
               ><v-icon>mdi-delete</v-icon>delete</v-btn
             >
@@ -87,30 +87,31 @@ export default {
     remove(index, id) {
       if (id != null) {
         this.deleteID.push({
-          re_IngredientsID: id,
+          re_IngredientID: id,
         });
       }
       this.$store.dispatch(
         "editRecipe/StoreDeleteIngredientsID",
         this.deleteID
       );
-      this.thisMIngredients.splice(index, 1); //อาจจะให้เวลากด ลบ จะส่ง re_IngredientsID ไปเก็บไว้ใน state ก่อนแล้ว พอกด save ถึงจะทำการลบจริงๆ
+      this.thisMIngredients.splice(index, 1); //อาจจะให้เวลากด ลบ จะส่ง re_IngredientID ไปเก็บไว้ใน state ก่อนแล้ว พอกด save ถึงจะทำการลบจริงๆ
     },
     saveMIngredient() {
       const mIngredients = this.thisMIngredients;
       for (var i in mIngredients) {
         if (mIngredients[i].ingredientName != "") {
-          if (mIngredients[i].re_IngredientsID != null) {
+          if (mIngredients[i].re_IngredientID != null) {
             this.$store.dispatch(
               "editRecipe/StoreMainIngredientsID",
-              mIngredients[i].re_IngredientsID
+              mIngredients[i].re_IngredientID
             );
             this.$store.dispatch(
               "editRecipe/EditMainIngredients",
               mIngredients[i]
             );
             console.log("ใน if ", mIngredients[i]);
-          } else {
+          } 
+          else {
             this.$store.dispatch(
               "editRecipe/storeRecipeID",
               this.$route.params.id

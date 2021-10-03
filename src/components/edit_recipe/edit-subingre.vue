@@ -81,8 +81,8 @@ export default {
     addsIngredient() {
       const sIngredients = this.sIngredients;
       for(var i in sIngredients){
-        if(sIngredients[i].re_IngredientsID != null){  
-          this.$store.dispatch("editRecipe/StoreSubIngredientsID", sIngredients[i].re_IngredientsID);
+        if(sIngredients[i].re_IngredientID != null){  
+          this.$store.dispatch("editRecipe/StoreSubIngredientsID", sIngredients[i].re_IngredientID);
           this.$store.dispatch("editRecipe/EditSubIngredients", sIngredients[i]);
           console.log("ใน if ", sIngredients[i]);
         }

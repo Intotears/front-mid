@@ -84,8 +84,8 @@ export default {
     addflavoring() {
       const flavoring = this.flavoring;
       for(var i in flavoring){
-          if(flavoring[i].re_IngredientsID != null){  
-            this.$store.dispatch("editRecipe/StoreFlavoringID", flavoring[i].re_IngredientsID);
+          if(flavoring[i].re_IngredientID != null){  
+            this.$store.dispatch("editRecipe/StoreFlavoringID", flavoring[i].re_IngredientID);
             this.$store.dispatch("editRecipe/EditFlavoring", flavoring[i]);
             console.log("ใน if ", flavoring[i]);
           }

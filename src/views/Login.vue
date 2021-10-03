@@ -25,7 +25,7 @@
               @keyup.enter="handleLogin"
             />
             <hr />
-            <p>forget password</p>
+            <!-- <p>forget password</p> -->
             <v-btn color="primary"  @click="handleLogin"
               >Login</v-btn
             >
@@ -69,7 +69,7 @@ export default {
       if (this.user.username && this.user.password) {
         this.$store.dispatch("auth/login", this.user).then(
           () => {
-            this.$router.push("/profile");
+            this.$router.push("/");
           },
           (error) => {
             this.loading = false;

@@ -6,7 +6,7 @@
         <v-container>
           <span>สูตรโดยคุณ</span>
           <v-avatar class="ma-3" size="25">
-            <v-img :src="detail.img"></v-img>
+            <v-img ></v-img>
           </v-avatar>
           <span v-if="detail.userID!=currentUser.userID" class="text-decoration-none" style="margin-left: -10px">
             <router-link :to="{ path: '/userProfile/' + detail.userID}" class="text-decoration-none black--text">         
@@ -98,6 +98,7 @@ export default {
       "viewRecipe/loadDetailByID",
       router.currentRoute.params.id
     );
+     this.$store.dispatch("editRecipe/loadImage", router.currentRoute.params.id);
   },
 };
 </script>
