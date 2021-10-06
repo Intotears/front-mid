@@ -16,12 +16,25 @@
         </v-combobox>
       </v-col>
     </v-row>
+    <!-- <v-btn elevation="2" color="blue" fab dark @click="next()">
+      next
+    </v-btn> -->
+    <v-spacer> </v-spacer>
+    <v-btn
+      elevation="2"
+      color="success"
+      fab
+      dark
+      @click="selectFoodTag()"
+    >
+      <v-icon> mdi-content-save </v-icon>
+    </v-btn>
   </v-container>
 </template>
 
 <script>
-// import { mapState } from "vuex";
-//import {mapGetters} from "vuex";
+import router from "@/router";
+
 export default {
   name: "Foodtag",
   data() {
@@ -30,33 +43,46 @@ export default {
     };
   },
   computed: {
-    // ...mapState("editFoodtag", ["selectTag"]),
     thisFoodtag() {
       return this.$store.state.editFoodtag.foodtag;
     },
-    // thisSelectTag : function(){
-    //   return this.selectTag;
-    // },
-    // thisFoodtag() {
-    //   return this.foodtag.find((v) => v.tagName);
-    // },
     currentUser() {
       return this.$store.state.auth.user;
     },
+    loadSelectedFoodtag() {
+      return this.$store.state.editFoodtag.selectedFoodtag;
+    },
   },
-  created() {
-    this.$store.dispatch("editFoodtag/loadFoodtag");
+  async created() {
+    await this.$store.dispatch(
+      "editFoodtag/loadSelectedFoodtag",
+      router.currentRoute.params.id
+    );
+    await this.$store.dispatch("editFoodtag/loadFoodtag");
+    
+    this.getSelectedFoodtag();
   },
+  beforeMount() {},
   methods: {
-    // addSelectTag() {
-    //   const selectTag = this.selectTag;
-    //   console.log(this.selectTag);
-    //   this.$store.dispatch("showFoodtag/selectFoodTag", selectTag);
-    //   console.log(this.$store.state.selectTag);
-    // },
-    selectFoodTag() {
-      const selectTag = this.selectTag;
-      console.log(this.selectTag);
+    save() {
+      this.$store.dispatch("editFoodtag/deleteSelectedFoodtag", router.currentRoute.params.id);
+      console.log("save", this.selectTag)
+    },
+    getSelectedFoodtag() {
+      const tag = this.loadSelectedFoodtag;
+      for (var i in tag) {
+        this.selectTag.push({
+          tagID: tag[i].tagID,
+          tagName: tag[i].tagName,
+        });
+      }
+      console.log("selectTag", this.selectTag);
+    },
+    async selectFoodTag() {   
+      const selectTag = await this.selectTag;
+      await this.$store.dispatch("editFoodtag/storeRecipeID",  router.currentRoute.params.id);
+      await this.$store.dispatch("editFoodtag/deleteSelectedFoodtag", router.currentRoute.params.id);
+      await console.log("1",this.selectTag);
       this.$store.dispatch("editFoodtag/selectFoodTag", selectTag);
     },
     edit(index, item) {
@@ -96,6 +122,16 @@ export default {
         }
         return v;
       });
+      if (this.click == true) {
+        const tag = this.loadSelectedFoodtag;
+        for (var i in tag) {
+          this.selectTag.push({
+            tagID: tag[i].tagID,
+            tagName: tag[i].tagName,
+          });
+        }
+        console.log("selectTag", this.selectTag);
+      }
     },
   },
 };
