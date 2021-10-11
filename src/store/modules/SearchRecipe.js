@@ -3,25 +3,28 @@ import axios from "axios"
 const searchRecipes = {
     namespaced: true,
     state: {
-      seachedRecipe: [],
-      searchingWord:""
+      searchedRecipe: [],
+      searchingWord: ''
     },
     getters: {
-      Recipe: (state) => state.seachedRecipe,
+      SEARCHED_RECIPE: (state) => state.seachedRecipe,
     },
     mutations: {
-      LOAD_SEARCHED_RECIPE: (state, seachedRecipe)=>{
-          state.searchedRecipe = seachedRecipe;
+      SET_SEARCHED_RECIPE: (state, searchedRecipe)=>{
+          state.searchedRecipe = searchedRecipe;
       },
-  },
+  }, 
     actions: {
-      async loadSearchedRecipe({ commit }) {
-        let response = await axios
-          .get(`${process.env.VUE_APP_BACKEND}/api/recipe/search/name`, {
-              
-          })
-           await commit("LOAD_SEARCHED_RECIPES", response.data);
-            console.log(response.data);
+      async loadSearchedRecipe({ commit }, searchingWord) {
+        console.log("Hi there", searchingWord)
+
+            await axios
+            .get(`${process.env.VUE_APP_BACKEND}/api/recipe/search/name/${searchingWord}`)
+            .then((response) => {
+              commit("SET_SEARCHED_RECIPE", response.data);
+              console.log(response.data);
+            })
+            .catch((error) => console.log(error));
       },
      
     },

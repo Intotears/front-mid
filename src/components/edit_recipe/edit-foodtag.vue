@@ -62,7 +62,6 @@ export default {
     
     this.getSelectedFoodtag();
   },
-  beforeMount() {},
   methods: {
     save() {
       this.$store.dispatch("editFoodtag/deleteSelectedFoodtag", router.currentRoute.params.id);

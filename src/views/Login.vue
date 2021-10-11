@@ -20,9 +20,10 @@
               v-model="user.password"
               outlined
               required
-              type="password"
-              :rules="passwordRules"
+              :type="show4 ? 'text' : 'password'"
+              :rules="[passwordRules, passwordMatch]"
               @keyup.enter="handleLogin"
+              @click:append="show4 = !show4"
             />
             <hr />
             <!-- <p>forget password</p> -->
@@ -43,12 +44,14 @@ export default {
   Name: "Login",
   data() {
     return {
+      show: false,
       valid: false,
       user: new User("", ""),
       loading: false,
       message: "",
       usernameRules: [(v) => !!v || "Name is required"],
       passwordRules: [(v) => !!v || "Password is required"],
+      passwordMatch: [() => (`The email and password you entered don't match`)],
     };
   },
   computed: {
