@@ -118,5 +118,8 @@ export default {
       this.$router.push("/login");
     }
   },
+  watch(){
+    
+  }
 };
 </script>

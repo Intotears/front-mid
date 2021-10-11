@@ -65,6 +65,11 @@ const routes = [
     name: "Collection",
     component:() => import("@/views/Collection.vue"),
   },
+  {
+    path: "/result",
+    name: "result",
+    component:() => import("@/views/Result.vue"),
+  },
 ];
 
 const router = new VueRouter({
