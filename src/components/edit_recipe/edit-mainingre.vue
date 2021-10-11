@@ -31,17 +31,8 @@
             ></v-text-field>
           </v-col>
 
-          <v-col cols="12" lg="2" md="2" sm="2">
-            <v-text-field
-              v-model="mIngredient.calories"
-              label="Calories"
-              readonly
-            ></v-text-field>
-          </v-col>
           <v-col cols="1" lg="1" md="1" sm="1">
-            <v-btn
-              @click="remove(i, mIngredient.re_IngredientID)"
-              class="error"
+            <v-btn @click="remove(i, mIngredient.re_IngredientID)" class="error"
               ><v-icon>mdi-delete</v-icon>delete</v-btn
             >
           </v-col>
@@ -62,15 +53,10 @@
 
 <script>
 import router from "@/router";
-//import { mapState } from "vuex";
 export default {
   name: "Mainingre",
   data() {
     return {
-      // mIngredients: [],
-      // unitItems: [],
-      // indredientsItems: [],
-      // num: ''
       deleteID: [],
       isIngreName: [(v) => !!v || "Ingredient name is required"],
     };
@@ -81,23 +67,23 @@ export default {
         categoryID: "ic001",
         ingredientName: "",
         quantityValue: "",
-        calories: "",
       });
     },
-    remove(index, id) {
-      if (id != null) {
+    async remove(index, id) {
+      if ((await id) != null) {
         this.deleteID.push({
           re_IngredientID: id,
         });
       }
-      this.$store.dispatch(
-        "editRecipe/StoreDeleteIngredientsID",
-        this.deleteID
-      );
-      this.thisMIngredients.splice(index, 1); //อาจจะให้เวลากด ลบ จะส่ง re_IngredientID ไปเก็บไว้ใน state ก่อนแล้ว พอกด save ถึงจะทำการลบจริงๆ
+      // await this.$store.dispatch(
+      //   "editRecipe/StoreDeleteIngredientsID",
+      //   this.deleteID
+      // );
+      await console.log("main ingre remove ", this.deleteID);
+      await this.thisMIngredients.splice(index, 1); //อาจจะให้เวลากด ลบ จะส่ง re_IngredientID ไปเก็บไว้ใน state ก่อนแล้ว พอกด save ถึงจะทำการลบจริงๆ
     },
-    saveMIngredient() {
-      const mIngredients = this.thisMIngredients;
+    async saveMIngredient() {
+      const mIngredients = await this.thisMIngredients;
       for (var i in mIngredients) {
         if (mIngredients[i].ingredientName != "") {
           if (mIngredients[i].re_IngredientID != null) {
@@ -110,8 +96,7 @@ export default {
               mIngredients[i]
             );
             console.log("ใน if ", mIngredients[i]);
-          } 
-          else {
+          } else {
             this.$store.dispatch(
               "editRecipe/storeRecipeID",
               this.$route.params.id
@@ -124,8 +109,15 @@ export default {
           }
         }
       }
-      console.log("deleteID 108 ", this.deleteID);
-      this.$store.dispatch("editRecipe/DeleteIngredients");
+
+      console.log("deleteID main ", this.deleteID);
+      const deleteID = await this.deleteID;
+      for (var d in await deleteID) {
+        this.$store.dispatch(
+          "editRecipe/DeleteIngredients",
+          deleteID[d].re_IngredientID
+        );
+      }
     },
   },
   computed: {

@@ -25,7 +25,7 @@
       color="success"
       fab
       dark
-      @click="selectFoodTag()"
+      @click="saveFoodTag()"
     >
       <v-icon> mdi-content-save </v-icon>
     </v-btn>
@@ -60,14 +60,9 @@ export default {
     );
     await this.$store.dispatch("editFoodtag/loadFoodtag");
     
-    this.getSelectedFoodtag();
+    await this.getSelectedFoodtag();
   },
-  beforeMount() {},
   methods: {
-    save() {
-      this.$store.dispatch("editFoodtag/deleteSelectedFoodtag", router.currentRoute.params.id);
-      console.log("save", this.selectTag)
-    },
     getSelectedFoodtag() {
       const tag = this.loadSelectedFoodtag;
       for (var i in tag) {
@@ -78,7 +73,7 @@ export default {
       }
       console.log("selectTag", this.selectTag);
     },
-    async selectFoodTag() {   
+    async saveFoodTag() {   
       const selectTag = await this.selectTag;
       await this.$store.dispatch("editFoodtag/storeRecipeID",  router.currentRoute.params.id);
       await this.$store.dispatch("editFoodtag/deleteSelectedFoodtag", router.currentRoute.params.id);
@@ -122,16 +117,6 @@ export default {
         }
         return v;
       });
-      if (this.click == true) {
-        const tag = this.loadSelectedFoodtag;
-        for (var i in tag) {
-          this.selectTag.push({
-            tagID: tag[i].tagID,
-            tagName: tag[i].tagName,
-          });
-        }
-        console.log("selectTag", this.selectTag);
-      }
     },
   },
 };

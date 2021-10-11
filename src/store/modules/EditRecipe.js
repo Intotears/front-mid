@@ -16,7 +16,7 @@ const editRecipe = {
     sIngredientsID: '',
     flavoringID: '',
     cookingProcessID: '',
-    deleteIngredientsID:[]
+    //deleteIngredientsID:[]
   },
 
   getters: {
@@ -112,35 +112,13 @@ const editRecipe = {
     },
    
     //Delete
-    DeleteIngredients: (state, id)=>{
-      // const index = state.deleteIngredientsID.forEach((f) => {
-      //   if (f.re_IngredientID == id.re_IngredientID) {
-      //     state.deleteIngredientsID.splice(index, 1)
-      //   }
-      // });
- 
-      // state.deleteIngredientsID.splice(state.deleteIngredientsID.indexOf(id), 1);
-
-      const index = state.deleteIngredientsID.findIndex(r => r.deleteIngredientsID == id.re_IngredientID)
-      state.deleteIngredientsID.splice(index, 1)
-      
-    
+    DeleteIngredients: ()=>{
+      // const index = state.deleteIngredientsID.findIndex(r => r.deleteIngredientsID == id.re_IngredientID)
+      // state.deleteIngredientsID.splice(index, 1)     
     },
-    DELETE_MIngredient: (state, id)=>{
-      const index = state.mIngredients.findIndex(r => r.re_IngredientID == id)
-      state.mIngredients.splice(index, 1)
-    },
-    DELETE_SIngredient: (state, id)=>{ //ยังไม่แก้
-      const index = state.ingredient.findIndex(r => r.re_IngredientID == id)
-      state.ingredient.splice(index, 1)
-    },
-    DELETE_Flavoring: (state, id)=>{ //ยังไม่แก้
-      const index = state.ingredient.findIndex(r => r.re_IngredientID == id)
-      state.ingredient.splice(index, 1)
-    },
-    DELETE_PROCESS: (state, id)=>{ //ยังไม่แก้
-      const index = state.cookingProcess.findIndex(r => r.processID == id)
-      state.cookingProcess.splice(index, 1)
+    DELETE_PROCESS: ()=>{ 
+      // const index = state.cookingProcess.findIndex(r => r.processID == id.processID)
+      // state.cookingProcess.splice(index, 1)
     },
     
   },
@@ -381,26 +359,27 @@ const editRecipe = {
     },
 
     //Delete
-    async StoreDeleteIngredientsID({ commit }, IngredientsID) {
-      commit("STORE_DeleteIngredientsID", IngredientsID);
-    },
-    async DeleteIngredients({commit,getters}) {
-        const id = getters.findDeleteIngredientsID;
+    // async StoreDeleteIngredientsID({ commit }, IngredientsID) {
+    //   commit("STORE_DeleteIngredientsID", IngredientsID);
+    // },
+    async DeleteIngredients({commit} , id) {
+        // const id = getters.findDeleteIngredientsID;
         console.log("Edit delete ID",id);
         await axios
-        .delete(`${process.env.VUE_APP_BACKEND}/api/ingredient/deleteByRecipeIngreID` , id)
+        .delete(`${process.env.VUE_APP_BACKEND}/api/ingredient/deleteByRecipeIngreID/${id}` )
         .then((response) => {
           commit("DeleteIngredients", response.data);
-          console.log("Delete ingre",response.data);
+          console.log("Delete ingre success",response.data);
         })
         .catch((error) => console.log(error));   
     },
-    async DeleteProcess({ commit }, id) { //ยังไม่แก้
+    async DeleteProcess({ commit }, id) {
+      console.log("Edit delete process",id);
       await axios
-        .delete(`${process.env.VUE_APP_BACKEND}/api/cooking_process/delete/`, id)
+        .delete(`${process.env.VUE_APP_BACKEND}/api/cooking_process/deleteByProcessID/${id}` )
         .then((response) => {
-          commit("DELETE_PROCESS", id);
-          console.log(response.data);
+          commit("DELETE_PROCESS", response.data);
+          console.log("Delete process success",response.data);
         })
         .catch((error) => console.log(error));
     },

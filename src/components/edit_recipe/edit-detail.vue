@@ -69,9 +69,6 @@
       </v-row>
     </v-container>
     <v-container>
-      <foodtag />
-    </v-container>
-    <v-container>
       <h3>Share option</h3>
       <v-switch
         v-model="thisRecipe.shareOption"
@@ -97,9 +94,6 @@ export default {
       isPreviewUpload: false,
       isRecipeName: [(v) => !!v || "Recipe name is required"],
     };
-  },
-  components: {
-    foodtag: () => import("./edit-foodtag.vue"),
   },
   methods: {
     Preview_image() {

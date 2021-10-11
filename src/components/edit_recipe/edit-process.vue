@@ -2,17 +2,17 @@
   <div>
     <v-container class="ma-2">
       <div id="CookingProcess" class="text-center">
-          <v-row
-            v-for="(process, i) in cookingProcess"
-            :key="i"
-            class="text-fields-row"
-            align-content-center
-            num = i
-          >
-            <v-col cols="1" md="1" sm="1">
-              <v-text-field readonly v-text="num = i+1"></v-text-field>
-            </v-col>
-            <!-- <v-col cols="4" md="2" sm="2" align-center>
+        <v-row
+          v-for="(process, i) in cookingProcess"
+          :key="i"
+          class="text-fields-row"
+          align-content-center
+          num="i"
+        >
+          <v-col cols="1" md="1" sm="1">
+            <v-text-field readonly v-text="(num = i + 1)"></v-text-field>
+          </v-col>
+          <!-- <v-col cols="4" md="2" sm="2" align-center>
               <v-img
                 :src="url_process"
                 contain
@@ -30,22 +30,24 @@
               >
               </v-file-input>
             </v-col> -->
-            <v-col cols="12" md="7" sm="5" xs="2">
-              <v-textarea
-                solo
-                counter
-                label="Descript cooking process ex. Boil water"
-                maxlength="500"
-                v-model="process.processDescription"
-              ></v-textarea>
-            </v-col>
-            <v-col cols="1" md="1">
-              <v-btn @click="remove4(i)" class="error"
-                ><v-icon>mdi-delete</v-icon>delete</v-btn
-              >
-            </v-col>
-          </v-row>
-          <br>
+          <v-col cols="12" md="7" sm="5" xs="2">
+            <v-textarea
+              solo
+              counter
+              label="Descript cooking process ex. Boil water"
+              maxlength="500"
+              v-model="process.processDescription"
+              required
+              :rules="isProcess"
+            ></v-textarea>
+          </v-col>
+          <v-col cols="1" md="1">
+            <v-btn @click="remove4(i, process.processID)" class="error"
+              ><v-icon>mdi-delete</v-icon>delete</v-btn
+            >
+          </v-col>
+        </v-row>
+        <br />
       </div>
       <div class="text-center">
         <v-btn @click="add4" width="100px" rounded class="primary"
@@ -53,24 +55,22 @@
         >
       </div>
     </v-container>
-    <v-btn elevation="2" color="success" fab dark @click="addflavoring()">
-            <v-icon> mdi-content-save </v-icon>
+    <v-btn elevation="2" color="success" fab dark @click="saveProcess()">
+      <v-icon> mdi-content-save </v-icon>
     </v-btn>
   </div>
 </template>
 
 <script>
-
-import router from '@/router'
+import router from "@/router";
 import { mapState } from "vuex";
 
 export default {
   name: "Process",
   data() {
     return {
-      //processes: [],
-      // imgProcess: null,
-      // url_process: null,
+      deleteProcessID: [],
+      isProcess: [(v) => !!v || "Cooking process description is required"],
     };
   },
   methods: {
@@ -80,36 +80,67 @@ export default {
         processDescription: "",
       });
     },
-    remove4(index) {
-      this.cookingProcess.splice(index, 1);
+    async remove4(index, id) {
+      if ((await id) != null) {
+        this.deleteProcessID.push({
+          processID: id,
+        });
+      }
+      await console.log("process remove ", this.deleteProcessID);
+      await this.cookingProcess.splice(index, 1);
     },
-    Preview_imageProcess() {
-      this.url_process = URL.createObjectURL(this.imgProcess);
-    },
-    addflavoring() {
-      const cookingProcess = this.cookingProcess;
-      for(var i in cookingProcess){
-          if(cookingProcess[i].processID != null){  
-            this.$store.dispatch("editRecipe/StoreCookingProcessID", cookingProcess[i].processID);
-            this.$store.dispatch("editRecipe/EditCookingprocess", cookingProcess[i]);
+    // Preview_imageProcess() {
+    //   this.url_process = URL.createObjectURL(this.imgProcess);
+    // },
+    async saveProcess() {
+      const cookingProcess = await this.cookingProcess;
+      for (var i in cookingProcess) {
+        if (cookingProcess[i].processDescription != "") {
+          if (cookingProcess[i].processID != null) {
+            this.$store.dispatch(
+              "editRecipe/StoreCookingProcessID",
+              cookingProcess[i].processID
+            );
+            this.$store.dispatch(
+              "editRecipe/EditCookingprocess",
+              cookingProcess[i]
+            );
             console.log("ใน if ", cookingProcess[i]);
-          }
-          else{
-            this.$store.dispatch('editRecipe/storeRecipeID', this.$route.params.id),
-            this.$store.dispatch("editRecipe/CreateCookingprocess", cookingProcess[i]);
+          } else {
+            this.$store.dispatch(
+              "editRecipe/storeRecipeID",
+              this.$route.params.id
+            ),
+              this.$store.dispatch(
+                "editRecipe/CreateCookingprocess",
+                cookingProcess[i]
+              );
             console.log("ใน else ", cookingProcess[i]);
           }
-        } 
-    }
+        }
+      }
+
+      console.log("deleteID process ", this.deleteProcessID);
+      const deleteProcessID = await this.deleteProcessID;
+      for (var d in await deleteProcessID) {
+        this.$store.dispatch(
+          "editRecipe/DeleteProcess",
+          deleteProcessID[d].processID
+        );
+      }
+    },
   },
   computed: {
-    ...mapState('editRecipe', ['cookingProcess']),
-    Process(){
-      return this.cookingProcess.find(v => v.recipeID == this.$route.params.id)
-    }
+    ...mapState("editRecipe", ["cookingProcess"]),
+    // Process(){
+    //   return this.cookingProcess.find(v => v.recipeID == this.$route.params.id)
+    // }
   },
   created() {
-    this.$store.dispatch("editRecipe/loadProcess",router.currentRoute.params.id);
+    this.$store.dispatch(
+      "editRecipe/loadProcess",
+      router.currentRoute.params.id
+    );
   },
 };
 </script>
