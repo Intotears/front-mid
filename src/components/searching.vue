@@ -4,7 +4,11 @@
     placeholder="Search for recipe by Name, Ingredients, Food tags"
     clearable
     single-line
+    solo-inverted
     @keyup.enter="searching()"
+    dark
+    class="pt-8 mt-auto"
+    flat
   >
   </v-text-field>
 </template>
@@ -25,8 +29,8 @@ export default {
         route.query = {
           search: this.search,
         };
-      }
-      // this.$router.push(route)
+      } 
+       this.$router.push(route)
     },
   },
   methods: {

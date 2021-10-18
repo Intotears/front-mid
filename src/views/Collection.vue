@@ -31,34 +31,31 @@
 
                 <td>
                   <v-btn
-                  elevation="2"
-                  color="error"
-                  dark
-                  @click="dialog = true; recipeIDToRemove = recipeCol?recipeCol.recipeID:''"
-                >
-                  Remove
-                </v-btn>
-                 
+                    elevation="2"
+                    color="error"
+                    dark
+                    @click="
+                      dialog = true;
+                      recipeIDToRemove = recipeCol ? recipeCol.recipeID : '';
+                    "
+                  >
+                    Remove
+                  </v-btn>
                 </td>
               </tr>
             </tbody>
             <v-dialog v-model="dialog" persistent max-width="290">
-              
               <v-card>
                 <v-card-title class="headline">
                   Are you sure to remove this recipe from the collection?
                 </v-card-title>
-                
+
                 <v-card-actions>
                   <v-btn color="green darken-1" text @click="dialog = false">
                     Cancel
                   </v-btn>
                   <v-spacer></v-spacer>
-                  <v-btn
-                    color="error"
-                    text
-                    @click="removeFromCollection"
-                  >
+                  <v-btn color="error" text @click="removeFromCollection">
                     Remove
                   </v-btn>
                 </v-card-actions>
@@ -108,7 +105,10 @@ export default {
     },
     removeFromCollection() {
       this.$store.dispatch("mycollection/StoreUserID", this.currentUser.userID);
-      this.$store.dispatch("mycollection/removeFromCollection", this.recipeIDToRemove );
+      this.$store.dispatch(
+        "mycollection/removeFromCollection",
+        this.recipeIDToRemove
+      );
       this.dialog = false;
       // window.location.reload();
     },
@@ -118,8 +118,6 @@ export default {
       this.$router.push("/login");
     }
   },
-  watch(){
-    
-  }
+  watch() {},
 };
 </script>

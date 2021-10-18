@@ -20,10 +20,10 @@
               v-model="user.password"
               outlined
               required
-              :type="show4 ? 'text' : 'password'"
+              type="password"
               :rules="[passwordRules, passwordMatch]"
               @keyup.enter="handleLogin"
-              @click:append="show4 = !show4"
+    
             />
             <hr />
             <!-- <p>forget password</p> -->

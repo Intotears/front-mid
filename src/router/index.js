@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import goTo from 'vuetify/lib/services/goto'
 
 Vue.use(VueRouter);
 
@@ -16,7 +17,7 @@ const routes = [
     component: () => import("@/views/CreateRecipe.vue"),
   },
   {
-    path: "/test/:id",
+    path: "/test",
     name: "test",
     component: () => import("@/views/test.vue"),
   },
@@ -76,6 +77,17 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes,
+  scrollBehavior: (to, from, savedPosition) => {
+    let scrollTo = 0
+
+    if (to.hash) {
+      scrollTo = to.hash
+    } else if (savedPosition) {
+      scrollTo = savedPosition.y
+    }
+
+    return goTo(scrollTo)
+  },
 });
 
 export default router;
@@ -99,3 +111,9 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+
+// src/router.js
+
+
+

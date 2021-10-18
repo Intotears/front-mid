@@ -1,13 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
 
 const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user
-  ? { status: { loggedIn: true, signedUp: true }, user }
-  : { status: { loggedIn: false, signedUp: false }, user: null };
+  ? { status: { loggedIn: true, signedUp: true, edited: false}, user }
+  : { status: { loggedIn: false, signedUp: false, edited: false}, user: null };
 
 const auth = {
   namespaced: true,
   state: initialState,
+  getters: {
+    currentUserID: (state) => state.user.userID
+  },
   actions: {
     async login({ commit }, user) {
       await axios
@@ -48,10 +51,54 @@ const auth = {
           (response) => {
             commit("registerSuccess");
             return Promise.resolve(response.data);
-
           },
           (error) => {
             commit("registerFailure");
+            return Promise.reject(error);
+          }
+        );
+    },
+    async editIdentity({commit, getters}, user) {
+      const id = getters.currentUserID
+      console.log("Profile of ", getters.currentUserID);
+      await axios
+        .put(`${process.env.VUE_APP_BACKEND}/api/auth/profile/name/${id}`, {
+          userPassword: user.password,
+          name: user.name,
+          username: user.username
+        })
+        .then(
+          (response) => {
+            if (localStorage.getItem("user")) {
+              localStorage.removeItem("user");
+            }
+            localStorage.setItem("user", JSON.stringify(response.data));
+            commit("editSuccess");
+            return Promise.resolve(response.data);
+          },
+          (error) => {
+            return Promise.reject(error);
+          }
+        );
+    },
+    async editUsername({commit, getters}, user) {
+      const id = getters.currentUserID
+      console.log("Profile of ", getters.currentUserID);
+      await axios
+        .put(`${process.env.VUE_APP_BACKEND}/api/auth/profile/username/${id}`, {
+          userPassword: user.password,
+          username: user.username
+        })
+        .then(
+          (response) => {
+            if (localStorage.getItem("user")) {
+              localStorage.removeItem("user");
+            }
+            localStorage.setItem("user", JSON.stringify(response.data));
+            commit("editSuccess");
+            return Promise.resolve(response.data);
+          },
+          (error) => {
             return Promise.reject(error);
           }
         );
@@ -77,6 +124,9 @@ const auth = {
       state.status.signedUp = false;
       state.status.loggedIn = false;
     },
+    editSuccess(state){
+      state.status.edited = true;
+    }
   },
 };
 

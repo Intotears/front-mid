@@ -425,8 +425,8 @@
                         <v-icon> mdi-emoticon </v-icon></v-card-text
                       >
                       <v-card-actions>
-                        <v-btn color="primary" text @click="dialog = false">
-                          Back
+                        <v-btn color="primary" text @click="EditRecipe(findThisRecipeID)">
+                          Edit recipe
                         </v-btn>
                         <v-spacer></v-spacer>
                         <v-btn
@@ -451,7 +451,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "CreateRecipe",
   data() {
@@ -582,6 +582,11 @@ export default {
         -1
       );
     },
+    EditRecipe(id) {
+      console.log("find recipe", id)
+      this.$router.push({ path: `/editRecipe/${id}` });
+    },
+    
   },
   watch: {
     model(val, prev) {
@@ -606,6 +611,7 @@ export default {
   components: {},
   computed: {
     ...mapState("createRecipe", ["recipe"]),
+    ...mapGetters("createRecipe", ["findThisRecipeID"]),
     currentUser() {
       return this.$store.state.auth.user;
     },

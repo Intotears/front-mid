@@ -22,7 +22,7 @@
 
         <v-stepper-items>
           <v-stepper-content step="1">
-            <h2 class="font-weight-bold">Create your recipe</h2>
+            <h2 class="font-weight-bold">Edit your recipe</h2>
 
             <editDetail />
 
