@@ -21,11 +21,11 @@
                 :key="recipeCol.recipeID"
               >
                 <td v-on:click.stop="ViewRecipe(recipeCol.recipeID)">
-                  <v-avatar class="ma-3" size="150" tile>
+                  <v-avatar class="ma-3" size="200" tile>
                     <v-img :src="recipeCol.img"></v-img>
                   </v-avatar>
                 </td>
-                <td v-on:click.stop="ViewRecipe(recipeCol.recipeID)">
+                <td >
                   {{ recipeCol.recipeName }}
                 </td>
 

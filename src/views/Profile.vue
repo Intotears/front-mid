@@ -41,13 +41,15 @@
             <tbody>
               <tr v-for="myRecipes in recipeProfile" :key="myRecipes.recipeID">
                 <td v-on:click.stop="ViewRecipe(myRecipes.recipeID)">
-                  <v-avatar class="ma-3" size="120" rounded>
+                  <v-avatar class="ma-3" size="200" rounded>
                     <v-img :src="myRecipes.img"></v-img>
                   </v-avatar>
-                  <span v-on:click.stop="ViewRecipe(myRecipes.recipeID)">{{
-                    myRecipes.recipeName
-                  }}</span>
                 </td>
+                <td>
+                  <p class="font-weight-regular text-h5 ">{{ myRecipes.recipeName }}</p>
+                  <p class="font-weight-regular text- ">{{ myRecipes.description }}</p>
+                </td>
+                <td></td>
               </tr>
             </tbody>
           </template>
