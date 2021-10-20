@@ -396,10 +396,10 @@
                       v-on="on"
                       @click="
                         saveMIngredient(),
-                        saveSIngredient(),
-                        saveFlavoring(),
-                        saveProcess(),
-                        saveFoodTag() 
+                          saveSIngredient(),
+                          saveFlavoring(),
+                          saveProcess(),
+                          saveFoodTag()
                       "
                     >
                       <v-icon> mdi-content-save </v-icon>
@@ -414,7 +414,11 @@
                       <v-icon> mdi-emoticon </v-icon></v-card-text
                     >
                     <v-card-actions>
-                      <v-btn color="primary" text @click="dialog = false, reloadPage()">
+                      <v-btn
+                        color="primary"
+                        text
+                        @click="(dialog = false), reloadPage()"
+                      >
                         Back
                       </v-btn>
                       <v-spacer></v-spacer>
@@ -790,9 +794,9 @@ export default {
     },
 
     //reload
-    reloadPage(){
+    reloadPage() {
       window.location.reload();
-    }
+    },
   },
 
   watch: {
@@ -814,6 +818,11 @@ export default {
         return v;
       });
     },
+
+    destroyed() {
+      window.location.reload();
+    },
+    
   },
 
   components: {
