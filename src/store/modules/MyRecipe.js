@@ -64,7 +64,7 @@ const myrecipes = {
     async loadUser({ commit }, userID) {
       await axios
         .get(`${process.env.VUE_APP_BACKEND}/api/find/UserInUserProfile/${userID}`)
-        .then((response) => {
+        .then((response) => { 
           commit("LOAD_USER", response.data);
           console.log("myrecipes LOAD_USER",response.data);
         })

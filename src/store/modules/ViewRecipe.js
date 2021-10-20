@@ -94,7 +94,7 @@ const viewRecipe = {
     },
     async loadFoodtag({ commit }, id) {
       await axios
-        .get(`${process.env.VUE_APP_BACKEND}/api/findAll/foodtag/` + id) 
+        .get(`${process.env.VUE_APP_BACKEND}/api/findAll/selectedFoodtag/` + id) 
         .then((response) => {
           commit("LOAD_FOODTAG", response.data);
           console.log("view loadFoodtag",response.data);

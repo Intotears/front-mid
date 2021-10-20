@@ -1,12 +1,9 @@
 <template>
   <div>
-
       <h3>Food tags:</h3>
       <span v-for="foodtag in thisFoodtags" :key="foodtag.rft_ID">
         {{foodtag.tagName}} 
       </span>
-     
-
   </div>
 </template>
 
@@ -16,7 +13,7 @@ import router from "@/router";
 export default {
   name: "Foodtag",
   created() {
-    this.$store.dispatch("viewRecipe/loadFoodtag",router.currentRoute.params.id);
+    this.$store.dispatch("viewRecipe/loadFoodtag", router.currentRoute.params.id);
   },
   computed:{
     thisFoodtags() {

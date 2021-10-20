@@ -10,12 +10,12 @@
           </v-avatar>
           <span v-if="detail.userID!=currentUser.userID" class="text-decoration-none" style="margin-left: -10px">
             <router-link :to="{ path: '/userProfile/' + detail.userID}" class="text-decoration-none black--text">         
-                {{ detail.user ? detail.user.userName : "-" }}
+                {{ detail.user ? detail.user.username : "-" }}
             </router-link>
           </span>
           <span v-else span class="text-decoration-none" style="margin-left: -10px">
             <router-link :to="{ path: '/profile/'}" class="text-decoration-none black--text">      
-                {{ detail.user ? detail.user.userName : "-" }}
+                {{ detail.user ? detail.user.username : "-" }}
             </router-link>
           </span>
           

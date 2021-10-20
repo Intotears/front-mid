@@ -3,7 +3,7 @@
     <h1>Catagory</h1>
     <v-sheet class="mx-auto" elevation="2" max-width="100%">
       <v-slide-group
-        v-model="model"
+        
         class="pa-4"
         active-class="success"
         show-arrows
