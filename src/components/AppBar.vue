@@ -8,8 +8,10 @@
         ></v-app-bar-nav-icon>
         <v-app-bar-title><h3 class="headline">Yum!</h3></v-app-bar-title>
         <v-spacer/>
-        <searching/>
-        <v-spacer />
+        <v-col  xs="12" sm="12" md="6" lg="6">
+          <searching />
+        </v-col>
+        <v-spacer/>
         <v-menu offset-y open-on-hover>
           <template v-slot:activator="{ on, attrs }">
             <v-btn text dark v-bind="attrs" v-on="on">
@@ -81,7 +83,7 @@
 </template>
 
 <script>
-import searching from './searching.vue';
+import searching from "./searching.vue";
 export default {
   components: { searching },
   name: "AppBar",
@@ -89,16 +91,21 @@ export default {
     drawer: false,
     navItems: [
       { title: "Home", icon: "mdi-home", route: "/" },
-      { title: "My recipes", icon: "mdi-book-open-variant", route: "/myRecipe" },
+      {
+        title: "My recipes",
+        icon: "mdi-book-open-variant",
+        route: "/myRecipe",
+      },
       { title: "Create Recipe", icon: "mdi-pencil", route: "/createRecipe" },
-      { title: "Collection", icon: "mdi-bookmark-multiple", route: "/collection" },
+      {
+        title: "Collection",
+        icon: "mdi-bookmark-multiple",
+        route: "/collection",
+      },
       { title: "Test", icon: "mdi-pencil", route: "/test" },
     ],
     userItems: [
-      { icon: "mdi-account",
-        title: "Profile",
-        route: "/profile",
-      },
+      { icon: "mdi-account", title: "Profile", route: "/profile" },
       { title: "Setting", icon: "mdi-cog" },
     ],
   }),
@@ -106,7 +113,6 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
-
   },
   methods: {
     logout() {

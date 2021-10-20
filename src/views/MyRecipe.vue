@@ -1,51 +1,59 @@
 <template>
   <v-container>
-    <h1 class="headline">This is my recipes</h1>
+    <h1>My recipes</h1>
     <div>
       <v-container>
-        <v-simple-table class="justify-space-around">
+        <v-simple-table align-self="center">
           <template v-slot:default>
-            <thead>
-              <tr>
-                <th>Recipe image</th>
-                <th>Recipe name</th>
-                <th class="has-text-centered">Actions</th>
-              </tr>
-            </thead>
             <tbody>
-              <tr v-for="myRecipes in recipe" :key="myRecipes.recipeID">
-                <td v-on:click.stop="ViewRecipe(myRecipes.recipeID)">
-                  <v-avatar class="ma-3" size="150" tile>
+              <tr
+                v-for="myRecipes in recipe"
+                :key="myRecipes.recipeID"
+                v-on:click.stop="ViewRecipe(myRecipes.recipeID)"
+              >
+                <td class="text-center">
+                  <v-avatar class="ma-3" size="200" tile>
                     <v-img :src="myRecipes.img"></v-img>
                   </v-avatar>
                 </td>
-                <td v-on:click.stop="ViewRecipe(myRecipes.recipeID)">
-                  {{ myRecipes.recipeName }}
+                <td class="">
+                  <p class="text-h5 font-weight-medium">
+                    {{ myRecipes.recipeName }}
+                  </p>
+                  <p class="text-subtitle-1 font-weight-regular ">
+                    {{ myRecipes.description }}
+                  </p>
                 </td>
-
                 <td class="text-left">
                   <v-btn
+                    elevation="2"
                     color="primary"
                     @click="EditRecipe(myRecipes.recipeID)"
                     class="margin-right:20p"
-                    >Edit
+                    icon
+                  >
+                    <v-icon>
+                      mdi-pencil
+                    </v-icon>
                   </v-btn>
                   &nbsp;
-                 
-                <v-btn
-                  elevation="2"
-                  color="error"
-                  dark
-                  @click="dialog = true; recipeIDToDelete = myRecipes.recipeID"
-                >
-                  Delete
-                </v-btn>
-           
+
+                  <v-btn
+                    elevation="2"
+                    color="error"
+                    dark
+                    @click="
+                      dialog = true;
+                      recipeIDToDelete = myRecipes.recipeID;
+                    "
+                    icon
+                  >
+                    <v-icon> mdi-delete</v-icon>
+                  </v-btn>
                 </td>
               </tr>
             </tbody>
             <v-dialog v-model="dialog" persistent max-width="290">
-              
               <v-card>
                 <v-card-title class="headline">
                   Are you sure to delete this recipe?
@@ -59,11 +67,7 @@
                     Cancel
                   </v-btn>
                   <v-spacer></v-spacer>
-                  <v-btn
-                    color="error"
-                    text
-                    @click="DeleteRecipe"
-                  >
+                  <v-btn color="error" text @click="DeleteRecipe">
                     Delete
                   </v-btn>
                 </v-card-actions>

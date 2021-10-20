@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Result of {{searchingWord}}</h1>
     <div v-for="searched in searchedRecipe" :key="searched.recipeID">
       <v-card
         class="mx-auto ma-5 elevation-5"

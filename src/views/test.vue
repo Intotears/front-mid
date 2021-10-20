@@ -1,111 +1,129 @@
 <template>
-  <div>
-    <v-container>
-      <h4>Main ingredient</h4>
-    </v-container>
-    <v-container class="ma-2">
-      <div id="Mainingredient" class="text-center">
-        <v-row
-          v-for="(mIngredient, i) in mIngredients"
-          :key="i"
-          align-content-center
-          num = i
-        >
-          <v-col cols="1" lg="1" md="1" sm="1">
-            <v-text-field readonly v-text="num = i+1"></v-text-field>
-          </v-col>
-          <v-col cols="12" lg="4" md="4" sm="3">
-            <v-text-field
-              v-model="mIngredient.ingredientName"
-              label="วัตถุดิบหลัก"
-            >
-              </v-text-field
-            >
-          </v-col>
+  <v-container>
+    <h1>My recipes</h1>
+    <div>
+      <v-container>
+        <v-simple-table align-self="center">
+          <template v-slot:default>
+            <tbody>
+              <tr
+                v-for="myRecipes in recipe"
+                :key="myRecipes.recipeID"
+                v-on:click.stop="ViewRecipe(myRecipes.recipeID)"
+              >
+                <td class="text-right">
+                  <v-avatar class="ma-3" size="200" tile>
+                    <v-img :src="myRecipes.img"></v-img>
+                  </v-avatar>
+                </td>
+                <td class="">
+                  <p class="text-h5 font-weight-medium">
+                    {{ myRecipes.recipeName }}
+                  </p>
+                  <p class="text-subtitle-1 font-weight-regular ">
+                    {{ myRecipes.description }}
+                  </p>
+                </td>
+                <td class="text-left">
+                  <v-btn
+                    elevation="2"
+                    color="primary"
+                    @click="EditRecipe(myRecipes.recipeID)"
+                    class="margin-right:20p"
+                    icon
+                  >
+                    <v-icon>
+                      mdi-pencil
+                    </v-icon>
+                  </v-btn>
+                  &nbsp;
 
-          <v-col cols="12" lg="3" md="3" sm="2">
-            <v-text-field
-              v-model="mIngredient.quantityValue"
-              label="ปริมาณ"
-            ></v-text-field>
-          </v-col>
-
-          <v-col cols="12" lg="2" md="2" sm="2">
-            <v-text-field
-              v-model="mIngredient.calories"
-              label="Calories"
-              readonly
-            ></v-text-field>
-          </v-col>
-          <v-col cols="1" lg="1" md="1" sm="1">
-            <v-btn @click="remove(i ,mIngredient.re_IngredientID)" class="error"
-              ><v-icon>mdi-delete</v-icon>delete</v-btn
-            >
-          </v-col>
-        </v-row>
-        <br>
-      </div>
-      <!-- <div class="text-center">
-        <v-btn @click="add" width="100px" rounded class="primary" 
-          ><v-icon>mdi-plus </v-icon>add</v-btn
-        >
-      </div> -->
-    </v-container>
-    <v-btn elevation="2" color="success" fab dark @click="DeleteIngredients()">
-            <v-icon> mdi-content-save </v-icon>
-    </v-btn>
-  </div>
+                  <v-btn
+                    elevation="2"
+                    color="error"
+                    dark
+                    @click="
+                      dialog = true;
+                      recipeIDToDelete = myRecipes.recipeID;
+                    "
+                    icon
+                  >
+                    <v-icon> mdi-delete</v-icon>
+                  </v-btn>
+                </td>
+              </tr>
+            </tbody>
+            <v-dialog v-model="dialog" persistent max-width="290">
+              <v-card>
+                <v-card-title class="headline">
+                  Are you sure to delete this recipe?
+                </v-card-title>
+                <v-card-text
+                  >If you delete it, you cannot restore this recipe.
+                  <v-icon> mdi-emoticon </v-icon></v-card-text
+                >
+                <v-card-actions>
+                  <v-btn color="green darken-1" text @click="dialog = false">
+                    Cancel
+                  </v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn color="error" text @click="DeleteRecipe">
+                    Delete
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </template>
+        </v-simple-table>
+      </v-container>
+    </div>
+  </v-container>
 </template>
 
 <script>
-import axios from 'axios'
-import router from "@/router";
+import { mapState } from "vuex";
 
 export default {
-  name: "test",
+  name: "MyRecipe",
   data() {
     return {
-      deleteID:[],
-      mIngredients:[],
-    }
+      dialog: false,
+      // activator: null,
+      recipeIDToDelete: "",
+    };
   },
-  computed:{ 
-    
+  computed: {
+    ...mapState("myrecipes", ["recipe"]),
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
   },
-  created() { //action load ข้อมูล
-   this.loadMainIngre();
+  created() {
+    console.log("userID ", this.currentUser.userID);
+    this.$store.dispatch("myrecipes/loadMyRecipes", this.currentUser.userID);
+    this.$store.dispatch("myrecipes/loadIngredient");
+    this.$store.dispatch("myrecipes/loadProcess");
   },
   methods: {
-    remove(index, id) {
-      if (id != null) {
-        this.deleteID.push({
-          re_IngredientID: id,
-        });
-      }
-      this.mIngredients.splice(index, 1);      
+    EditRecipe(id) {
+      this.$router.push({ path: `/editRecipe/${id}` });
     },
-    async loadMainIngre() {
-      await axios
-        .get(`${process.env.VUE_APP_BACKEND}/api/find/MainIngre/` + router.currentRoute.params.id)
-        .then((response) => {
-          this.mIngredients = response.data;
-          console.log("loadMainIngre",response.data);
-        })
-        .catch((error) => console.log(error));
+    DeleteRecipe() {
+      console.log("recipeIDToDelete ", this.recipeIDToDelete);
+      this.$store.dispatch("myrecipes/DeleteIngredient", this.recipeIDToDelete);
+      this.$store.dispatch("myrecipes/DeleteProcess", this.recipeIDToDelete);
+      this.$store.dispatch("myrecipes/DeleteDetail", this.recipeIDToDelete);
+      this.dialog = false;
     },
-    async DeleteIngredients() {
-        console.log("Before delete ID",this.deleteID);
-        await axios
-        .delete(`${process.env.VUE_APP_BACKEND}/api/ingredient/deleteByRecipeIngreID` , this.deleteID)
-        .then((response) => {
-          console.log("Delete ingre",response.data);
-          console.log("After delete ID",this.deleteID);
-        })
-        .catch((error) => console.log(error));   
+    ViewRecipe(id) {
+      this.$store.dispatch("viewRecipe/storeID", id),
+        this.$router.push({ path: `/viewRecipe/${id}` });
     },
   },
+  mounted() {
+    if (!this.currentUser) {
+      this.$router.push("/login");
+    }
+  },
 };
-
 </script>
-
-<style></style>
