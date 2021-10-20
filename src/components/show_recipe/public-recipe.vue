@@ -9,7 +9,7 @@
         lg="4"
         v-for="all in allRecipes"
         :key="all.recipeID"
-        @click="ViewRecipe(all.recipeID)"
+        
       >
         <v-hover v-slot="{ hover }" open-delay="100">
           <v-card
@@ -75,7 +75,7 @@
                 </v-row>
               </v-list-item>
             </v-card-actions>
-            <v-img :src="all.img" height="250px"></v-img>
+            <v-img @click="ViewRecipe(all.recipeID)" :src="all.img" height="250px"></v-img>
             <v-card-title class="text-h5">
               <span>{{ all.recipeName }}</span>
             </v-card-title>

@@ -17,10 +17,10 @@
                   </v-avatar>
                 </td>
                 <td class="">
-                  <p class="text-h5 text--primary">
+                  <p class="text-h5 font-weight-medium">
                     {{ myRecipes.recipeName }}
                   </p>
-                  <p class="text-h6 font-weight-medium ">
+                  <p class="text-subtitle-1 font-weight-regular ">
                     {{ myRecipes.description }}
                   </p>
                 </td>

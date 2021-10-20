@@ -39,15 +39,23 @@
           <template v-slot:default>
             <v-divider></v-divider>
             <tbody>
-              <tr v-for="myRecipes in recipeProfile" :key="myRecipes.recipeID">
-                <td v-on:click.stop="ViewRecipe(myRecipes.recipeID)">
+              <tr
+                v-for="myRecipes in recipeProfile"
+                :key="myRecipes.recipeID"
+                v-on:click.stop="ViewRecipe(myRecipes.recipeID)"
+              >
+                <td class="text-center">
                   <v-avatar class="ma-3" size="200" rounded>
                     <v-img :src="myRecipes.img"></v-img>
                   </v-avatar>
                 </td>
-                <td>
-                  <p class="font-weight-regular text-h5 ">{{ myRecipes.recipeName }}</p>
-                  <p class="font-weight-regular text- ">{{ myRecipes.description }}</p>
+                <td class="text-left">
+                  <p class="font-weight-regular text-h5 ">
+                    {{ myRecipes.recipeName }}
+                  </p>
+                  <p class="font-weight-regular text- ">
+                    {{ myRecipes.description }}
+                  </p>
                 </td>
                 <td></td>
               </tr>

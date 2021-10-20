@@ -5,13 +5,6 @@
       <v-container>
         <v-simple-table class="justify-space-around">
           <template v-slot:default>
-            <thead>
-              <tr>
-                <th>Recipe image</th>
-                <th>Recipe name</th>
-                <th class="has-text-centered">Actions</th>
-              </tr>
-            </thead>
             <tbody
               v-for="collection in collectionSam"
               :key="collection.collectionID"
@@ -19,14 +12,23 @@
               <tr
                 v-for="recipeCol in collection.recipes"
                 :key="recipeCol.recipeID"
+                v-on:click.stop="ViewRecipe(recipeCol.recipeID)"
               >
-                <td v-on:click.stop="ViewRecipe(recipeCol.recipeID)">
+                <td class="text-center">
                   <v-avatar class="ma-3" size="200" tile>
                     <v-img :src="recipeCol.img"></v-img>
                   </v-avatar>
                 </td>
-                <td >
-                  {{ recipeCol.recipeName }}
+                <td class="text-left">
+                  <p class="text-h5 font-weight-medium">
+                    {{ recipeCol.recipeName }}
+                  </p>
+                  <p class="text-h5 font-weight-medium">
+                    By {{ recipeCol.username }}
+                  </p>
+                  <p class="text-subtitle-1 font-weight-regular ">
+                    {{ recipeCol.description ? recipeCol.description  : '' }}
+                  </p>
                 </td>
 
                 <td>
