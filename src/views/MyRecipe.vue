@@ -6,24 +6,22 @@
         <v-simple-table align-self="center">
           <template v-slot:default>
             <tbody>
-              <tr
-                v-for="myRecipes in recipe"
-                :key="myRecipes.recipeID"
-                v-on:click.stop="ViewRecipe(myRecipes.recipeID)"
-              >
-                <td class="text-center">
-                  <v-avatar class="ma-3" size="200" tile>
-                    <v-img :src="myRecipes.img"></v-img>
-                  </v-avatar>
-                </td>
-                <td class="">
-                  <p class="text-h5 font-weight-medium">
-                    {{ myRecipes.recipeName }}
-                  </p>
-                  <p class="text-subtitle-1 font-weight-regular ">
-                    {{ myRecipes.description }}
-                  </p>
-                </td>
+              <tr v-for="myRecipes in recipe" :key="myRecipes.recipeID">
+                <div v-on:click.stop="ViewRecipe(myRecipes.recipeID)">
+                  <td class="text-center">
+                    <v-avatar class="ma-3" size="200" tile>
+                      <v-img :src="myRecipes.img"></v-img>
+                    </v-avatar>
+                  </td>
+                  <td class="">
+                    <p class="text-h5 font-weight-medium">
+                      {{ myRecipes.recipeName }}
+                    </p>
+                    <p class="text-subtitle-1 font-weight-regular">
+                      {{ myRecipes.description }}
+                    </p>
+                  </td>
+                </div>
                 <td class="text-left">
                   <v-btn
                     elevation="2"
@@ -32,9 +30,7 @@
                     class="margin-right:20p"
                     icon
                   >
-                    <v-icon>
-                      mdi-pencil
-                    </v-icon>
+                    <v-icon> mdi-pencil </v-icon>
                   </v-btn>
                   &nbsp;
 
