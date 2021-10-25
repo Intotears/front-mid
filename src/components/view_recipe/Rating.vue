@@ -4,7 +4,7 @@
       <v-rating
         :items="Stars"
         item-text="Stars"
-        v-model="rating"
+        v-model="rate"
         :rules="Rules"
         icon-label="custom icon label text {0} of {1}"
       ></v-rating>
@@ -22,6 +22,9 @@
           @click="addRating(), test()"
         >
           <v-icon> mdi-heart </v-icon>
+        </v-btn>
+        <v-btn @click="updateRating()">
+          
         </v-btn>
       </template>
       <v-card>
@@ -81,7 +84,7 @@ export default {
         { value: 1 },
       ],
       Rules: [(v) => !!v || "Recipe name cannot be null"],
-      rating: "",
+      rate: "",
       // temp_value: null,
       dialog: false,
       activator: null,
@@ -101,7 +104,7 @@ export default {
   methods: {
     addRating() {
       let rating = {
-        rate: this.rating,
+        rate: this.rate,
       };
       this.$store.dispatch("viewRecipe/storeID", this.$route.params.id),
         this.$store.dispatch("viewRecipe/StoreUserID", this.currentUser.userID),
@@ -118,13 +121,41 @@ export default {
     //   this.temp_value = star;
     // },
 
+    updateRating() {
+      //เหมือนมันไม่รู้ว่าจะอัพตรงไหน
+      const thisUserRating = this.thisUserRating;
+      for (var i in thisUserRating) {
+
+        if (thisUserRating[i].userID == this.currentUser.userID ) {
+      console.log("editRating", thisUserRating[i]);
+      this.$store.dispatch(
+        "viewRecipe/StoreUser_RatingID",
+        thisUserRating[i].ur_ID
+      ),
+        this.$store.dispatch("viewRecipe/EditRating", this.rate);
+      console.log("Rate Update:", this.rate);
+      }
+      }
+    },
+
     saveRating() {
       //conditionยังไม่ผ่านไม่เข้า
 
       const thisUserRating = this.thisUserRating;
       for (var i in thisUserRating) {
-        if (thisUserRating[i].ur_ID != null) {
-          if (thisUserRating[i].userID != this.currentUser.userID) {
+        if (thisUserRating[i].userID != this.currentUser.userID) {
+          if (thisUserRating[i].ur_ID != null ) {
+            console.log("editRating", thisUserRating[i]);
+            this.$store.dispatch(
+              "viewRecipe/StoreUser_RatingID",
+              thisUserRating[i].ur_ID
+            ),
+              this.$store.dispatch("viewRecipe/EditRating", this.rating);
+            console.log("Rate Update:", this.rating);
+            console.log("UR ID:", thisUserRating[i].ur_ID);
+          } else {
+            
+
             let rating = {
               rate: this.rating,
             };
@@ -135,15 +166,6 @@ export default {
               ),
               this.$store.dispatch("viewRecipe/GiveRating", rating);
             console.log("เพิ่มเรท: ", rating);
-          } else {
-            console.log("editRating", thisUserRating[i]);
-            this.$store.dispatch(
-              "viewRecipe/StoreUser_RatingID",
-              thisUserRating[i].ur_ID
-            ),
-              this.$store.dispatch("viewRecipe/EditRating", this.rating);
-            console.log("Rate Update:", this.rating);
-            console.log("UR ID:", thisUserRating[i].ur_ID);
           }
         }
       }
