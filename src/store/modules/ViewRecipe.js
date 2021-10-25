@@ -13,8 +13,6 @@ const viewRecipe = {
     recipesfoodtag: [],
     rating: "",
     userID: "",
-    ratingStars: [], //แสดงข้อมูลเพื่อคำนวน
-    showRate: [], //โหลดข้อมูลAvgจากตารางrating
     user_rating: [], //เรียกข้อมูลจากตารางuser_rating
     ur_ID: "",
   },
@@ -55,18 +53,9 @@ const viewRecipe = {
     StoreUserId: (state, userID) => {
       state.userID = userID;
     },
-    LOAD_ratingStars: (state, ratingStars) => {
-      state.ratingStars = ratingStars;
-    },
     LOAD_user_rating: (state, user_rating) => {
       state.user_rating = user_rating;
     },
-    LOAD_showRate: (state, showRate) => {
-      state.showRate = showRate;
-    },
-    // LOAD_RATING:(state, ratingStars)=>{
-    //   state.ratingStars = ratingStars;
-    // }
     EDIT_Rating: (state, user_rating) => {
       state.user_rating.forEach((r) => {
         if (
@@ -123,25 +112,6 @@ const viewRecipe = {
           console.log("SET_RATING ", response.data);
         })
         .catch((error) => console.error(error.response.data));
-    },
-    //showAvgRate ตัวคำนวน
-    async loadRatingByID({ commit }, id) {
-      await axios
-        .get(`${process.env.VUE_APP_BACKEND}/api/find/allRating/${id}`)
-        .then((response) => {
-          commit("LOAD_ratingStars", response.data);
-        })
-        .catch((error) => console.log(error));
-    },
-
-    async loadAVGRating({ commit }, id) {
-      await axios
-        .get(`${process.env.VUE_APP_BACKEND}/api/find/rating/${id}`)
-        .then((response) => {
-          commit("LOAD_showRate", response.data);
-          console.log("showRate", response.data);
-        })
-        .catch((error) => console.log(error));
     },
 
     async loadUserRating({ commit }, id) {

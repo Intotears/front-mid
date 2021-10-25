@@ -19,7 +19,7 @@
           color="pink"
           v-bind="attrs"
           v-on="on"
-          @click="saveRating(),test()"
+          @click="addRating(), test()"
         >
           <v-icon> mdi-heart </v-icon>
         </v-btn>
@@ -64,7 +64,6 @@
 //import Vue from "vue";
 //import { mapState } from "vuex";
 export default {
-
   name: "stars-rating",
   components: {},
   props: {
@@ -88,8 +87,8 @@ export default {
       activator: null,
     };
   },
-  created(){
-    this.$store.dispatch("viewRecipe/loadUserRating",this.$route.params.id);
+  created() {
+    this.$store.dispatch("viewRecipe/loadUserRating", this.$route.params.id);
   },
   computed: {
     currentUser() {
@@ -102,17 +101,14 @@ export default {
   methods: {
     addRating() {
       let rating = {
-          rate: this.rating,
-        };
-        this.$store.dispatch("viewRecipe/storeID", this.$route.params.id),
-          this.$store.dispatch(
-            "viewRecipe/StoreUserID",
-            this.currentUser.userID
-          ),
-          this.$store.dispatch("viewRecipe/GiveRating", rating);
-          console.log("เพิ่มเรท" ,rating)
+        rate: this.rating,
+      };
+      this.$store.dispatch("viewRecipe/storeID", this.$route.params.id),
+        this.$store.dispatch("viewRecipe/StoreUserID", this.currentUser.userID),
+        this.$store.dispatch("viewRecipe/GiveRating", rating);
+      console.log("เพิ่มเรท", rating);
     },
-    test(){
+    test() {
       console.log("test", this.thisUserRating);
       console.log("test2", this.rating);
     },
@@ -124,31 +120,34 @@ export default {
 
     saveRating() {
       //conditionยังไม่ผ่านไม่เข้า
-      
+
       const thisUserRating = this.thisUserRating;
       for (var i in thisUserRating) {
-        console.log("Do this");
-      if (thisUserRating[i].userID == this.currentUser.userID) {
-        console.log("editRating", thisUserRating[i]);
-          this.$store.dispatch("viewRecipe/StoreUser_RatingID",thisUserRating[i].ur_ID),
-          this.$store.dispatch("viewRecipe/EditRating", this.rating);
-      } else {
-        let rating = {
-          rate: this.rating,
-        };
-        this.$store.dispatch("viewRecipe/storeID", this.$route.params.id),
-          this.$store.dispatch(
-            "viewRecipe/StoreUserID",
-            this.currentUser.userID
-          ),
-          this.$store.dispatch("viewRecipe/GiveRating", rating);
-        
+        if (thisUserRating[i].ur_ID != null) {
+          if (thisUserRating[i].userID != this.currentUser.userID) {
+            let rating = {
+              rate: this.rating,
+            };
+            this.$store.dispatch("viewRecipe/storeID", this.$route.params.id),
+              this.$store.dispatch(
+                "viewRecipe/StoreUserID",
+                this.currentUser.userID
+              ),
+              this.$store.dispatch("viewRecipe/GiveRating", rating);
+            console.log("เพิ่มเรท: ", rating);
+          } else {
+            console.log("editRating", thisUserRating[i]);
+            this.$store.dispatch(
+              "viewRecipe/StoreUser_RatingID",
+              thisUserRating[i].ur_ID
+            ),
+              this.$store.dispatch("viewRecipe/EditRating", this.rating);
+            console.log("Rate Update:", this.rating);
+            console.log("UR ID:", thisUserRating[i].ur_ID);
+          }
+        }
       }
-      
-      }
-
     },
-    
   },
 };
 </script>
