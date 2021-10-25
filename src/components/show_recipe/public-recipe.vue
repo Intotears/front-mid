@@ -50,7 +50,7 @@
                 </v-list-item-content>
 
                 <v-row align="center" justify="end">
-                  <span class="text-caption"> ({{ rating }}) </span>
+                  <span class="text-caption"> ({{ ratingStars }}) </span>
                   <v-rating
                     v-model="rating"
                     background-color="white"
@@ -104,6 +104,7 @@ export default {
     ...mapState("allrecipes", ["allRecipes"]),
     // ...mapState("allrecipes", ["rating"]),
     ...mapState("mycollection", ["recipeCollection"]),
+    ...mapState("viewRecipe",["ratingStars"]),
     thisRating() {
       return this.allRecipes.find((v) => v.recipeID == this.rating.recipeID);
     },
