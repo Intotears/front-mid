@@ -102,10 +102,15 @@ export default {
   methods: {
     addRating() {
       let rating = {
-        rate: this.rating,
-      };
-      this.$store.dispatch("viewRecipe/StoreUserID", this.currentUser.userID);
-      this.$store.dispatch("viewRecipe/GiveRating", rating);
+          rate: this.rating,
+        };
+        this.$store.dispatch("viewRecipe/storeID", this.$route.params.id),
+          this.$store.dispatch(
+            "viewRecipe/StoreUserID",
+            this.currentUser.userID
+          ),
+          this.$store.dispatch("viewRecipe/GiveRating", rating);
+          console.log("เพิ่มเรท" ,rating)
     },
     test(){
       console.log("test", this.thisUserRating);
@@ -137,7 +142,7 @@ export default {
             this.currentUser.userID
           ),
           this.$store.dispatch("viewRecipe/GiveRating", rating);
-        console.log("ตรงนี้เป็นส่วนเพิ่มเรท", thisUserRating[i]);
+        
       }
       
       }
