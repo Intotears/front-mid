@@ -1,70 +1,74 @@
 <template>
   <v-container>
-    <h1 class="headline">Collection</h1>
+    <p class="text-h3 font-weight-medium">Collection</p>
     <div>
       <v-container>
-        <v-simple-table class="justify-space-around">
-          <template v-slot:default>
-            <tbody
-              v-for="collection in collectionSam"
-              :key="collection.collectionID"
-            >
-              <tr
-                v-for="recipeCol in collection.recipes"
-                :key="recipeCol.recipeID"
-                v-on:click.stop="ViewRecipe(recipeCol.recipeID)"
+        <v-card>
+          <v-simple-table align-self="center" style="cursor: pointer;">
+            <template v-slot:default>
+              <tbody
+                v-for="collection in collectionSam"
+                :key="collection.collectionID"
               >
-                <td class="text-center">
-                  <v-avatar class="ma-3" size="200" tile>
-                    <v-img :src="recipeCol.img"></v-img>
-                  </v-avatar>
-                </td>
-                <td class="text-left">
-                  <p class="text-h5 font-weight-medium">
-                    {{ recipeCol.recipeName }}
-                  </p>
-                  <p class="text-h5 font-weight-medium">
-                    By {{ recipeCol.username }}
-                  </p>
-                  <p class="text-subtitle-1 font-weight-regular ">
-                    {{ recipeCol.description ? recipeCol.description  : '' }}
-                  </p>
-                </td>
-
-                <td>
-                  <v-btn
-                    elevation="2"
-                    color="error"
-                    dark
-                    @click="
-                      dialog = true;
-                      recipeIDToRemove = recipeCol ? recipeCol.recipeID : '';
-                    "
+                <tr
+                  v-for="recipeCol in collection.recipes"
+                  :key="recipeCol.recipeID"
+                >
+                  <td
+                    class="text-right"
+                    v-on:click.stop="ViewRecipe(recipeCol.recipeID)"
                   >
-                    Remove
-                  </v-btn>
-                </td>
-              </tr>
-            </tbody>
-            <v-dialog v-model="dialog" persistent max-width="290">
-              <v-card>
-                <v-card-title class="headline">
-                  Are you sure to remove this recipe from the collection?
-                </v-card-title>
+                    <v-avatar class="ma-3" size="200" tile>
+                      <v-img :src="recipeCol.img"></v-img>
+                    </v-avatar>
+                  </td>
+                  <td v-on:click.stop="ViewRecipe(recipeCol.recipeID)">
+                    <p class="text-h5 font-weight-medium">
+                      {{ recipeCol.recipeName }}
+                    </p>
+                    <p class="text-h5 font-weight-medium">
+                      By {{ collection.user.username }}
+                    </p>
+                    <p class="text-subtitle-1 font-weight-regular ">
+                      {{ recipeCol.description ? recipeCol.description : "" }}
+                    </p>
+                  </td>
 
-                <v-card-actions>
-                  <v-btn color="green darken-1" text @click="dialog = false">
-                    Cancel
-                  </v-btn>
-                  <v-spacer></v-spacer>
-                  <v-btn color="error" text @click="removeFromCollection">
-                    Remove
-                  </v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </template>
-        </v-simple-table>
+                  <td>
+                    <v-btn
+                      elevation="2"
+                      color="error"
+                      dark
+                      @click="
+                        dialog = true;
+                        recipeIDToRemove = recipeCol ? recipeCol.recipeID : '';
+                      "
+                    >
+                      Remove
+                    </v-btn>
+                  </td>
+                </tr>
+              </tbody>
+              <v-dialog v-model="dialog" persistent max-width="290">
+                <v-card>
+                  <v-card-title class="headline">
+                    Are you sure to remove this recipe from the collection?
+                  </v-card-title>
+
+                  <v-card-actions>
+                    <v-btn color="green darken-1" text @click="dialog = false">
+                      Cancel
+                    </v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn color="error" text @click="removeFromCollection">
+                      Remove
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
+            </template>
+          </v-simple-table>
+        </v-card>
       </v-container>
     </div>
   </v-container>

@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <h1>Result of {{searchingWord}}</h1>
+  <v-container>
+    <p class="text-h3 font-weight-medium">
+      Result of <v-icon x-large color="black">mdi-magnify</v-icon>
+    </p>
     <div v-for="searched in searchedRecipe" :key="searched.recipeID">
       <v-card
         class="mx-auto ma-5 elevation-5"
-        color="purple"
+        color="orange"
         dark
         style="max-width: 550px;"
       >
@@ -37,10 +39,10 @@
         <v-row justify="space-between">
           <v-col cols="4">
             <v-img
-              class="shrink ma-2"
-              height="150px"
+              class="ma-2"
+              height="200"
               :src="searched.img"
-              style="flex-basis: 150px"
+              style="flex-basis: 200px"
               tile
             ></v-img>
           </v-col>
@@ -61,43 +63,58 @@
                   :to="{ path: '/userProfile/' + searched.userID }"
                   class="text-decoration-none white--text"
                 >
-                  By {{ searched.user ? searched.user.userName : "-" }}
+                  By {{ searched.user ? searched.user.username : "-" }}
                 </router-link>
                 <router-link
                   v-else
                   :to="{ path: '/profile/' }"
                   class="text-decoration-none white--text"
                 >
-                  By {{ searched.user ? searched.user.userName : "-" }}
+                  By {{ searched.user ? searched.user.username : "-" }}
                 </router-link>
               </p>
             </v-card-subtitle>
             <!-- </v-hover> -->
             <v-card-text>
               <p>{{ searched.description }}</p>
+              <span
+                v-for="foodtag in searched.recipeFoodtags"
+                :key="foodtag.rtf_ID"
+              >
+                <v-chip outlined color="white"> #{{ foodtag.tagName }} </v-chip>
+              </span>
             </v-card-text>
           </v-col>
         </v-row>
       </v-card>
     </div>
-  </div>
+  </v-container>
 </template>
 
 <script>
 import { mapState } from "vuex";
 export default {
   name: "Result",
-  watch: {
+  data() {
+    return {
     
+    };
+  },
+  watch: {
+    search() {
+      if (this.search !== "") {
+        this.searchWord = this.search;
+      }
+    },
   },
   methods: {},
   computed: {
     ...mapState("searchRecipes", ["searchedRecipe"]),
+
     currentUser() {
       return this.$store.state.auth.user;
     },
   },
-  
 };
 </script>
 

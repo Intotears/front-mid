@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Homepage</h1>
+    <p class="text-h2 font-weight-medium">Homepage</p>
     <v-row cols-12>
       <v-col
         xs="12"
@@ -37,14 +37,14 @@
                       :to="{ path: '/userProfile/' + all.userID }"
                       class="text-decoration-none white--text"
                     >
-                      {{ all.user ? all.user.userName : "-" }}
+                      {{ all.user ? all.user.username : "-" }}
                     </router-link>
                     <router-link
                       v-else
                       :to="{ path: '/profile/' }"
                       class="text-decoration-none white--text"
                     >
-                      {{ all.user ? all.user.userName : "-" }}
+                      {{ all.user ? all.user.username : "-" }}
                     </router-link></v-list-item-title
                   >
                 </v-list-item-content>

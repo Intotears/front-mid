@@ -7,11 +7,11 @@
           dark
         ></v-app-bar-nav-icon>
         <v-app-bar-title><h3 class="headline">Yum!</h3></v-app-bar-title>
-        <v-spacer/>
-        <v-col  xs="12" sm="12" md="6" lg="6">
+        <v-spacer />
+        <v-col xs="12" sm="12" md="6" lg="6">
           <searching />
         </v-col>
-        <v-spacer/>
+        <v-spacer />
         <v-menu offset-y open-on-hover>
           <template v-slot:activator="{ on, attrs }">
             <v-btn text dark v-bind="attrs" v-on="on">
@@ -26,6 +26,7 @@
               v-for="userItem in userItems"
               :key="userItem.title"
               :to="userItem.route"
+            
             >
               <v-list-item-icon>
                 <v-icon>{{ userItem.icon }}</v-icon>
@@ -115,6 +116,7 @@ export default {
     },
   },
   methods: {
+
     logout() {
       this.$store.dispatch("auth/logout");
       this.$router.push("/login");

@@ -9,32 +9,29 @@
           v-for="(mIngredient, i) in MIngredients"
           :key="i"
           align-content-center
-          num = i
+          num="i"
         >
           <v-col cols="1" lg="1" md="1" sm="1">
-            <p v-text="num = i+1"></p>
+            <p v-text="(num = i + 1)"></p>
           </v-col>
           <v-col cols="12" lg="4" md="4" sm="3">
-            <p class="font-weight-regular">{{mIngredient.ingredientName}}</p>
+            <p class="font-weight-regular">{{ mIngredient.ingredientName }}</p>
           </v-col>
 
           <v-col cols="12" lg="3" md="3" sm="2">
-             <p class="font-weight-regular">{{mIngredient.quantityValue}}</p>
+            <p class="font-weight-regular">{{ mIngredient.quantityValue }}</p>
           </v-col>
 
-          <v-col cols="12" lg="2" md="2" sm="2">
-            <p class="font-weight-regular">Calories: {{mIngredient.calories}}</p>
-          </v-col>
+          <v-col cols="12" lg="2" md="2" sm="2"> </v-col>
         </v-row>
-        <br>
+        <br />
       </div>
     </v-container>
   </div>
 </template>
 
 <script>
-
-import router from '@/router'
+import router from "@/router";
 import { mapState } from "vuex";
 
 export default {
@@ -61,10 +58,13 @@ export default {
     },
   },
   computed: {
-    ...mapState('viewRecipe', ['MIngredients']),
+    ...mapState("viewRecipe", ["MIngredients"]),
   },
   created() {
-    this.$store.dispatch("viewRecipe/loadMainIngre",router.currentRoute.params.id);
+    this.$store.dispatch(
+      "viewRecipe/loadMainIngre",
+      router.currentRoute.params.id
+    );
   },
 };
 </script>
