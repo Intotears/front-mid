@@ -51,17 +51,9 @@
 
                 <v-row align="center" justify="end">
                   <span class="text-caption"> ({{ all.rating.ratingStars }}) </span>
-                  <v-rating
-                    v-model="rating"
-                    background-color="white"
-                    color="red darken-4"
-                    dense
-                    half-increments
-                    size="18"
-                    icon
-                    readonly
-                  ></v-rating>
-                  <span class="mr-1">·</span>
+                  <span class="mr-1"></span>
+                  <v-icon color="red darken-4" size="18">mdi-star</v-icon>
+                  <span class="mr-1"></span>
                   <v-btn icon @click="addToCollection(all.recipeID)">
                     <v-icon>mdi-bookmark-outline</v-icon>
                   </v-btn>
@@ -110,7 +102,7 @@ export default {
   },
   created() {
     this.$store.dispatch("allrecipes/loadAllRecipes");
-    this.$store.dispatch("allrecipes/loadRating");
+    
   },
   methods: {
     ShowRating() {
