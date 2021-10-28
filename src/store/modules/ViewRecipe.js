@@ -15,7 +15,7 @@ const viewRecipe = {
     userID: "",
     user_rating: [], //เรียกข้อมูลจากตารางuser_rating
     user_ratingID: "",
-    // user_rateUp : [],
+    user_rateUp : [],
   },
   getters: {
     editDetail: (state) => state.recipe,
@@ -57,9 +57,9 @@ const viewRecipe = {
     LOAD_user_rating: (state, user_rating) => {
       state.user_rating = user_rating;
     },
-    // LOAD_user_rateUp: (state, user_rateUp) => {
-    //   state.user_rateUp = user_rateUp;
-    // },
+    LOAD_user_rateUp: (state, user_rateUp) => {
+      state.user_rateUp = user_rateUp;
+    },
     EDIT_user_rating: (state, user_rating) => {
       state.user_rating.forEach((r) => {
         if (r.ur_ID == user_rating.ur_ID) {
@@ -126,19 +126,20 @@ const viewRecipe = {
       
     },
     //โหลดเรทติ้งเฉพาะของคนนั้นหน้านั้นเพื่อแสดงเรทที่ให้ไปแล้ว
-    // async loadUserRatingUpdate({ commit }, user_ratingID) {
-    //   console.log("loadUserRatingUpdate ");
-    //   await axios
-    //     .get(
-    //       `${process.env.VUE_APP_BACKEND}/api/find/findRatingByUser_RatingID/${user_ratingID}`
-    //     )
-    //     .then((response) => {
-    //       commit("LOAD_user_rateUp", response.data);
-    //       console.log("UserRatingUpdate", response.data);
-    //     })
-    //     .catch((error) => console.log(error));
+    async loadUserRatingUpdate({ commit,getters }, id) {
+      const userID = getters.findUserID;
+      console.log("loadUserRatingUpdate ", userID);
+      await axios
+        .get(
+          `${process.env.VUE_APP_BACKEND}/api/find/findRatingByUserRecipeID/${id}/${userID}`
+        )
+        .then((response) => {
+          commit("LOAD_user_rateUp", response.data);
+          console.log("===========================UserRatingUpdate==========================", response.data);
+        })
+        .catch((error) => console.log(error));
       
-    // },
+    },
 
     async loadDetailByID({ commit }, id) {
       await axios
