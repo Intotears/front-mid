@@ -27,12 +27,7 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="2" sm="2">
-            <v-text-field
-              v-model="flavoring.calories"
-              label="Calories"
-              readonly
-            ></v-text-field>
-          </v-col>
+            
           <v-col cols="1" sm="1">
             <v-btn @click="remove3(i)" class="error"
               ><v-icon>mdi-delete</v-icon>delete</v-btn

@@ -18,7 +18,7 @@
     <div>
       <v-container>
         <h3>สูตรอาหารของ {{ User.username }}</h3>
-        <v-simple-table class="justify-space-around">
+        <v-simple-table  class="justify-center"  style="cursor: pointer;">
           <template v-slot:default>
             <v-divider></v-divider>
             <tbody>

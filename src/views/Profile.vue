@@ -1,41 +1,36 @@
 <template>
   <v-container>
     <div v-if="this.canEdit == false">
-      <v-row>
-        <v-col cols="12" xs="2" sm="3" md="3" lg="4"> <p>ใส่รูป</p> </v-col>
-        <v-col cols="12" xs="10" sm="9" md="9" lg="8">
-          <h3>
-            <strong>{{ currentUser.username }}</strong> Profile
-            <v-btn @click="statusEditFunc()" icon>
-              <v-icon> mdi-pencil</v-icon>
-            </v-btn>
-          </h3>
-          <p>
-            <strong>Name: {{ currentUser.name }} </strong>
-          </p>
+       <v-container>
+    <v-card color="orange" dark>
 
-          <!-- <p>
-            <strong>Token:</strong>
-            {{ currentUser.accessToken.substring(0, 20) }} ...
-            {{
-              currentUser.accessToken.substr(
-                currentUser.accessToken.length - 20
-              )
-            }}
-          </p> -->
-          <p>
-            <strong>Email:</strong>
-            {{ currentUser.userEmail }}
-          </p>
-          <!-- <p>
-            <strong>User ID:</strong>
-            {{ currentUser.userID }}
-          </p> -->
-        </v-col>
-      </v-row>
+        <v-row justify="center">
+          <v-col class="ma-3" cols="12" xs="6" sm="4" md="4" lg="4 ">
+            <v-avatar class="profile-circle" color="grey" size="150">
+              <v-img
+                src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
+              ></v-img>
+            </v-avatar>
+          </v-col>
+
+          <v-col class="ma-3" cols="12" xs="12" sm="6" md="6" lg="6">
+            <v-row>
+              <v-col>
+                <h1>@{{ currentUser.name }}</h1>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <h3>Name: {{ currentUser.username }}</h3>
+              </v-col>
+            </v-row>
+          </v-col>
+        </v-row>
+    </v-card>
+  </v-container>
       <v-container>
         <h3>สูตรอาหารของ {{ currentUser.username }}</h3>
-        <v-simple-table class="justify-space-around">
+        <v-simple-table class="justify-center" style="cursor: pointer;">
           <template v-slot:default>
             <v-divider></v-divider>
             <tbody>
@@ -46,7 +41,7 @@
               >
                 <td class="text-center">
                   <v-avatar class="ma-3" size="200" rounded>
-                    <v-img :src="myRecipes.img"></v-img>
+                    <v-img :src="myRecipes.img"  ></v-img>
                   </v-avatar>
                 </td>
                 <td class="text-left">

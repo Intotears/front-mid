@@ -1,36 +1,40 @@
 <template>
   <v-container>
-    <h1>My recipes</h1>
+    <p class="text-h3 font-weight-medium">My recipes</p>
     <div>
       <v-container>
-        <v-simple-table align-self="center">
+         <v-card>
+        <v-simple-table style="cursor: pointer;">
           <template v-slot:default>
             <tbody>
               <tr v-for="myRecipes in recipe" :key="myRecipes.recipeID">
-                <div v-on:click.stop="ViewRecipe(myRecipes.recipeID)">
-                  <td class="text-center">
-                    <v-avatar class="ma-3" size="200" tile>
-                      <v-img :src="myRecipes.img"></v-img>
-                    </v-avatar>
-                  </td>
-                  <td class="">
-                    <p class="text-h5 font-weight-medium">
-                      {{ myRecipes.recipeName }}
-                    </p>
-                    <p class="text-subtitle-1 font-weight-regular">
-                      {{ myRecipes.description }}
-                    </p>
-                  </td>
-                </div>
+                <td
+                  class="text-right"
+                  v-on:click.stop="ViewRecipe(myRecipes.recipeID)"
+                >
+                  <v-avatar class="ma-3" size="200" tile>
+                    <v-img :src="myRecipes.img"></v-img>
+                  </v-avatar>
+                </td>
+                <td v-on:click.stop="ViewRecipe(myRecipes.recipeID)">
+                  <p class="text-h5 font-weight-medium">
+                    {{ myRecipes.recipeName }}
+                  </p>
+                  <p class="text-subtitle-1 font-weight-regular ">
+                    {{ myRecipes.description }}
+                  </p>
+                </td>
                 <td class="text-left">
                   <v-btn
                     elevation="2"
                     color="primary"
-                    @click="EditRecipe(myRecipes.recipeID)"
+                    @click.self="EditRecipe(myRecipes.recipeID)"
                     class="margin-right:20p"
                     icon
                   >
-                    <v-icon> mdi-pencil </v-icon>
+                    <v-icon>
+                      mdi-pencil
+                    </v-icon>
                   </v-btn>
                   &nbsp;
 
@@ -71,6 +75,7 @@
             </v-dialog>
           </template>
         </v-simple-table>
+         </v-card>
       </v-container>
     </div>
   </v-container>

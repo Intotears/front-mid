@@ -25,7 +25,7 @@
           </v-col>
 
           <v-col cols="12" md="2" sm="2">
-            <p class="font-weight-regular">Calories: {{flavoring.calories}}</p>
+            
           </v-col>
 
         </v-row>
