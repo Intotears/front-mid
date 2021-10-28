@@ -14,21 +14,19 @@ const viewRecipe = {
     rating: "",
     userID: "",
     user_rating: [], //เรียกข้อมูลจากตารางuser_rating
-    ur_ID: "",
+    user_ratingID: "",
+    // user_rateUp : [],
   },
   getters: {
     editDetail: (state) => state.recipe,
     findRecipeID: (state) => state.ID,
     findUserID: (state) => state.userID,
-    findUr_ID: (state) => state.ur_ID,
+    findUr_ID: (state) => state.user_ratingID,
   },
   mutations: {
     recipeID: (state, id) => {
       state.ID = id;
     },
-    // gotoEditRecipe: (state, id)=>{
-    //   state.recipeID = id;
-    // },
     LOAD_DETAIL: (state, detail) => {
       state.recipe = detail;
     },
@@ -53,22 +51,23 @@ const viewRecipe = {
     StoreUserId: (state, userID) => {
       state.userID = userID;
     },
+    STORE_urRatingID: (state, user_ratingID) => {
+      state.user_ratingID = user_ratingID;
+    },
     LOAD_user_rating: (state, user_rating) => {
       state.user_rating = user_rating;
     },
-    EDIT_Rating: (state, user_rating) => {
+    // LOAD_user_rateUp: (state, user_rateUp) => {
+    //   state.user_rateUp = user_rateUp;
+    // },
+    EDIT_user_rating: (state, user_rating) => {
       state.user_rating.forEach((r) => {
-        if (
-          r.recipeID == user_rating.recipeID &&
-          r.userID == user_rating.userID
-        ) {
+        if (r.ur_ID == user_rating.ur_ID) {
           r = user_rating;
         }
       });
     },
-    STORE_urRatingID: (state, ur_ID) => {
-      state.ur_ID = ur_ID;
-    },
+    
   },
   actions: {
     storeID({ commit }, id) {
@@ -78,12 +77,11 @@ const viewRecipe = {
       commit("StoreUserId", userID);
     },
     //Rating Update
-    async StoreUser_RatingID({ commit }, ur_ID) {
-      commit("STORE_urRatingID", ur_ID);
+    async StoreUser_RatingID({ commit }, user_ratingID) {
+      commit("STORE_urRatingID", user_ratingID);
     },
-    async EditRating({ commit, getters }, user_rating) {
+    async EditUserRating({ commit, getters }, user_rating) {
       const ur_ID = getters.findUr_ID;
-      console.log("Ur_ID: ", ur_ID);
       await axios
         .put(
           `${process.env.VUE_APP_BACKEND}/api/user_raiting/editRaing/${ur_ID}`,
@@ -92,7 +90,7 @@ const viewRecipe = {
           }
         )
         .then((response) => {
-          commit("EDIT_Rating", response.data);
+          commit("EDIT_user_rating", response.data);
           console.log(response.data);
         })
         .catch((error) => console.error(error.response.data));
@@ -115,6 +113,7 @@ const viewRecipe = {
     },
 
     async loadUserRating({ commit }, id) {
+      console.log("loadUserRating ");
       await axios
         .get(
           `${process.env.VUE_APP_BACKEND}/api/find/findRatingByRecipeID/${id}`
@@ -124,7 +123,23 @@ const viewRecipe = {
           console.log("user rating", response.data);
         })
         .catch((error) => console.log(error));
+      
     },
+    //โหลดเรทติ้งเฉพาะของคนนั้นหน้านั้นเพื่อแสดงเรทที่ให้ไปแล้ว
+    // async loadUserRatingUpdate({ commit }, user_ratingID) {
+    //   console.log("loadUserRatingUpdate ");
+    //   await axios
+    //     .get(
+    //       `${process.env.VUE_APP_BACKEND}/api/find/findRatingByUser_RatingID/${user_ratingID}`
+    //     )
+    //     .then((response) => {
+    //       commit("LOAD_user_rateUp", response.data);
+    //       console.log("UserRatingUpdate", response.data);
+    //     })
+    //     .catch((error) => console.log(error));
+      
+    // },
+
     async loadDetailByID({ commit }, id) {
       await axios
         .get(`${process.env.VUE_APP_BACKEND}/api/find/viewRecipe/${id}`)

@@ -4,7 +4,7 @@
       <v-rating
         :items="Stars"
         item-text="Stars"
-        v-model="rate"
+        v-model="rating"
         :rules="Rules"
         icon-label="custom icon label text {0} of {1}"
       ></v-rating>
@@ -19,18 +19,15 @@
           color="pink"
           v-bind="attrs"
           v-on="on"
-          @click="addRating(), test()"
+          @click="saveRating()"
         >
           <v-icon> mdi-heart </v-icon>
-        </v-btn>
-        <v-btn @click="updateRating()">
-          
         </v-btn>
       </template>
       <v-card>
         <v-card-title class="headline"> Rating! </v-card-title>
         <v-card-text
-          >Rating Success ! <v-icon> mdi-emoticon </v-icon></v-card-text
+          >Rating Success !<v-icon> mdi-emoticon </v-icon></v-card-text
         >
         <!-- <polygon :points="getStarPoints" style="fill-rule: nonzero" /> -->
         <!-- <span class="rating" :class="{ 'disable-all-rating': !!value }">
@@ -84,7 +81,7 @@ export default {
         { value: 1 },
       ],
       Rules: [(v) => !!v || "Recipe name cannot be null"],
-      rate: "",
+      rating: "",
       // temp_value: null,
       dialog: false,
       activator: null,
@@ -97,23 +94,22 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
-    thisUserRating() {
+    allUserRating() {
       return this.$store.state.viewRecipe.user_rating;
     },
+    thisUserRating(){
+      return this.$store.state.viewRecipe.user_rateUp;
+    }
   },
   methods: {
     addRating() {
       let rating = {
-        rate: this.rate,
+        rate: this.rating,
       };
       this.$store.dispatch("viewRecipe/storeID", this.$route.params.id),
         this.$store.dispatch("viewRecipe/StoreUserID", this.currentUser.userID),
         this.$store.dispatch("viewRecipe/GiveRating", rating);
       console.log("เพิ่มเรท", rating);
-    },
-    test() {
-      console.log("test", this.thisUserRating);
-      console.log("test2", this.rating);
     },
 
     // rate: function (star) {
@@ -121,53 +117,46 @@ export default {
     //   this.temp_value = star;
     // },
 
-    updateRating() {
-      //เหมือนมันไม่รู้ว่าจะอัพตรงไหน
-      const thisUserRating = this.thisUserRating;
-      for (var i in thisUserRating) {
-
-        if (thisUserRating[i].userID == this.currentUser.userID ) {
-      console.log("editRating", thisUserRating[i]);
-      this.$store.dispatch(
-        "viewRecipe/StoreUser_RatingID",
-        thisUserRating[i].ur_ID
-      ),
-        this.$store.dispatch("viewRecipe/EditRating", this.rate);
-      console.log("Rate Update:", this.rate);
-      }
-      }
-    },
-
-    saveRating() {
-      //conditionยังไม่ผ่านไม่เข้า
-
-      const thisUserRating = this.thisUserRating;
-      for (var i in thisUserRating) {
-        if (thisUserRating[i].userID != this.currentUser.userID) {
-          if (thisUserRating[i].ur_ID != null ) {
-            console.log("editRating", thisUserRating[i]);
-            this.$store.dispatch(
-              "viewRecipe/StoreUser_RatingID",
-              thisUserRating[i].ur_ID
-            ),
-              this.$store.dispatch("viewRecipe/EditRating", this.rating);
-            console.log("Rate Update:", this.rating);
-            console.log("UR ID:", thisUserRating[i].ur_ID);
-          } else {
-            
-
+    async saveRating() {
+      const allUserRating = this.allUserRating;
+      let isUserHadReview = false;
+      for (var i in allUserRating) {
+        if (allUserRating[i].ur_ID != null) {
+          if (
+            allUserRating[i].userID == this.currentUser.userID &&
+            allUserRating[i].recipeID == this.$route.params.id
+          ) {
             let rating = {
               rate: this.rating,
             };
-            this.$store.dispatch("viewRecipe/storeID", this.$route.params.id),
-              this.$store.dispatch(
-                "viewRecipe/StoreUserID",
-                this.currentUser.userID
-              ),
-              this.$store.dispatch("viewRecipe/GiveRating", rating);
-            console.log("เพิ่มเรท: ", rating);
+            await this.$store.dispatch(
+              "viewRecipe/StoreUser_RatingID",
+              allUserRating[i].ur_ID
+            ),
+              await this.$store.dispatch("viewRecipe/EditUserRating", rating);
+            
+            console.log("Rate Update:", rating);
+
+            isUserHadReview = true;
+            break;
           }
         }
+      }
+      if (isUserHadReview == false) {
+        let rating = {
+          rate: this.rating,
+        };
+        await this.$store.dispatch("viewRecipe/storeID", this.$route.params.id);
+        await this.$store.dispatch(
+          "viewRecipe/StoreUserID",
+          this.currentUser.userID
+        );
+        await this.$store.dispatch("viewRecipe/GiveRating", rating);
+        console.log("Insert : ", rating);
+        await this.$store.dispatch(
+          "viewRecipe/loadUserRating",
+          this.$route.params.id
+        );
       }
     },
   },
