@@ -18,6 +18,7 @@ export default {
   data() {
     return {
       search: "",
+      searchRoute:""
     };
   },
   watch: {
@@ -30,13 +31,13 @@ export default {
           search: this.search,
         };
       } 
-       this.$router.push(route)
+       this.searchRoute = route;
     },
   },
   methods: {
     searching() {
       this.$store.dispatch("searchRecipes/loadSearchedRecipe", this.search);
-      this.$router.push("/result");
+      this.$router.push(this.searchRoute);
     },
   },
 

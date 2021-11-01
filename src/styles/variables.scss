@@ -17,11 +17,43 @@ $btn-sizes: (
 
 $headings: (
   'h1': (
-    'size': 3.3125rem,
-    'line-height': 1.15em
+    'size': 6rem,
+    'line-height': -.015625em
   ),
   'h2': (
-    'size': 2.25rem,
-    'line-height': 1.5em
+    'size': 3.75rem,
+    'line-height': -.0083333333em1.5em
+  ),
+  'h3': (
+    'size': 3rem,
+    'line-height': normal
+  ),
+  'h4': (
+    'size': 2.125rem,
+    'line-height': .0073529412em
+  ),
+  'h5': (
+    'size': 1.5rem,
+    'line-height': normal
+  ),
+  'h6': (
+    'size': 1.25rem,
+    'line-height': .0125em
+  ),
+);
+$subtitles: (
+  'subtitle-1': (
+    'size': 1rem,
+    'line-height': .009375em
+  ),
+  'subtitle-2': (
+    'size': 0.875rem,
+    'line-height': .0071428571em
   )
 );
+$body:(
+  'body-1':(
+    'size': 0.875rem,
+    'line-height': .0071428571em
+  ),
+)

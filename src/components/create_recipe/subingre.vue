@@ -28,11 +28,7 @@
           </v-col>
 
           <v-col cols="12" md="2" sm="2">
-            <v-text-field
-              v-model="$store.getters.getName"
-              label="Calories"
-              readonly
-            ></v-text-field>
+            
           </v-col>
           <v-col cols="12" md="1">
             <v-btn @click="remove2(i)" class="error"

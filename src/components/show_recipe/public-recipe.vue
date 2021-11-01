@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Homepage</h1>
+    <p class="text-h2 font-weight-medium">Homepage</p>
     <v-row cols-12>
       <v-col
         xs="12"
@@ -37,31 +37,23 @@
                       :to="{ path: '/userProfile/' + all.userID }"
                       class="text-decoration-none white--text"
                     >
-                      {{ all.user ? all.user.userName : "-" }}
+                      {{ all.user ? all.user.username : "-" }}
                     </router-link>
                     <router-link
                       v-else
                       :to="{ path: '/profile/' }"
                       class="text-decoration-none white--text"
                     >
-                      {{ all.user ? all.user.userName : "-" }}
+                      {{ all.user ? all.user.username : "-" }}
                     </router-link></v-list-item-title
                   >
                 </v-list-item-content>
 
                 <v-row align="center" justify="end">
-                  <span class="text-caption"> ({{ rating }}) </span>
-                  <v-rating
-                    v-model="rating"
-                    background-color="white"
-                    color="red darken-4"
-                    dense
-                    half-increments
-                    size="18"
-                    icon
-                    readonly
-                  ></v-rating>
-                  <span class="mr-1">·</span>
+                  <span class="text-caption"> ({{ all.rating.ratingStars }}) </span>
+                  <span class="mr-1"></span>
+                  <v-icon color="red darken-4" size="18">mdi-star</v-icon>
+                  <span class="mr-1"></span>
                   <v-btn icon @click="addToCollection(all.recipeID)">
                     <v-icon>mdi-bookmark-outline</v-icon>
                   </v-btn>
@@ -102,18 +94,15 @@ export default {
   },
   computed: {
     ...mapState("allrecipes", ["allRecipes"]),
-    // ...mapState("allrecipes", ["rating"]),
     ...mapState("mycollection", ["recipeCollection"]),
-    thisRating() {
-      return this.allRecipes.find((v) => v.recipeID == this.rating.recipeID);
-    },
+
     currentUser() {
       return this.$store.state.auth.user;
     },
   },
   created() {
     this.$store.dispatch("allrecipes/loadAllRecipes");
-    this.$store.dispatch("allrecipes/loadRating");
+    
   },
   methods: {
     ShowRating() {

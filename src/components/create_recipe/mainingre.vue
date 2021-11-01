@@ -32,11 +32,7 @@
           </v-col>
 
           <v-col cols="12" md="2" sm="2">
-            <v-text-field
-              v-model="mIngredient.calories"
-              label="Calories"
-              readonly
-            ></v-text-field>
+           
           </v-col>
           <v-col cols="1" sm="1">
             <v-btn @click="remove(i)" class="error"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-container>
-      <h1>Popular recipes</h1>
+     <p class="text-h3 font-weight-medium">Popular recipe</p>
     </v-container>
   </div>
 </template>
