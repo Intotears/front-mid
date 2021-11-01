@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="text-h2 font-weight-medium">Homepage</p>
+    <p class="text-h3 font-weight-medium">Homepage</p>
     <v-row cols-12>
       <v-col
         xs="12"

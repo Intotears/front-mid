@@ -1,6 +1,6 @@
 <template>
   <div>
-   <p class="text-h4 font-weight-bold">Catagory</p>
+   <p class="text-h3 font-weight-medium">Catagory</p>
     <v-sheet class="mx-auto" elevation="2" max-width="100%">
       <v-slide-group
         
