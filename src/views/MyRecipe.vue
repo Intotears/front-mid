@@ -28,7 +28,7 @@
                   <v-btn
                     elevation="2"
                     color="primary"
-                    @click.self="EditRecipe(myRecipes.recipeID)"
+                    @click="EditRecipe(myRecipes.recipeID)"
                     class="margin-right:20p"
                     icon
                   >
