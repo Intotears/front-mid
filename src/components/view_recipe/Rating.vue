@@ -8,6 +8,7 @@
         :rules="Rules"
         icon-label="custom icon label text {0} of {1}"
       ></v-rating>
+
     </div>
     <v-dialog class="text-center" v-model="dialog" persistent max-width="290">
       <template v-slot:activator="{ on, attrs }">
@@ -23,36 +24,18 @@
         >
           <v-icon> mdi-heart </v-icon>
         </v-btn>
+        
       </template>
       <v-card>
         <v-card-title class="headline"> Rating! </v-card-title>
         <v-card-text
           >Rating Success !<v-icon> mdi-emoticon </v-icon></v-card-text
         >
-        <!-- <polygon :points="getStarPoints" style="fill-rule: nonzero" /> -->
-        <!-- <span class="rating" :class="{ 'disable-all-rating': !!value }">
-        <div v-for="RateStar in RateStars" :key="RateStar.id">
-          <label
-            class="radio-inline input-star"
-            :class="{
-              'is-selected': starValue >= RateStar.value && starValue != null,
-            }"
-          >
-            <input
-              type="radio"
-              class="input-rating"
-              v-model="starValue"
-              @click="rate(RateStar.value)"
-            />
-          </label>
-        </div>
-      </span> -->
 
         <v-card-actions>
-          <v-btn color="primary" text @click="dialog = false"> Back </v-btn>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" text @click="dialog = false" to="/">
-            Home
+          <v-btn color="orange" text @click="dialog = false" >
+            OK
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -85,10 +68,15 @@ export default {
       // temp_value: null,
       dialog: false,
       activator: null,
+
+      
     };
   },
-  created() {
-    this.$store.dispatch("viewRecipe/loadUserRating", this.$route.params.id);
+  async created() {
+    await this.$store.dispatch("viewRecipe/loadUserRating", this.$route.params.id);
+    await this.$store.dispatch("viewRecipe/StoreUserID", this.currentUser.userID);
+    await this.$store.dispatch("viewRecipe/loadUserRatingUpdate", this.$route.params.id);
+    this.showRating();
   },
   computed: {
     currentUser() {
@@ -98,25 +86,15 @@ export default {
       return this.$store.state.viewRecipe.user_rating;
     },
     thisUserRating(){
-      return this.$store.state.viewRecipe.user_rateUp;
-    }
-  },
-  methods: {
-    addRating() {
-      let rating = {
-        rate: this.rating,
-      };
-      this.$store.dispatch("viewRecipe/storeID", this.$route.params.id),
-        this.$store.dispatch("viewRecipe/StoreUserID", this.currentUser.userID),
-        this.$store.dispatch("viewRecipe/GiveRating", rating);
-      console.log("เพิ่มเรท", rating);
+      return this.$store.state.viewRecipe.user_rateUp ;
     },
 
-    // rate: function (star) {
-    //   this.$http.post(window.BaseUrl + "/star", { star: star });
-    //   this.temp_value = star;
-    // },
+  },
 
+  methods: {
+    showRating(){
+      this.rating = this.thisUserRating.rate
+    },
     async saveRating() {
       const allUserRating = this.allUserRating;
       let isUserHadReview = false;

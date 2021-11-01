@@ -4,7 +4,7 @@ import axios from "axios";
 const editRecipe = {
   namespaced: true,
   state: {
-    ID: '',
+    ID: "",
     recipe: [],
     image: [],
     mIngredients: [],
@@ -12,10 +12,10 @@ const editRecipe = {
     flavoring: [],
     cookingProcess: [],
     foodtag: [],
-    mIngredientsID: '',
-    sIngredientsID: '',
-    flavoringID: '',
-    cookingProcessID: '',
+    mIngredientsID: "",
+    sIngredientsID: "",
+    flavoringID: "",
+    cookingProcessID: "",
     //deleteIngredientsID:[]
   },
 
@@ -26,9 +26,9 @@ const editRecipe = {
     findSIngredientsID: (state) => state.sIngredientsID,
     findflavoringID: (state) => state.flavoringID,
     findcookingProcessID: (state) => state.cookingProcessID,
-    findDeleteIngredientsID : (state) => state.deleteIngredientsID,
+    findDeleteIngredientsID: (state) => state.deleteIngredientsID,
   },
-  
+
   mutations: {
     recipeID: (state, id) => {
       state.ID = id;
@@ -110,19 +110,21 @@ const editRecipe = {
     STORE_DeleteIngredientsID: (state, deleteIngredientsID) => {
       state.deleteIngredientsID = deleteIngredientsID;
     },
-   
+
     //Delete
-    DeleteIngredients: ()=>{
+    DeleteIngredients: () => {
       // const index = state.deleteIngredientsID.findIndex(r => r.deleteIngredientsID == id.re_IngredientID)
-      // state.deleteIngredientsID.splice(index, 1)     
+      // state.deleteIngredientsID.splice(index, 1)
     },
-    DELETE_PROCESS: ()=>{ 
+    DELETE_PROCESS: () => {
       // const index = state.cookingProcess.findIndex(r => r.processID == id.processID)
       // state.cookingProcess.splice(index, 1)
     },
-    
-  },
 
+    UPLOAD_RECIPE_IMAGE: () => {
+
+    }
+  },
 
   actions: {
     storeRecipeID({ commit }, id) {
@@ -277,15 +279,32 @@ const editRecipe = {
         })
         .catch((error) => console.error(error.response.data));
     },
-     //Cooking Process
-     async CreateCookingprocess({ getters }, processes) {
-      console.log("Cooking Process")
+    //Cooking Process
+    async CreateCookingprocess({ getters }, processes) {
+      console.log("Cooking Process");
       const id = getters.findRecipeID;
-      await axios   
-        .post(`${process.env.VUE_APP_BACKEND}/api/cookingProcess/createProcessFormEdit/${id}`,processes)
+      await axios
+        .post(
+          `${process.env.VUE_APP_BACKEND}/api/cookingProcess/createProcessFormEdit/${id}`,
+          processes
+        )
         .then((response) => {
           // commit("SET_cookingprocess", response.data);
           console.log(response.data);
+        })
+        .catch((error) => console.log(error.response.data));
+    },
+    //upload image
+    async uploadRecipeImage({ commit },image) {
+      console.log("UPLOAD_RECIPE_IMAGE",image);
+      await axios
+        .post(
+          `${process.env.VUE_APP_BACKEND}/api/cookingProcess/createProcessFormEdit`,
+          image
+        )
+        .then((response) => {
+          commit("UPLOAD_RECIPE_IMAGE", response.data);
+          console.log("UPLOAD_RECIPE_IMAGE",response.data);
         })
         .catch((error) => console.log(error.response.data));
     },
@@ -341,7 +360,8 @@ const editRecipe = {
     async loadProcess({ commit }, id) {
       await axios
         .get(
-          `${process.env.VUE_APP_BACKEND}/api/find/cooking_process/recipeID/${id}`)
+          `${process.env.VUE_APP_BACKEND}/api/find/cooking_process/recipeID/${id}`
+        )
         .then((response) => {
           commit("LOAD_PROCESS", response.data);
           console.log(response.data);
@@ -362,24 +382,28 @@ const editRecipe = {
     // async StoreDeleteIngredientsID({ commit }, IngredientsID) {
     //   commit("STORE_DeleteIngredientsID", IngredientsID);
     // },
-    async DeleteIngredients({commit} , id) {
-        // const id = getters.findDeleteIngredientsID;
-        console.log("Edit delete ID",id);
-        await axios
-        .delete(`${process.env.VUE_APP_BACKEND}/api/ingredient/deleteByRecipeIngreID/${id}` )
+    async DeleteIngredients({ commit }, id) {
+      // const id = getters.findDeleteIngredientsID;
+      console.log("Edit delete ID", id);
+      await axios
+        .delete(
+          `${process.env.VUE_APP_BACKEND}/api/ingredient/deleteByRecipeIngreID/${id}`
+        )
         .then((response) => {
           commit("DeleteIngredients", response.data);
-          console.log("Delete ingre success",response.data);
+          console.log("Delete ingre success", response.data);
         })
-        .catch((error) => console.log(error));   
+        .catch((error) => console.log(error));
     },
     async DeleteProcess({ commit }, id) {
-      console.log("Edit delete process",id);
+      console.log("Edit delete process", id);
       await axios
-        .delete(`${process.env.VUE_APP_BACKEND}/api/cooking_process/deleteByProcessID/${id}` )
+        .delete(
+          `${process.env.VUE_APP_BACKEND}/api/cooking_process/deleteByProcessID/${id}`
+        )
         .then((response) => {
           commit("DELETE_PROCESS", response.data);
-          console.log("Delete process success",response.data);
+          console.log("Delete process success", response.data);
         })
         .catch((error) => console.log(error));
     },

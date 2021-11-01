@@ -6,9 +6,12 @@
           @click.stop="drawer = !drawer"
           dark
         ></v-app-bar-nav-icon>
-        <v-app-bar-title><h3 class="headline">Yum!</h3></v-app-bar-title>
-        <v-spacer />
-        <v-col xs="12" sm="12" md="6" lg="6">
+        <!-- <v-app-bar-title><h3 class="headline">Yum!</h3></v-app-bar-title> -->
+        <v-avatar class="ma-3" size="70" rounded>
+            <v-img :src="require('@/assets/logo.png')"></v-img>
+        </v-avatar>
+        <v-spacer/>
+        <v-col  xs="12" sm="12" md="6" lg="6">
           <searching />
         </v-col>
         <v-spacer />
