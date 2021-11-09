@@ -20,7 +20,7 @@ const searchRecipes = {
 
       await axios
         .get(
-          `${process.env.VUE_APP_BACKEND}/api/recipe/search/name/${searchingWord}`
+          `${process.env.VUE_APP_BACKEND}/api/recipe/search/ingredient/`, searchingWord
         )
         .then((response) => {
           commit("SET_SEARCHED_RECIPE", response.data);
