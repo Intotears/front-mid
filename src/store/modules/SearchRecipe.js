@@ -17,14 +17,23 @@ const searchRecipes = {
   actions: {
     async loadSearchedRecipe({ commit }, searchingWord) {
       console.log("Hi there", searchingWord);
-
       await axios
-        .get(
-          `${process.env.VUE_APP_BACKEND}/api/recipe/search/ingredient/`, searchingWord
-        )
+        .get(`${process.env.VUE_APP_BACKEND}/api/recipe/search/name/${searchingWord}`)
         .then((response) => {
           commit("SET_SEARCHED_RECIPE", response.data);
           console.log(response.data);
+          
+        })
+        .catch((error) => console.log(error));
+    },
+    async loadSearchedIngredient({ commit }, searchingWord) {
+      console.log("Hi there", searchingWord);
+      await axios
+        .get(`${process.env.VUE_APP_BACKEND}/api/recipe/search/ingredient/`,{ params: { searchingWord }})
+        .then((response) => {
+          commit("SET_SEARCHED_RECIPE", response.data);
+          console.log(response.data);
+          
         })
         .catch((error) => console.log(error));
     },
