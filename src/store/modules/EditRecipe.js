@@ -280,13 +280,15 @@ const editRecipe = {
         .catch((error) => console.error(error.response.data));
     },
     //Cooking Process
-    async CreateCookingprocess({ getters }, processes) {
-      console.log("Cooking Process");
+    async CreateCookingprocess({ getters }, payload) {
+      console.log("Cooking Process payload ", payload);
       const id = getters.findRecipeID;
       await axios
         .post(
           `${process.env.VUE_APP_BACKEND}/api/cookingProcess/createProcessFormEdit/${id}`,
-          processes
+          
+            payload
+          
         )
         .then((response) => {
           // commit("SET_cookingprocess", response.data);

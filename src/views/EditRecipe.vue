@@ -713,7 +713,7 @@ export default {
     // },
     async saveProcess() {
       const cookingProcess = await this.cookingProcess;
-      for (var i in cookingProcess) {
+      for (var i = 0; i < cookingProcess.length; i++) {
         if (cookingProcess[i].processDescription != "") {
           if (cookingProcess[i].processID != null) {
             this.$store.dispatch(
@@ -726,14 +726,14 @@ export default {
             );
             console.log("ใน if ", cookingProcess[i]);
           } else {
+            const count = i + 1;
+            const payload = {process : cookingProcess[i], thisCount: count};
             this.$store.dispatch(
               "editRecipe/storeRecipeID",
               this.$route.params.id
             ),
-              this.$store.dispatch(
-                "editRecipe/CreateCookingprocess",
-                cookingProcess[i]
-              );
+              this.$store.dispatch("editRecipe/CreateCookingprocess", payload);
+            console.log("thiss payload ", payload);
             console.log("ใน else ", cookingProcess[i]);
           }
         }
@@ -822,7 +822,6 @@ export default {
     destroyed() {
       window.location.reload();
     },
-    
   },
 
   components: {

@@ -12,18 +12,17 @@
     </div>
     <v-dialog class="text-center" v-model="dialog" persistent max-width="290">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          class="mx-2"
-          fab
-          dark
-          small
-          color="pink"
-          v-bind="attrs"
-          v-on="on"
-          @click="saveRating()"
-        >
-          <v-icon> mdi-heart </v-icon>
-        </v-btn>
+        <div class="my-2">
+          <v-btn
+            color="warning"
+            dark
+            v-bind="attrs"
+            v-on="on"
+            @click="saveRating()"
+          >
+            Rate
+          </v-btn>
+        </div>
         
       </template>
       <v-card>

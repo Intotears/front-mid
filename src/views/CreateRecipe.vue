@@ -108,7 +108,7 @@
               <br />
 
               <v-col class="text-right">
-                <v-btn color="primary" @click="(step = 2)">
+                <v-btn color="primary" @click="step = 2">
                   Next step <v-icon>mdi-menu-right</v-icon>
                 </v-btn>
               </v-col>
@@ -294,7 +294,7 @@
                   </v-btn>
                 </v-col>
                 <v-col class="text-right">
-                  <v-btn color="primary" @click="step = 3 , addDetail()">
+                  <v-btn color="primary" @click="(step = 3), addDetail()">
                     Next step <v-icon>mdi-menu-right</v-icon></v-btn
                   >
                 </v-col>
@@ -310,14 +310,20 @@
                   <div>
                     <v-container class="ma-2">
                       <div id="CookingProcess" class="text-center">
-                        <template>
-                          <div
-                            v-for="(process, i) in processes"
-                            :key="i"
-                            class="text-fields-row"
-                            align-content-center
-                          >
-                            <v-col cols="4" md="3" sm="3" align-center>
+                        <v-row
+                          v-for="(process, i) in processes"
+                          :key="i"
+                          class="text-fields-row"
+                          align-content-center
+                          num="i"
+                        >
+                          <v-col cols="1" md="1" sm="1">
+                            <v-text-field
+                              readonly
+                              v-text="(num = i + 1)"
+                            ></v-text-field>
+                          </v-col>
+                          <!-- <v-col cols="4" md="3" sm="3" align-center>
                               <v-img
                                 :src="url_process"
                                 contain
@@ -335,32 +341,32 @@
                                 hint="Upload file"
                               >
                               </v-file-input>
-                            </v-col>
-                            <v-col cols="12" md="7" sm="6" xs="2">
-                              <v-textarea
-                                solo
-                                counter
-                                label="Descript cooking process ex. 1. Boil water"
-                                maxlength="500"
-                                v-model="process.processDescription"
-                              ></v-textarea>
-                            </v-col>
-                            <v-col cols="1" md="1">
-                              <v-btn @click="remove4(i)" class="error"
-                                ><v-icon>mdi-delete</v-icon>delete</v-btn
-                              >
-                            </v-col>
-                          </div>
-                          <div>
-                            <v-btn
-                              @click="add4"
-                              width="100px"
-                              rounded
-                              class="primary"
-                              ><v-icon>mdi-plus </v-icon>add</v-btn
+                            </v-col> -->
+                          <v-col cols="12" md="7" sm="5" xs="2">
+                            <v-textarea
+                              solo
+                              counter
+                              label="Descript cooking process ex. 1. Boil water"
+                              maxlength="500"
+                              v-model="process.processDescription"
+                            ></v-textarea>
+                          </v-col>
+                          <v-col cols="1" md="1">
+                            <v-btn @click="remove4(i)" class="error"
+                              ><v-icon>mdi-delete</v-icon>delete</v-btn
                             >
-                          </div>
-                        </template>
+                          </v-col>
+                        </v-row>
+                        <br />
+                      </div>
+                      <div class="text-center">
+                        <v-btn
+                          @click="add4"
+                          width="100px"
+                          rounded
+                          class="primary"
+                          ><v-icon>mdi-plus </v-icon>add</v-btn
+                        >
                       </div>
                     </v-container>
                   </div>
@@ -404,13 +410,11 @@
                         v-bind="attrs"
                         v-on="on"
                         @click="
-                            
-                            addmIngredient(),
+                          addmIngredient(),
                             addsIngredient(),
                             addflavoring(),
                             selectFoodTag(),
                             addProcess()
-                            
                         "
                       >
                         <v-icon> mdi-content-save </v-icon>
@@ -425,7 +429,11 @@
                         <v-icon> mdi-emoticon </v-icon></v-card-text
                       >
                       <v-card-actions>
-                        <v-btn color="primary" text @click="EditRecipe(findThisRecipeID)">
+                        <v-btn
+                          color="primary"
+                          text
+                          @click="EditRecipe(findThisRecipeID)"
+                        >
                           Edit recipe
                         </v-btn>
                         <v-spacer></v-spacer>
@@ -558,7 +566,7 @@ export default {
       this.$store.dispatch("createRecipe/CreateCookingprocess", processes);
       console.log(this.$store.state.recipe);
     },
-      selectFoodTag() {
+    selectFoodTag() {
       const selectTag = this.selectTag;
       console.log(this.selectTag);
       this.$store.dispatch("createRecipe/selectFoodTag", selectTag);
@@ -583,10 +591,9 @@ export default {
       );
     },
     EditRecipe(id) {
-      console.log("find recipe", id)
+      console.log("find recipe", id);
       this.$router.push({ path: `/editRecipe/${id}` });
     },
-    
   },
   watch: {
     model(val, prev) {
@@ -628,9 +635,9 @@ export default {
   created() {
     this.$store.dispatch("showFoodtag/loadFoodtag");
   },
-  destroyed(){
-     window.location.reload();
-  }
+  destroyed() {
+    window.location.reload();
+  },
 };
 </script>
 
