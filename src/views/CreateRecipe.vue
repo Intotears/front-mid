@@ -627,7 +627,6 @@ export default {
   mounted() {},
   created() {
     this.$store.dispatch("showFoodtag/loadFoodtag");
-    
   },
   destroyed(){
      window.location.reload();

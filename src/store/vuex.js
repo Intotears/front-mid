@@ -10,6 +10,7 @@ import showFoodtag from './modules/ShowFoodtag';
 import mycollection from './modules/Collection';
 import searchRecipes from './modules/SearchRecipe';
 import editFoodtag from './modules/EditFoodtag';
+import userimage from './modules/UserIMG';
 
 Vue.use(Vuex);
 
@@ -27,6 +28,7 @@ export default new Vuex.Store({
     showFoodtag,
     mycollection,
     searchRecipes,
-    editFoodtag
+    editFoodtag,
+    userimage
   },
 });

@@ -1,33 +1,37 @@
 <template>
   <v-container>
     <div v-if="this.canEdit == false">
-       <v-container>
-    <v-card color="orange" dark>
+      <v-container>
+        <v-card color="orange" dark flat>
+          <v-row justify="center">
+            <v-col class="ma-3" cols="12" xs="6" sm="4" md="4" lg="4 ">
+              <v-avatar class="profile-circle" color="grey" size="150">
+                <v-img
+                  :src="userIMG"
+                ></v-img>
+              </v-avatar>
+            </v-col>
 
-        <v-row justify="center">
-          <v-col class="ma-3" cols="12" xs="6" sm="4" md="4" lg="4 ">
-            <v-avatar class="profile-circle" color="grey" size="150">
-              <v-img
-                src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"
-              ></v-img>
-            </v-avatar>
-          </v-col>
-
-          <v-col class="ma-3" cols="12" xs="12" sm="6" md="6" lg="6">
-            <v-row>
-              <v-col>
-                <h1>@{{ currentUser.name }}</h1>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
-                <h3>Name: {{ currentUser.username }}</h3>
-              </v-col>
-            </v-row>
-          </v-col>
-        </v-row>
-    </v-card>
-  </v-container>
+            <v-col class="ma-3" cols="12" xs="12" sm="6" md="6" lg="6">
+              <v-row>
+                <v-col>
+                  <h1>@{{ currentUser.name }}</h1>
+                  <v-btn icon @click="statusEditFunc()">
+                    <v-icon>
+                      mdi-pencil
+                    </v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <h3>Name: {{ currentUser.username }}</h3>
+                </v-col>
+              </v-row>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-container>
       <v-container>
         <h3>สูตรอาหารของ {{ currentUser.username }}</h3>
         <v-simple-table class="justify-center" style="cursor: pointer;">
@@ -41,7 +45,7 @@
               >
                 <td class="text-center">
                   <v-avatar class="ma-3" size="200" rounded>
-                    <v-img :src="myRecipes.img"  ></v-img>
+                    <v-img :src="myRecipes.img"></v-img>
                   </v-avatar>
                 </td>
                 <td class="text-left">
@@ -61,26 +65,45 @@
     </div>
 
     <div v-if="this.canEdit == true">
-      <p>Hello</p>
-      <p><strong>Name:</strong></p>
-      <v-text-field v-model="currentUser.name"> </v-text-field>
-      <p><strong>Username:</strong></p>
-      <v-text-field v-model="currentUser.username"> </v-text-field>
+      <v-card flat>
+        <v-card-title>
+          Edit Profile
+        </v-card-title>
 
-      <p><strong>Please enter password</strong></p>
-      <v-text-field
-        v-model="currentUser.password"
-        required
-        :rules="passwordRules"
-      >
-      </v-text-field>
-      <v-btn @click="statusEditFunc()">Discard</v-btn>
-      <v-btn
-        @click="[editProfile(), statusEditFunc()]"
-        color="success"
-        @keyup.enter="editProfile()"
-        >Done</v-btn
-      >
+        <v-card-text>
+          <v-row justify="center">
+            <v-col class="" xs="6" sm="4" md="4" lg="4 ">
+              <v-img :src="userIMG">
+              </v-img
+              ><v-file-input
+                accept="image/png, image/jpeg, image/bmp"
+                prepend-icon="mdi-camera"
+                label="Avatar"
+              ></v-file-input>
+            </v-col>
+            <v-col class="" cols="12" xs="6" sm="4" md="6" lg="6">
+              <p><strong>Name:</strong></p>
+              <v-text-field v-model="currentUser.name"> </v-text-field>
+              <p><strong>Username:</strong></p>
+              <v-text-field v-model="currentUser.username"> </v-text-field>
+              <p><strong>Please enter password</strong></p>
+              <v-text-field
+                v-model="currentUser.password"
+                required
+                :rules="passwordRules"
+              >
+              </v-text-field>
+              <v-btn @click="statusEditFunc()">Discard</v-btn>
+              <v-btn
+                @click="[editProfile(), statusEditFunc()]"
+                color="success"
+                @keyup.enter="editProfile()"
+                >Done</v-btn
+              >
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
     </div>
   </v-container>
 </template>
@@ -99,6 +122,7 @@ export default {
   computed: {
     ...mapState("auth", ["initialState"]),
     ...mapState("myrecipes", ["recipeProfile"]),
+    ...mapState("userimage", ["userIMG"]),
     currentUser() {
       return this.$store.state.auth.user;
     },
@@ -108,6 +132,8 @@ export default {
       "myrecipes/loadRecipesInProfile",
       this.currentUser.userID
     );
+    this.$store.dispatch("userimage/StoreUserID", this.currentUser.userID);
+    this.$store.dispatch("userimage/loadProfileImage", this.currentUser.userID);
   },
   methods: {
     ViewRecipe(id) {
