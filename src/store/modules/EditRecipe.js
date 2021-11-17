@@ -286,9 +286,7 @@ const editRecipe = {
       await axios
         .post(
           `${process.env.VUE_APP_BACKEND}/api/cookingProcess/createProcessFormEdit/${id}`,
-          
-            payload
-          
+            payload  
         )
         .then((response) => {
           // commit("SET_cookingprocess", response.data);
