@@ -40,7 +40,7 @@
             </v-list-item>
           </v-list>
         </v-menu>
-        <v-chip @click="logout">logout</v-chip>
+        <v-chip outlined color="white" @click="logout">logout</v-chip>
       </v-app-bar>
       <v-navigation-drawer v-model="drawer" flat app dark>
         <v-list rounded>

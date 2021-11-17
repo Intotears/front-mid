@@ -5,7 +5,7 @@
     clearable
     single-line
     solo-inverted
-    @keyup.enter="searching()"
+    @keyup.enter="searchingIngredient()"
     dark
     class="pt-8 mt-auto"
     flat
@@ -35,9 +35,13 @@ export default {
     },
   },
   methods: {
-    searching() {
+    searchingIngredient() {
+      this.$store.dispatch("searchRecipes/loadSearchedIngredient", this.search);
+      this.$router.push(this.searchRoute)
+    },
+    searching(){
       this.$store.dispatch("searchRecipes/loadSearchedRecipe", this.search);
-      this.$router.push(this.searchRoute);
+      this.$router.push(this.searchRoute)
     },
   },
 

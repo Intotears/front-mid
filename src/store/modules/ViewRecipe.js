@@ -16,6 +16,7 @@ const viewRecipe = {
     user_rating: [], //เรียกข้อมูลจากตารางuser_rating
     user_ratingID: "",
     user_rateUp : [],
+    popularRecipe: [],
   },
   getters: {
     editDetail: (state) => state.recipe,
@@ -59,6 +60,9 @@ const viewRecipe = {
     },
     LOAD_user_rateUp: (state, user_rateUp) => {
       state.user_rateUp = user_rateUp;
+    },
+    LOAD_popularRecipe:(state,popularRecipe)=>{
+      state.popularRecipe = popularRecipe;
     },
     EDIT_user_rating: (state, user_rating) => {
       state.user_rating.forEach((r) => {
@@ -140,6 +144,16 @@ const viewRecipe = {
         .catch((error) => console.log(error));
       
     },
+        //Load Popular Recipe
+        async loadpopularRecipe({ commit }) {
+          await axios
+            .get(`${process.env.VUE_APP_BACKEND}/api/ratingOrderByDesc`)
+            .then((response) => {
+              commit("LOAD_popularRecipe", response.data);
+              console.log("view popularRecipe ", response.data);
+            })
+            .catch((error) => console.log(error));
+        },
 
     async loadDetailByID({ commit }, id) {
       await axios

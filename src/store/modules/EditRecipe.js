@@ -299,7 +299,7 @@ const editRecipe = {
       console.log("UPLOAD_RECIPE_IMAGE",image);
       await axios
         .post(
-          `${process.env.VUE_APP_BACKEND}/api/cookingProcess/uploadImageFormEdit`,
+          `${process.env.VUE_APP_BACKEND}/upload`,
           image
         )
         .then((response) => {
