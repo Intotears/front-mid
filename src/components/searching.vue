@@ -5,7 +5,7 @@
     clearable
     single-line
     solo-inverted
-    @keyup.enter="searchingIngredient()"
+    @keyup.enter="searching()"
     dark
     class="pt-8 mt-auto"
     flat
@@ -18,6 +18,8 @@ export default {
   data() {
     return {
       search: "",
+      formatArray: "",
+      searchArray:[],
       searchRoute:""
     };
   },
@@ -35,13 +37,20 @@ export default {
     },
   },
   methods: {
-    searchingIngredient() {
-      this.$store.dispatch("searchRecipes/loadSearchedIngredient", this.search);
-      this.$router.push(this.searchRoute)
-    },
-    searching(){
-      this.$store.dispatch("searchRecipes/loadSearchedRecipe", this.search);
-      this.$router.push(this.searchRoute)
+    async searching(){
+      // this.searchArray = await this.search.split(" ");
+      // this.formatArray =  this.search.split(" ")
+      // console.log("formatArray ",this.formatArray)
+      // for(var i in this.formatArray){
+      //   this.searchArray.push({
+      //     ingredientName: this.formatArray[i]
+      //   })
+      // }
+      console.log("searchArray ", this.searchArray)
+      //this.$store.dispatch("searchRecipes/loadSearchedIngredient", this.search);
+      //this.$store.dispatch("searchRecipes/loadSearchedRecipe", this.search);
+      this.$store.dispatch("searchRecipes/searchRecipeByFoodtag", this.searchArray);
+      this.$router.push(this.searchRoute).catch(()=>{})
     },
   },
 
