@@ -47,8 +47,8 @@ export default {
       //   })
       // }
       console.log("searchArray ", this.search)
-      //this.$store.dispatch("searchRecipes/loadSearchedIngredient", this.search);
-      //this.$store.dispatch("searchRecipes/loadSearchedRecipe", this.search);
+      this.$store.dispatch("searchRecipes/loadSearchedIngredient", this.search);
+      this.$store.dispatch("searchRecipes/loadSearchedRecipe", this.search);
       this.$store.dispatch("searchRecipes/searchRecipeByFoodtag", this.search);
       this.$router.push(this.searchRoute).catch(()=>{})
     },
