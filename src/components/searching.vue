@@ -46,10 +46,10 @@ export default {
       //     ingredientName: this.formatArray[i]
       //   })
       // }
-      console.log("searchArray ", this.searchArray)
+      console.log("searchArray ", this.search)
       //this.$store.dispatch("searchRecipes/loadSearchedIngredient", this.search);
       //this.$store.dispatch("searchRecipes/loadSearchedRecipe", this.search);
-      this.$store.dispatch("searchRecipes/searchRecipeByFoodtag", this.searchArray);
+      this.$store.dispatch("searchRecipes/searchRecipeByFoodtag", this.search);
       this.$router.push(this.searchRoute).catch(()=>{})
     },
   },
