@@ -7,11 +7,10 @@
           <v-simple-table align-self="center" style="cursor: pointer;">
             <template v-slot:default>
               <tbody
-                v-for="collection in collectionSam"
-                :key="collection.collectionID"
+        
               >
                 <tr
-                  v-for="recipeCol in collection.recipes"
+                  v-for="recipeCol in collectionSam.recipes"
                   :key="recipeCol.recipeID"
                 >
                   <td
@@ -27,7 +26,7 @@
                       {{ recipeCol.recipeName }}
                     </p>
                     <p class="text-h5 font-weight-medium">
-                      By {{ collection.user.username }}
+                      By {{ collectionSam.user.username }}
                     </p>
                     <p class="text-subtitle-1 font-weight-regular ">
                       {{ recipeCol.description ? recipeCol.description : "" }}
@@ -117,6 +116,7 @@ export default {
       );
       this.dialog = false;
       // window.location.reload();
+      
     },
   },
   mounted() {
@@ -124,6 +124,6 @@ export default {
       this.$router.push("/login");
     }
   },
-  watch() {},
+
 };
 </script>

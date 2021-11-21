@@ -4,48 +4,51 @@
       Result of <v-icon x-large color="black">mdi-magnify</v-icon>
     </p>
     <!-- แบ่งหน้า -->
-    <v-toolbar color="orange" dark>
-      <template v-slot:extension>
-        <v-tabs v-model="tabs" centered>
-          <v-tab> names </v-tab>
-          <v-tab> ingredients </v-tab>
-          <v-tab> food tags </v-tab>
-        </v-tabs>
-      </template>
+    <v-toolbar color="orange" dark max-height="100" :class="`rounded`">
+      <v-tabs v-model="tabs" centered>
+        <v-tab> names </v-tab>
+        <v-tab> ingredients </v-tab>
+        <v-tab> food tags </v-tab>
+      </v-tabs>
     </v-toolbar>
 
     <v-tabs-items v-model="tabs">
       <!-- name -->
       <v-tab-item>
-        <v-card flat>
-          <div v-for="searched in searchedRecipeName" :key="searched.recipeID">
+        <div v-for="searched in searchedRecipeName" :key="searched.recipeID">
+          <v-hover v-slot="{ hover }" open-delay="100">
             <v-card
               class="mx-auto ma-5 elevation-5"
               color="orange"
               dark
               style="max-width: 550px"
+              :elevation="hover ? 12 : 2"
+              :class="{ 'on-hover': hover }"
             >
-              <v-card-actions class="pa-4">
+              <v-card-actions class="pa-1">
                 <v-spacer></v-spacer>
-                <!-- <span class="grey--text text--lighten-2 text-caption mr-2">
-            ({{ rating }})
-          </span> -->
-                <!-- <v-rating
-            v-model="rating"
-            background-color="white"
-            color="yellow accent-4"
-            dense
-            half-increments
-            hover
-            size="18"
-            icon
-            readonly
-          ></v-rating> -->
+
+                <v-row align="center" justify="end">
+                  <span class="text-caption">
+                    ({{ searched.rating.ratingStars }})
+                  </span>
+                  <span class="mr-1"></span>
+                  <v-icon color="red darken-4" size="18">mdi-star</v-icon>
+                  <span class="mr-1"></span>
+
+                  <!-- <v-btn
+              icon
+            
+              @click="removeFromCollection(all.recipeID)"
+            >
+              <v-icon>mdi-bookmark-check</v-icon>
+            </v-btn> -->
+                </v-row>
 
                 <!-- <v-btn icon @click="addToCollection(all.recipeID)">
             <v-icon>mdi-bookmark-outline</v-icon>
           </v-btn> -->
-                <v-btn icon @click="removeFromCollection(all.recipeID)">
+                <v-btn icon @click="removeFromCollection(searched.recipeID)">
                   <v-icon>mdi-bookmark-check</v-icon>
                 </v-btn>
               </v-card-actions>
@@ -124,8 +127,8 @@
                 </v-col>
               </v-row>
             </v-card>
-          </div>
-        </v-card>
+          </v-hover>
+        </div>
       </v-tab-item>
       <!-- ingre -->
       <v-tab-item>
@@ -242,7 +245,10 @@
       <!-- foodtag -->
       <v-tab-item>
         <v-card flat>
-         <div v-for="searched in searchedRecipeFoodtag" :key="searched.recipeID">
+          <div
+            v-for="searched in searchedRecipeFoodtag"
+            :key="searched.recipeID"
+          >
             <v-card
               class="mx-auto ma-5 elevation-5"
               color="orange"

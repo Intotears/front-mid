@@ -14,7 +14,8 @@
         <v-col xs="12" sm="6" md="6" lg="6">
           <searching />
         </v-col>
-
+        
+        <v-spacer></v-spacer>
         <v-menu offset-y open-on-hover>
           <template v-slot:activator="{ on, attrs }">
             <v-btn text dark v-bind="attrs" v-on="on">
@@ -40,6 +41,7 @@
           </v-list>
         </v-menu>
         <v-chip outlined color="white" @click="logout">logout</v-chip>
+       
       </v-app-bar>
       <v-navigation-drawer v-model="drawer" flat app dark>
         <v-list rounded>
