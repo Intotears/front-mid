@@ -14,6 +14,7 @@ const createRecipe = {
     processes: [],
     thisRecipeID: "",
     selectTag: [],
+    image: ""
   },
   getters: {
     getRecipes: (state) => state.recipe,
@@ -58,12 +59,7 @@ const createRecipe = {
       const id = getters.findUserID;
       await axios
         .post(`${process.env.VUE_APP_BACKEND}/api/recipe/create/${id}`, {
-          shareOption: recipe.shareOption,
-          recipeName: recipe.recipeName,
-          description: recipe.description,
-          time: recipe.time,
-          serveNumber: recipe.serveNumber,
-          image: recipe.image,
+          recipe
         })
         .then((response) => {
           commit("SET_Detail", response.data);

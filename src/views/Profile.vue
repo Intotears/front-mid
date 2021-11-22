@@ -6,9 +6,7 @@
           <v-row justify="center">
             <v-col class="ma-3" cols="12" xs="6" sm="4" md="4" lg="4 ">
               <v-avatar class="profile-circle" color="grey" size="150">
-                <v-img
-                  :src="userIMG"
-                ></v-img>
+                <v-img :src="userIMG"></v-img>
               </v-avatar>
             </v-col>
 
@@ -71,17 +69,13 @@
         </v-card-title>
 
         <v-card-text>
-          <v-row justify="center">
-            <v-col class="" xs="6" sm="4" md="4" lg="4 ">
-              <v-img :src="userIMG">
-              </v-img
-              ><v-file-input
-                accept="image/png, image/jpeg, image/bmp"
-                prepend-icon="mdi-camera"
-                label="Avatar"
-              ></v-file-input>
+          <v-row justify-content="center">
+            <v-col cols="12" xs="12" sm="8" md="6" lg="4 ">
+              <v-img :src="userIMG" v-if="!isImageUpload"></v-img>
+              <v-img :src="url" v-else></v-img>
+              <input type="file" @change="onSelectedFile" />
             </v-col>
-            <v-col class="" cols="12" xs="6" sm="4" md="6" lg="6">
+            <v-col cols="12" xs="12" sm="4" md="6" lg="6">
               <p><strong>Name:</strong></p>
               <v-text-field v-model="currentUser.name"> </v-text-field>
               <p><strong>Username:</strong></p>
@@ -93,13 +87,33 @@
                 :rules="passwordRules"
               >
               </v-text-field>
-              <v-btn @click="statusEditFunc()">Discard</v-btn>
+              <v-btn dark @click="dialog = true" color="red">Discard</v-btn>
               <v-btn
-                @click="[editProfile(), statusEditFunc()]"
+                dark
+                @click="[editProfile()]"
                 color="success"
                 @keyup.enter="editProfile()"
                 >Done</v-btn
               >
+              <div v-if="message" class="alert " color="red">
+                {{ message }}
+              </div>
+              <v-dialog v-model="dialog" persistent max-width="290">
+                <v-card>
+                  <v-card-title class="headline">
+                    Are you sure to discard all change?
+                  </v-card-title>
+                  <v-card-actions>
+                    <v-btn color="green darken-1" text @click="dialog = false">
+                      Cancel
+                    </v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn color="error" text @click="discardAll">
+                      Discard
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-dialog>
             </v-col>
           </v-row>
         </v-card-text>
@@ -114,9 +128,13 @@ export default {
   name: "Profile",
   data() {
     return {
-      oldUsername: "",
+      dialog: false,
       canEdit: false,
       passwordRules: [(v) => !!v || "Password is required"],
+      url: null,
+      isImageUpload: false,
+      message: "",
+      selectedFile: null,
     };
   },
   computed: {
@@ -143,17 +161,48 @@ export default {
     statusEditFunc() {
       this.canEdit = !this.canEdit;
     },
-    editProfile() {
-      if (this.currentUser.name != "") {
-        console.log("edit name", this.currentUser);
-        this.$store.dispatch("auth/editIdentity", this.currentUser);
-      }
+    discardAll() {
+      this.canEdit = !this.canEdit;
+      window.location.reload();
+    },
+    async editProfile() {
+      this.message = "";
+      console.log("WTF", this.currentUser.password);
+      if (this.currentUser.password != null) {
+        if (this.currentUser.name != null) {
+          console.log("edit name", this.currentUser);
+          this.$store.dispatch("auth/editIdentity", this.currentUser);
+        }
 
-      if (this.currentUser.username != "") {
-        console.log("edit username", this.currentUser);
-        this.$store.dispatch("auth/editUsername", this.currentUser);
+        if (this.currentUser.username != null) {
+          console.log("edit username", this.currentUser);
+          this.$store.dispatch("auth/editUsername", this.currentUser);
+        }
+        const fd = new FormData();
+        fd.append("file", this.selectedFile);
+        this.$store.dispatch("userimage/editImage", fd, {
+          onUploadProges: (uploadEvent) => {
+            console.log(
+              "Upload Prosgres: " +
+                Math.round((uploadEvent.loaded / uploadEvent.total) * 100) +
+                "%"
+            );
+          },
+        });
+        this.canEdit = !this.canEdit;
+      } else {
+        this.message = "Enter your password";
       }
     },
+    onSelectedFile(event) {
+      this.selectedFile = event.target.files[0];
+      console.log(this.selectedFile);
+      this.url = URL.createObjectURL(this.selectedFile);
+      this.isImageUpload = true;
+
+      console.log("url : " + this.url);
+    },
+    
   },
   mounted() {
     if (!this.currentUser) {
@@ -162,3 +211,6 @@ export default {
   },
 };
 </script>
+<style>
+
+</style>
