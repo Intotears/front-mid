@@ -99,6 +99,7 @@
                 <v-container>
                   <h3>Share option</h3>
                   <v-switch
+                  inset
                     v-model="shareOption"
                     flat
                     label="กดเพื่อเปิดเผยสูตรต่อสาธารณะ"

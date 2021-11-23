@@ -125,11 +125,11 @@ export default {
   methods: {
     addToCollection(id) {
       this.$store.dispatch("mycollection/StoreUserID", this.currentUser.userID);
-      this.$store.dispatch("mycollection/AddToCollection", id);
+      this.$store.dispatch("mycollection/addToCollection", id);
     },
     removeFromCollection(id) {
       this.$store.dispatch("mycollection/StoreUserID", this.currentUser.userID);
-      this.$store.dispatch("mycollection/RemoveFromCollectionn", id);
+      this.$store.dispatch("mycollection/removeFromCollectionn", id);
     },
     ViewRecipe(id) {
       this.$store.dispatch("viewRecipe/storeID", id),

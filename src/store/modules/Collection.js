@@ -49,7 +49,7 @@ const mycollection = {
         })
         .catch((error) => console.log(error));
     },
-    async AddToCollection({ commit, getters }, id) {
+    async addToCollection({ commit, getters }, id) {
       const userID = getters.findUserID;
       await axios
         .post(`${process.env.VUE_APP_BACKEND}/api/add/collection/${userID}/` + id ,

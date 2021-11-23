@@ -6,19 +6,33 @@
         <v-container>
           <span>สูตรโดยคุณ</span>
           <v-avatar class="ma-3" size="25">
-            <v-img ></v-img>
+            <v-img></v-img>
           </v-avatar>
-          <span v-if="detail.userID!=currentUser.userID" class="text-decoration-none" style="margin-left: -10px">
-            <router-link :to="{ path: '/userProfile/' + detail.userID}" class="text-decoration-none black--text">         
-                {{ detail.user ? detail.user.username : "-" }}
+          <span
+            v-if="detail.userID != currentUser.userID"
+            class="text-decoration-none"
+            style="margin-left: -10px"
+          >
+            <router-link
+              :to="{ path: '/userProfile/' + detail.userID }"
+              class="text-decoration-none black--text"
+            >
+              {{ detail.user ? detail.user.username : "-" }}
             </router-link>
           </span>
-          <span v-else span class="text-decoration-none" style="margin-left: -10px">
-            <router-link :to="{ path: '/profile/'}" class="text-decoration-none black--text">      
-                {{ detail.user ? detail.user.username : "-" }}
+          <span
+            v-else
+            span
+            class="text-decoration-none"
+            style="margin-left: -10px"
+          >
+            <router-link
+              :to="{ path: '/profile/' }"
+              class="text-decoration-none black--text"
+            >
+              {{ detail.user ? detail.user.username : "-" }}
             </router-link>
           </span>
-          
         </v-container>
         <v-row>
           <v-col col="5"></v-col>
@@ -28,6 +42,34 @@
             </v-avatar>
           </v-col>
           <v-col col="5"></v-col>
+        </v-row>
+      </v-container>
+
+      <v-container>
+        <v-row>
+          <!-- <v-col col="10"></v-col> -->
+          <!-- Rating -->
+          <v-col>
+            <span class="text-caption">
+              ({{ detail.rating.ratingStars }})
+            </span>
+            <span class="mr-1"></span>
+            <v-icon color="red darken-4" size="18">mdi-star</v-icon>
+          </v-col>
+
+          <!-- Collection -->
+          <v-col>
+            <v-btn
+              v-if="collection"
+              icon
+              @click="addToCollection(detail.recipeID)"
+            >
+              <v-icon>mdi-bookmark-outline</v-icon>
+            </v-btn>
+            <v-btn v-else icon @click="removeFromCollection(detail.recipeID)">
+              <v-icon>mdi-bookmark-check</v-icon>
+            </v-btn>
+          </v-col>
         </v-row>
       </v-container>
 
@@ -63,7 +105,7 @@
 
 <script>
 import router from "@/router";
-//import { mapState } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "Detail",
@@ -71,6 +113,7 @@ export default {
     return {
       url: null,
       image: null,
+      collection: null,
     };
   },
   components: {
@@ -80,25 +123,60 @@ export default {
     Preview_image() {
       this.url = URL.createObjectURL(this.image);
     },
+    addToCollection(id) {
+      this.$store.dispatch("mycollection/StoreUserID", this.currentUser.userID);
+      this.$store.dispatch("mycollection/addToCollection", id);
+      this.collection = false;
+    },
+    removeFromCollection(id) {
+      this.$store.dispatch("mycollection/StoreUserID", this.currentUser.userID);
+      this.$store.dispatch("mycollection/removeFromCollection", id);
+      this.collection = true;
+    },
+    async isCollected() {
+      for (var i in await this.recipeCollection.recipes) {
+        if (
+          this.thisRecipe.find(
+            (v) => v.recipeID == this.recipeCollection.recipes[i].recipeID
+          )
+        ) {
+          this.collection = false;
+          console.log("มีใน collection");
+        }
+      }
+
+      if (this.collection == (await null)) {
+        this.collection = true;
+        console.log("ไม่มีใน collection");
+      }
+    },
   },
   computed: {
-    // ...mapState("viewRecipe", ["recipe"]),
-    // thisRecipe() {
-    //   return this.recipe.find((v) => v.recipeID == this.$route.params.id);
-    // },
     thisRecipe() {
       return this.$store.state.viewRecipe.recipe;
     },
     currentUser() {
       return this.$store.state.auth.user;
     },
+    ...mapState("mycollection", ["recipeCollection"]),
   },
-  created() {
-    this.$store.dispatch(
+  async created() {
+    await this.$store.dispatch(
+      "mycollection/loadCollection",
+      this.currentUser.userID
+    );
+
+    await this.$store.dispatch(
       "viewRecipe/loadDetailByID",
       router.currentRoute.params.id
     );
-     this.$store.dispatch("editRecipe/loadImage", router.currentRoute.params.id);
+
+    await this.isCollected();
+
+    await this.$store.dispatch(
+      "editRecipe/loadImage",
+      router.currentRoute.params.id
+    );
   },
 };
 </script>

@@ -50,12 +50,12 @@
 
                 <v-row align="center" justify="end">
                   <span class="text-caption">
-                   Rating :  ({{ all.rating.ratingStars }})
+                    Rating : ({{ all.rating.ratingStars }})
                   </span>
                   <span class="mr-1"></span>
                   <v-icon color="red darken-4" size="18">mdi-star</v-icon>
                   <span class="mr-1"></span>
-                  <span
+                  <!-- <span
                     v-for="(collection, i) in recipeCollection.recipes"
                     :key="i"
                   >
@@ -63,17 +63,21 @@
                       v-if="collection.recipeID == all.recipeID"
                       icon
                       @click="removeFromCollection(all.recipeID)"
-                      :is="this.makeTrue()"
+                      
+                      this.makeTrue()
                     >
                       <v-icon>mdi-bookmark-check</v-icon>
                     </v-btn>
-                    <span v-else :is="makeFalse()"></span>
-                  </span>
-                 
-                  <v-btn v-if="isCollected == false" icon @click="addToCollection(all.recipeID)" >
+                    <span v-else this.makeFalse()></span>
+                
+                  </span> -->
+                  <!-- <v-btn
+                    v-if="isCollected == false"
+                    icon
+                    @click="addToCollection(all.recipeID)"
+                  >
                     <v-icon>mdi-bookmark-outline</v-icon>
-                  </v-btn>
-                  <span   :is="makeTrue()"></span>
+                  </v-btn> -->
                 </v-row>
               </v-list-item>
             </v-card-actions>
@@ -107,14 +111,25 @@ export default {
       isCollected: Boolean,
     };
   },
+
   computed: {
     ...mapState("allrecipes", ["allRecipes"]),
     ...mapState("mycollection", ["recipeCollection"]),
 
-
     currentUser() {
       return this.$store.state.auth.user;
     },
+
+    // makeTrue() {
+    //   return this.isCollected = true;
+    // },
+    // makeFalse() {
+    //   return this.isCollected = false;
+    // },
+
+    // alreadyCollected(){
+
+    // }
   },
   async created() {
     await this.$store.dispatch("allrecipes/loadAllRecipes");
@@ -127,19 +142,13 @@ export default {
     ShowRating() {
       return this.rating.find((v) => v.recipeID == this.allRecipes.recipeID);
     },
-    makeTrue(){
-      return this.isCollected = true;
-    },
-    makeFalse(){
-      return this.isCollected = false;
-    },
     addToCollection(id) {
       this.$store.dispatch("mycollection/StoreUserID", this.currentUser.userID);
-      this.$store.dispatch("mycollection/AddToCollection", id);
+      this.$store.dispatch("mycollection/addToCollection", id);
     },
     removeFromCollection(id) {
       this.$store.dispatch("mycollection/StoreUserID", this.currentUser.userID);
-      this.$store.dispatch("mycollection/RemoveFromCollectionn", id);
+      this.$store.dispatch("mycollection/removeFromCollection", id);
     },
     ViewRecipe(id) {
       this.$store.dispatch("viewRecipe/storeID", id),
@@ -147,11 +156,9 @@ export default {
     },
   },
 
-  watch: {
-   if(){
-
-   }
-  },
+  // watch: {
+  //   if() {},
+  // },
 };
 </script>
 
