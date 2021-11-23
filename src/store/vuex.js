@@ -11,7 +11,7 @@ import mycollection from './modules/Collection';
 import searchRecipes from './modules/SearchRecipe';
 import editFoodtag from './modules/EditFoodtag';
 import userimage from './modules/UserIMG';
-
+import recipeimage from './modules/RecipeIMG';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -29,6 +29,7 @@ export default new Vuex.Store({
     mycollection,
     searchRecipes,
     editFoodtag,
-    userimage
+    userimage,
+    recipeimage
   },
 });

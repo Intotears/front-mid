@@ -10,10 +10,11 @@
         <v-avatar class="ma-1" size="70" rounded>
           <v-img :src="require('@/assets/logo.png')"></v-img>
         </v-avatar>
-
+        <v-spacer />
         <v-col xs="12" sm="6" md="6" lg="6">
           <searching />
         </v-col>
+        <v-spacer />
         
         <v-spacer></v-spacer>
         <v-menu offset-y open-on-hover>

@@ -107,7 +107,7 @@ export default {
       if (this.thisRecipe.recipeName != "") {
         console.log("editdetail recipe", this.thisRecipe);
         this.$store.dispatch("editRecipe/storeRecipeID", this.$route.params.id),
-          this.$store.dispatch("editRecipe/EditDetail", this.thisRecipe);
+        this.$store.dispatch("editRecipe/EditDetail", this.thisRecipe);
       }
       //uploadRecipeImage
       this.$store.dispatch("editRecipe/uploadRecipeImage",  this.image);

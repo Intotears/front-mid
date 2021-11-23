@@ -35,15 +35,11 @@
                   <v-row>
                     <v-col col="5"></v-col>
                     <v-col col="2">
-                      <v-avatar class="ma-3" size="350" rounded>
-                        <v-img :src="url"></v-img>
+                      <v-avatar>
+                        <v-img :src="recipeIMG" v-if="!isImageUpload"></v-img>
+                        <v-img :src="url" v-else></v-img>
                       </v-avatar>
-                      <v-file-input
-                        @change="Preview_image"
-                        v-model="image"
-                        label="Input"
-                        prepend-icon="mdi-camera"
-                      ></v-file-input>
+                      <input type="file" @change="onSelectedFile" />
                     </v-col>
                     <v-col col="5"></v-col>
                   </v-row>
@@ -468,7 +464,7 @@ export default {
       todos: [],
       step: 1,
       url: null,
-      image: null,
+      selectedFile: null,
       recipeName: "",
       description: "",
       time: "",
@@ -482,23 +478,32 @@ export default {
       activator: null,
 
       nameRules: [(v) => !!v || "Recipe name cannot be null"],
+      isImageUpload: false,
     };
   },
   methods: {
-    Preview_image() {
-      this.url = URL.createObjectURL(this.image);
+    onSelectedFile(event) {
+      this.selectedFile = event.target.files[0];
+      console.log(this.selectedFile);
+      this.url = URL.createObjectURL(this.selectedFile);
+      this.isImageUpload = true;
+
+      console.log("url : " + this.url);
     },
     addDetail() {
+      const fd = new FormData();
+      fd.append("file", this.selectedFile);
       let recipe = {
         recipeName: this.recipeName,
         description: this.description,
-        image: this.image,
         time: this.time,
         serveNumber: this.serveNumber,
         shareOption: this.shareOption,
       };
+
       this.$store.dispatch("createRecipe/StoreUserID", this.currentUser.userID);
       this.$store.dispatch("createRecipe/CreateDetail", recipe);
+      this.$store.dispatch("createRecipe/addRecipeImage", fd);
     },
     add() {
       this.mIngredients.push({
@@ -587,8 +592,10 @@ export default {
       const text = hasValue(itemText);
       const query = hasValue(queryText);
       return (
-        text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) >
-        -1
+        text
+          .toString()
+          .toLowerCase()
+          .indexOf(query.toString().toLowerCase()) > -1
       );
     },
     EditRecipe(id) {
@@ -627,6 +634,7 @@ export default {
     ...mapState("createRecipe", ["sIngredients"]),
     ...mapState("createRecipe", ["flavoring"]),
     ...mapState("createRecipe", ["processes"]),
+    ...mapState("recipeimage", ["recipeIMG"]),
 
     thisFoodtag() {
       return this.$store.state.showFoodtag.foodtag;
@@ -634,6 +642,7 @@ export default {
   },
   mounted() {},
   created() {
+    this.$store.dispatch("recipeimage/loadRecipeDefaultImage");
     this.$store.dispatch("showFoodtag/loadFoodtag");
   },
   destroyed() {

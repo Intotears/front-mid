@@ -1,8 +1,8 @@
 <template>
   <v-container>
-    <v-switch inset>
-       
-    </v-switch>
+    <div>
+     dddddddddd
+    </div>
   </v-container>
 </template>
 

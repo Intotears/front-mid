@@ -25,7 +25,7 @@
                   <v-img
                     class="elevation-6"
                     alt=""
-                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                    :src="all.user.Image.imgLink"
                   ></v-img>
                 </v-list-item-avatar>
 
@@ -137,6 +137,7 @@ export default {
       "mycollection/loadCollection",
       this.currentUser.userID
     );
+
   },
   methods: {
     ShowRating() {
