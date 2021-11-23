@@ -148,7 +148,6 @@ const editRecipe = {
           description: recipe.description,
           time: recipe.time,
           serveNumber: recipe.serveNumber,
-          image: recipe.image,
         })
         .then((response) => {
           commit("EDIT_DETAIL", response.data);

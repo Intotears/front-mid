@@ -14,7 +14,7 @@ const createRecipe = {
     processes: [],
     thisRecipeID: "",
     selectTag: [],
-    image: ""
+    recipeIMG: "",
   },
   getters: {
     getRecipes: (state) => state.recipe,
@@ -50,6 +50,9 @@ const createRecipe = {
     LOAD_Selectfoodtag: (state, selectTag) => {
       state.selectTag = selectTag;
     },
+    SET_RECIPE_IMAGE: (state, recipe) => {
+      state.recipeIMG = recipe;
+    },
   },
   actions: {
     async StoreUserID({ commit }, id) {
@@ -59,7 +62,11 @@ const createRecipe = {
       const id = getters.findUserID;
       await axios
         .post(`${process.env.VUE_APP_BACKEND}/api/recipe/create/${id}`, {
-          recipe
+          shareOption: recipe.shareOption,
+          recipeName: recipe.recipeName,
+          description: recipe.description,
+          time: recipe.time,
+          serveNumber: recipe.serveNumber,
         })
         .then((response) => {
           commit("SET_Detail", response.data);
@@ -74,6 +81,18 @@ const createRecipe = {
           return response.data;
         })
         .catch((error) => console.error(error.response.data));
+    },
+    
+    async addRecipeImage({ commit, getters }, image) {
+      const id = getters.findUserID;
+      console.log("Hello", image);
+      await axios
+        .put(`${process.env.VUE_APP_BACKEND}/api/profile/edit/image/${id}`, image)
+        .then((response) => {
+          commit("SET_RECIPE_IMAGE", response.data);
+          console.log(" SET_RECIPE_IMAGE", response.data);
+        })
+        .catch((error) => console.log(error.response.data));
     },
 
     //Cooking Process

@@ -35,11 +35,10 @@
                   <v-row>
                     <v-col col="5"></v-col>
                     <v-col col="2">
-                
+                      <v-avatar>
                         <v-img :src="recipeIMG" v-if="!isImageUpload"></v-img>
                         <v-img :src="url" v-else></v-img>
-      
-
+                      </v-avatar>
                       <input type="file" @change="onSelectedFile" />
                     </v-col>
                     <v-col col="5"></v-col>
@@ -499,11 +498,11 @@ export default {
         time: this.time,
         serveNumber: this.serveNumber,
         shareOption: this.shareOption,
-        fd: fd,
       };
 
       this.$store.dispatch("createRecipe/StoreUserID", this.currentUser.userID);
       this.$store.dispatch("createRecipe/CreateDetail", recipe);
+      this.$store.dispatch("createRecipe/addRecipeImage", fd);
     },
     add() {
       this.mIngredients.push({

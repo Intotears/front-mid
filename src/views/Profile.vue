@@ -90,7 +90,7 @@
               <v-btn dark @click="dialog = true" color="red">Discard</v-btn>
               <v-btn
                 dark
-                @click="[editProfile()]"
+                @click="[editProfile(), reloadingPage()]"
                 color="success"
                 @keyup.enter="editProfile()"
                 >Done</v-btn
@@ -179,7 +179,7 @@ export default {
           this.$store.dispatch("auth/editUsername", this.currentUser);
         }
         const fd = new FormData();
-        fd.append("file", this.selectedFile);
+        fd.append("file", this.selectedFile, this.selectedFile.name);
         this.$store.dispatch("userimage/editImage", fd, {
           onUploadProges: (uploadEvent) => {
             console.log(
@@ -202,7 +202,9 @@ export default {
 
       console.log("url : " + this.url);
     },
-    
+    reloadingPage() {
+      window.location.reload();
+    },
   },
   mounted() {
     if (!this.currentUser) {
@@ -211,6 +213,4 @@ export default {
   },
 };
 </script>
-<style>
-
-</style>
+<style></style>

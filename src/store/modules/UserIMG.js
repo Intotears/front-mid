@@ -35,7 +35,7 @@ const userimage = {
       const id = getters.findUserID;
       console.log("Hello", image);
       await axios
-        .post(`${process.env.VUE_APP_BACKEND}/api/profile/edit/image/${id}`, image)
+        .put(`${process.env.VUE_APP_BACKEND}/api/profile/edit/image/${id}`, image)
         .then((response) => {
           commit("EDIT_PROFILE_IMAGE", response.data);
           console.log("EDIT_PROFILE_IMAGE", response.data);

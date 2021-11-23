@@ -9,11 +9,10 @@
         lg="4"
         v-for="all in allRecipes"
         :key="all.recipeID"
-        
       >
         <v-hover v-slot="{ hover }" open-delay="100">
           <v-card
-            class="mx-auto my-4 "
+            class="mx-auto my-4"
             :elevation="hover ? 12 : 2"
             :class="{ 'on-hover': hover }"
             color="orange lighten-1"
@@ -26,7 +25,7 @@
                   <v-img
                     class="elevation-6"
                     alt=""
-                    src="https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortCurly&accessoriesType=Prescription02&hairColor=Black&facialHairType=Blank&clotheType=Hoodie&clotheColor=White&eyeType=Default&eyebrowType=DefaultNatural&mouthType=Default&skinColor=Light"
+                    :src="all.user.Image.imgLink"
                   ></v-img>
                 </v-list-item-avatar>
 
@@ -50,24 +49,39 @@
                 </v-list-item-content>
 
                 <v-row align="center" justify="end">
-                  <span class="text-caption"> ({{ all.rating.ratingStars }}) </span>
+                  <span class="text-caption">
+                   Rating :  ({{ all.rating.ratingStars }})
+                  </span>
                   <span class="mr-1"></span>
                   <v-icon color="red darken-4" size="18">mdi-star</v-icon>
                   <span class="mr-1"></span>
-                  <v-btn icon @click="addToCollection(all.recipeID)">
+                  <span
+                    v-for="(collection, i) in recipeCollection.recipes"
+                    :key="i"
+                  >
+                    <v-btn
+                      v-if="collection.recipeID == all.recipeID"
+                      icon
+                      @click="removeFromCollection(all.recipeID)"
+                      :is="this.makeTrue()"
+                    >
+                      <v-icon>mdi-bookmark-check</v-icon>
+                    </v-btn>
+                    <span v-else :is="makeFalse()"></span>
+                  </span>
+                 
+                  <v-btn v-if="isCollected == false" icon @click="addToCollection(all.recipeID)" >
                     <v-icon>mdi-bookmark-outline</v-icon>
                   </v-btn>
-                  <!-- <v-btn
-              icon
-            
-              @click="removeFromCollection(all.recipeID)"
-            >
-              <v-icon>mdi-bookmark-check</v-icon>
-            </v-btn> -->
+                  <span   :is="makeTrue()"></span>
                 </v-row>
               </v-list-item>
             </v-card-actions>
-            <v-img @click="ViewRecipe(all.recipeID)" :src="all.img" height="250px"></v-img>
+            <v-img
+              @click="ViewRecipe(all.recipeID)"
+              :src="all.img"
+              height="250px"
+            ></v-img>
             <v-card-title class="text-h5">
               <span>{{ all.recipeName }}</span>
             </v-card-title>
@@ -88,27 +102,38 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      rating: 4.5,
+      // rating: 4.5,
       canCollect: true,
+      isCollected: Boolean,
     };
   },
   computed: {
     ...mapState("allrecipes", ["allRecipes"]),
     ...mapState("mycollection", ["recipeCollection"]),
 
+
     currentUser() {
       return this.$store.state.auth.user;
     },
   },
-  created() {
-    this.$store.dispatch("allrecipes/loadAllRecipes");
-    
+  async created() {
+    await this.$store.dispatch("allrecipes/loadAllRecipes");
+    await this.$store.dispatch(
+      "mycollection/loadCollection",
+      this.currentUser.userID
+    );
+
   },
   methods: {
     ShowRating() {
       return this.rating.find((v) => v.recipeID == this.allRecipes.recipeID);
     },
-
+    makeTrue(){
+      return this.isCollected = true;
+    },
+    makeFalse(){
+      return this.isCollected = false;
+    },
     addToCollection(id) {
       this.$store.dispatch("mycollection/StoreUserID", this.currentUser.userID);
       this.$store.dispatch("mycollection/AddToCollection", id);
@@ -121,6 +146,12 @@ export default {
       this.$store.dispatch("viewRecipe/storeID", id),
         this.$router.push({ path: `/viewRecipe/${id}` });
     },
+  },
+
+  watch: {
+   if(){
+
+   }
   },
 };
 </script>
