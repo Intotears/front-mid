@@ -71,6 +71,11 @@ const routes = [
     name: "result",
     component:() => import("@/views/Result.vue"),
   },
+  {
+    path: "/foodtagResult",
+    name: "foodtagResult",
+    component:() => import("@/views/FoodtagResult.vue"),
+  },
 ];
 
 const router = new VueRouter({

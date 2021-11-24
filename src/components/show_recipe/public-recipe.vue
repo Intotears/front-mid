@@ -25,8 +25,9 @@
                   <v-img
                     class="elevation-6"
                     alt=""
-                    :src="all.user.Image.imgLink"
+                   
                   ></v-img>
+                   <!-- :src="all.user.Image.imgLink" -->
                 </v-list-item-avatar>
 
                 <v-list-item-content>
@@ -55,29 +56,6 @@
                   <span class="mr-1"></span>
                   <v-icon color="red darken-4" size="18">mdi-star</v-icon>
                   <span class="mr-1"></span>
-                  <!-- <span
-                    v-for="(collection, i) in recipeCollection.recipes"
-                    :key="i"
-                  >
-                    <v-btn
-                      v-if="collection.recipeID == all.recipeID"
-                      icon
-                      @click="removeFromCollection(all.recipeID)"
-                      
-                      this.makeTrue()
-                    >
-                      <v-icon>mdi-bookmark-check</v-icon>
-                    </v-btn>
-                    <span v-else this.makeFalse()></span>
-                
-                  </span> -->
-                  <!-- <v-btn
-                    v-if="isCollected == false"
-                    icon
-                    @click="addToCollection(all.recipeID)"
-                  >
-                    <v-icon>mdi-bookmark-outline</v-icon>
-                  </v-btn> -->
                 </v-row>
               </v-list-item>
             </v-card-actions>
@@ -119,17 +97,6 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
-
-    // makeTrue() {
-    //   return this.isCollected = true;
-    // },
-    // makeFalse() {
-    //   return this.isCollected = false;
-    // },
-
-    // alreadyCollected(){
-
-    // }
   },
   async created() {
     await this.$store.dispatch("allrecipes/loadAllRecipes");
@@ -137,7 +104,6 @@ export default {
       "mycollection/loadCollection",
       this.currentUser.userID
     );
-
   },
   methods: {
     ShowRating() {

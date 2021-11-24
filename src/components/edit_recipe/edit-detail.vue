@@ -110,7 +110,7 @@ export default {
         this.$store.dispatch("editRecipe/EditDetail", this.thisRecipe);
       }
       //uploadRecipeImage
-      this.$store.dispatch("editRecipe/uploadRecipeImage",  this.image);
+      // this.$store.dispatch("editRecipe/uploadRecipeImage",  this.image);
     },
   },
   computed: {

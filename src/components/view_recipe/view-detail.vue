@@ -47,18 +47,17 @@
 
       <v-container>
         <v-row>
-          <!-- <v-col col="10"></v-col> -->
+          <v-col col="9" md="9"></v-col>
           <!-- Rating -->
-          <v-col>
-            <span class="text-caption">
-              ({{ detail.rating.ratingStars }})
+          <!-- Collection -->
+          <v-col cols="3" md="3">  Rating : 
+            <span class="text-caption" >
+            ({{ detail.rating.ratingStars }})
             </span>
             <span class="mr-1"></span>
             <v-icon color="red darken-4" size="18">mdi-star</v-icon>
-          </v-col>
-
-          <!-- Collection -->
-          <v-col>
+            <span class="mr-1"> | </span>
+            Collection :
             <v-btn
               v-if="collection"
               icon

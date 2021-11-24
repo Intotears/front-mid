@@ -25,7 +25,7 @@
               :elevation="hover ? 12 : 2"
               :class="{ 'on-hover': hover }"
             >
-              <v-card-actions class="pa-1">
+              <v-card-actions class="pa-4">
                 <v-spacer></v-spacer>
 
                 <v-row align="center" justify="end">
@@ -35,22 +35,7 @@
                   <span class="mr-1"></span>
                   <v-icon color="red darken-4" size="18">mdi-star</v-icon>
                   <span class="mr-1"></span>
-
-                  <!-- <v-btn
-              icon
-            
-              @click="removeFromCollection(all.recipeID)"
-            >
-              <v-icon>mdi-bookmark-check</v-icon>
-            </v-btn> -->
                 </v-row>
-
-                <!-- <v-btn icon @click="addToCollection(all.recipeID)">
-            <v-icon>mdi-bookmark-outline</v-icon>
-          </v-btn> -->
-                <v-btn icon @click="removeFromCollection(searched.recipeID)">
-                  <v-icon>mdi-bookmark-check</v-icon>
-                </v-btn>
               </v-card-actions>
               <v-divider dark class="mb-2"></v-divider>
 
@@ -142,27 +127,15 @@
             >
               <v-card-actions class="pa-4">
                 <v-spacer></v-spacer>
-                <!-- <span class="grey--text text--lighten-2 text-caption mr-2">
-            ({{ rating }})
-          </span> -->
-                <!-- <v-rating
-            v-model="rating"
-            background-color="white"
-            color="yellow accent-4"
-            dense
-            half-increments
-            hover
-            size="18"
-            icon
-            readonly
-          ></v-rating> -->
 
-                <!-- <v-btn icon @click="addToCollection(all.recipeID)">
-            <v-icon>mdi-bookmark-outline</v-icon>
-          </v-btn> -->
-                <v-btn icon @click="removeFromCollection(all.recipeID)">
-                  <v-icon>mdi-bookmark-check</v-icon>
-                </v-btn>
+                <v-row align="center" justify="end">
+                  <span class="text-caption">
+                    ({{ searched.rating.ratingStars }})
+                  </span>
+                  <span class="mr-1"></span>
+                  <v-icon color="red darken-4" size="18">mdi-star</v-icon>
+                  <span class="mr-1"></span>
+                </v-row>
               </v-card-actions>
               <v-divider dark class="mb-2"></v-divider>
 
@@ -257,27 +230,15 @@
             >
               <v-card-actions class="pa-4">
                 <v-spacer></v-spacer>
-                <!-- <span class="grey--text text--lighten-2 text-caption mr-2">
-            ({{ rating }})
-          </span> -->
-                <!-- <v-rating
-            v-model="rating"
-            background-color="white"
-            color="yellow accent-4"
-            dense
-            half-increments
-            hover
-            size="18"
-            icon
-            readonly
-          ></v-rating> -->
 
-                <!-- <v-btn icon @click="addToCollection(all.recipeID)">
-            <v-icon>mdi-bookmark-outline</v-icon>
-          </v-btn> -->
-                <v-btn icon @click="removeFromCollection(all.recipeID)">
-                  <v-icon>mdi-bookmark-check</v-icon>
-                </v-btn>
+                <v-row align="center" justify="end">
+                  <span class="text-caption">
+                    ({{ searched.rating.ratingStars }})
+                  </span>
+                  <span class="mr-1"></span>
+                  <v-icon color="red darken-4" size="18">mdi-star</v-icon>
+                  <span class="mr-1"></span>
+                </v-row>
               </v-card-actions>
               <v-divider dark class="mb-2"></v-divider>
 
