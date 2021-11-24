@@ -55,7 +55,7 @@
               required
             ></v-checkbox> -->
 
-            <v-btn color="primary" dark x-large @click="handleRegister"
+            <v-btn class="ma-2" color="orange darken-1" dark x-large @click="handleRegister"
               >Sign up</v-btn
             >
             <div

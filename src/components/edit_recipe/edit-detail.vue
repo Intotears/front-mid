@@ -5,16 +5,22 @@
       <v-row>
         <v-col col="5"></v-col>
         <v-col col="2">
-          <v-avatar class="ma-3" size="350" rounded>
-            <v-img :src="url" v-if="isPreviewUpload"></v-img>
-            <v-img :src="thisRecipe.img" v-else></v-img>
-          </v-avatar>
-          <v-file-input
-            @change="Preview_image"
-            v-model="image"
-            label="Input"
-            prepend-icon="mdi-camera"
-          ></v-file-input>
+           <v-img
+                        src="https://storage.googleapis.com/download/storage/v1/b/yummyyum-project/o/recipe-default-image.png?generation=1637744933088326&alt=media"
+                        v-if="!isImageUpload"
+                        max-height="350"
+                        max-width="550"
+                     
+                      ></v-img>
+                      <v-img
+                        :src="url"
+                        v-else
+                        max-height="350"
+                        max-width="550"
+                        aspect-ratio="16/9"
+                      ></v-img>
+
+                      <input class="ma-2" type="file" @change="onSelectedFile" />
         </v-col>
         <v-col col="5"></v-col>
       </v-row>
@@ -92,14 +98,16 @@ export default {
     return {
       url: null,
       image: null,
-      isPreviewUpload: false,
+      isImageUpload: false,
       isRecipeName: [(v) => !!v || "Recipe name is required"],
     };
   },
   methods: {
-    Preview_image() {
-      this.url = URL.createObjectURL(this.image);
-      this.isPreviewUpload = true;
+     onSelectedFile(event) {
+      this.selectedFile = event.target.files[0];
+      console.log(this.selectedFile);
+      this.url = URL.createObjectURL(this.selectedFile);
+      this.isImageUpload = true;
 
       console.log("url : " + this.url);
     },

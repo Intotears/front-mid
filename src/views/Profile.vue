@@ -14,12 +14,14 @@
               <v-row>
                 <v-col>
                   <h1>@{{ currentUser.name }}</h1>
-                  <v-btn icon @click="statusEditFunc()">
+                </v-col>
+                <v-col
+                  ><v-btn icon @click="statusEditFunc()">
                     <v-icon>
                       mdi-pencil
                     </v-icon>
-                  </v-btn>
-                </v-col>
+                  </v-btn></v-col
+                >
               </v-row>
               <v-row>
                 <v-col>
@@ -71,9 +73,10 @@
         <v-card-text>
           <v-row justify-content="center">
             <v-col cols="12" xs="12" sm="8" md="6" lg="4 ">
-              <v-img :src="userIMG" v-if="!isImageUpload"></v-img>
+              <v-img :src="userIMG" v-if="!isImageUpload" aspect-ratio="1"></v-img>
               <v-img :src="url" v-else></v-img>
-              <input type="file" @change="onSelectedFile" />
+            
+              <input class="ma-2" type="file" @change="onSelectedFile" />
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="6" lg="6">
               <p><strong>Name:</strong></p>
@@ -87,18 +90,19 @@
                 :rules="passwordRules"
               >
               </v-text-field>
-              <v-btn dark @click="dialog = true" color="red">Discard</v-btn>
+              <v-btn dark @click="dialog = true" color="red"  class="ma-2">Discard</v-btn>
               <v-btn
                 dark
                 @click="[editProfile(), reloadingPage()]"
                 color="success"
                 @keyup.enter="editProfile()"
+                class="ma-2"
                 >Done</v-btn
               >
               <div v-if="message" class="alert " color="red">
                 {{ message }}
               </div>
-              <v-dialog v-model="dialog" persistent max-width="290">
+              <v-dialog v-model="dialog" persistent max-width="350">
                 <v-card>
                   <v-card-title class="headline">
                     Are you sure to discard all change?

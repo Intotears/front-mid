@@ -27,7 +27,7 @@
             />
             <hr />
             <!-- <p>forget password</p> -->
-            <v-btn color="primary"  @click="handleLogin"
+            <v-btn class="ma-2" color="orange darken-1" dark @click="handleLogin"
               >Login</v-btn
             >
           </v-form>
