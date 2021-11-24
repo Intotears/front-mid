@@ -25,7 +25,7 @@
                   <v-img
                     class="elevation-6"
                     alt=""
-                    :src="all.user.Image.imgLink"
+                    :src="all.user.image.imgLink"
                   ></v-img>
                 </v-list-item-avatar>
 
@@ -83,7 +83,7 @@
             </v-card-actions>
             <v-img
               @click="ViewRecipe(all.recipeID)"
-              :src="all.img"
+              :src="all.image.imgLink"
               height="250px"
             ></v-img>
             <v-card-title class="text-h5">

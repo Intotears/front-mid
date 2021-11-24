@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="currentUser">
-      <v-app-bar flat color="orange" app>
+      <v-app-bar flat color="orange darken-1" app>
         <v-app-bar-nav-icon
           @click.stop="drawer = !drawer"
           dark
@@ -63,26 +63,21 @@
       </v-navigation-drawer>
     </div>
     <div v-if="!currentUser && $route.name === 'Login'">
-      <v-app-bar app color="primary" dark flat>
-        <v-app-bar-title><h3 class="headline">Yum!</h3></v-app-bar-title>
+      <v-app-bar app color="orange darken-1"  flat>
 
         <v-spacer />
-        <v-chip to="/register">Register</v-chip>
+        <v-chip to="/register" color="white" dark outlined>Register</v-chip>
       </v-app-bar>
     </div>
     <div v-if="!currentUser && $route.name === 'Register'">
-      <v-app-bar app color="primary" dark flat>
-        <v-app-bar-title><h3 class="headline">Yum!</h3></v-app-bar-title>
-
+      <v-app-bar app color="orange darken-1"  flat>
+      
         <v-spacer />
-        <v-chip to="/login">Login</v-chip>
+        <v-chip to="/login" dark outlined color="white">Login</v-chip>
       </v-app-bar>
     </div>
     <div v-if="!currentUser && $route.name === 'Index'">
-      <v-app-bar app color="primary" dark flat>
-        <v-app-bar-title><h3 class="headline">Yum!</h3></v-app-bar-title>
-
-        <v-spacer />
+      <v-app-bar app color="orange darken-1" dark flat>
       </v-app-bar>
     </div>
   </div>

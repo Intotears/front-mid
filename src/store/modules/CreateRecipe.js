@@ -53,6 +53,9 @@ const createRecipe = {
     SET_RECIPE_IMAGE: (state, recipe) => {
       state.recipeIMG = recipe;
     },
+    SET_RECIPE_DEFAULT_IMAGE: (state, recipe) => {
+      state.recipeIMG = recipe;
+    },
   },
   actions: {
     async StoreUserID({ commit }, id) {
@@ -84,15 +87,26 @@ const createRecipe = {
     },
     
     async addRecipeImage({ commit, getters }, image) {
-      const id = getters.findUserID;
+      const id = getters.findThisRecipeID;
       console.log("Hello", image);
       await axios
-        .put(`${process.env.VUE_APP_BACKEND}/api/profile/edit/image/${id}`, image)
+        .post(`${process.env.VUE_APP_BACKEND}/api/recipe/create/image/${id}`, image)
         .then((response) => {
           commit("SET_RECIPE_IMAGE", response.data);
           console.log(" SET_RECIPE_IMAGE", response.data);
         })
         .catch((error) => console.log(error.response.data));
+    },
+
+    async addRecipeDefaultImage({ commit, getters }) {
+      const id = getters.findThisRecipeID;
+      await axios
+        .post(`${process.env.VUE_APP_BACKEND}/api/recipe/create/defaultImage/${id}`)
+        .then((response) => {
+          commit("SET_RECIPE_DEFAULT_IMAGE", response.data);
+          console.log("SET_RECIPE_DEFAULT_IMAGE", response.data);
+        })
+        .catch((error) => console.log(error.response.data))
     },
 
     //Cooking Process

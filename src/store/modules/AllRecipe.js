@@ -19,7 +19,8 @@ const allrecipes = {
     },
     LOAD_ALL_FOODTAGS: (state, foodtag) =>{
       state.allFoodtags = foodtag;
-    }
+    }, 
+  
   },
   actions: {
     async loadAllRecipes({ commit }) {

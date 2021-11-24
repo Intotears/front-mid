@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div v-for="detail in thisRecipe" :key="detail.recipeID">
+    <div v-for="detail in recipe" :key="detail.recipeID">
       <v-container>
         <h2 class="font-weight-bold">{{ detail.recipeName }}</h2>
         <v-container>
@@ -30,16 +30,14 @@
               :to="{ path: '/profile/' }"
               class="text-decoration-none black--text"
             >
-              {{ detail.user ? detail.user.username : "-" }}
+              {{ detail.user.username }}
             </router-link>
           </span>
         </v-container>
         <v-row>
           <v-col col="5"></v-col>
           <v-col col="2">
-            <v-avatar class="ma-3" size="350" rounded>
-              <v-img :src="detail.img"></v-img>
-            </v-avatar>
+            <v-img max-height="350" max-width="550" aspect-ratio="16/9"></v-img>
           </v-col>
           <v-col col="5"></v-col>
         </v-row>
@@ -152,13 +150,11 @@ export default {
     },
   },
   computed: {
-    thisRecipe() {
-      return this.$store.state.viewRecipe.recipe;
-    },
     currentUser() {
       return this.$store.state.auth.user;
     },
     ...mapState("mycollection", ["recipeCollection"]),
+    ...mapState("viewRecipe", ["recipe"]),
   },
   async created() {
     await this.$store.dispatch(
@@ -172,11 +168,6 @@ export default {
     );
 
     await this.isCollected();
-
-    await this.$store.dispatch(
-      "editRecipe/loadImage",
-      router.currentRoute.params.id
-    );
   },
 };
 </script>

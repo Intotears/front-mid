@@ -2,7 +2,7 @@
   <v-row>
     <v-col xs12 sm12 md12 lg12 shrink>
       <v-container>
-        <v-stepper v-model="step">
+        <v-stepper v-model="step" >
           <v-stepper-header>
             <v-stepper-step :complete="step > 1" step="1">
               Recipe detail
@@ -35,11 +35,22 @@
                   <v-row>
                     <v-col col="5"></v-col>
                     <v-col col="2">
-                      <v-avatar>
-                        <v-img :src="recipeIMG" v-if="!isImageUpload"></v-img>
-                        <v-img :src="url" v-else></v-img>
-                      </v-avatar>
-                      <input type="file" @change="onSelectedFile" />
+                      <v-img
+                        src="https://storage.googleapis.com/download/storage/v1/b/yummyyum-project/o/recipe-default-image.png?generation=1637744933088326&alt=media"
+                        v-if="!isImageUpload"
+                        max-height="350"
+                        max-width="550"
+                     
+                      ></v-img>
+                      <v-img
+                        :src="url"
+                        v-else
+                        max-height="350"
+                        max-width="550"
+                        aspect-ratio="16/9"
+                      ></v-img>
+
+                      <input class="ma-2" type="file" @change="onSelectedFile" />
                     </v-col>
                     <v-col col="5"></v-col>
                   </v-row>
@@ -95,7 +106,7 @@
                 <v-container>
                   <h3>Share option</h3>
                   <v-switch
-                  inset
+                    inset
                     v-model="shareOption"
                     flat
                     label="กดเพื่อเปิดเผยสูตรต่อสาธารณะ"
@@ -105,7 +116,7 @@
               <br />
 
               <v-col class="text-right">
-                <v-btn color="primary" @click="step = 2">
+                <v-btn color="orange darken-1" dark @click="step = 2">
                   Next step <v-icon>mdi-menu-right</v-icon>
                 </v-btn>
               </v-col>
@@ -164,7 +175,8 @@
                           @click="add"
                           width="100px"
                           rounded
-                          class="primary"
+                          class="brown darken-1"
+                          dark
                           ><v-icon>mdi-plus </v-icon>add</v-btn
                         >
                       </div>
@@ -218,7 +230,8 @@
                           @click="add2"
                           width="100px"
                           rounded
-                          class="primary"
+                          class="brown darken-1"
+                          dark
                           ><v-icon>mdi-plus </v-icon>add</v-btn
                         >
                       </div>
@@ -273,7 +286,8 @@
                           @click="add3"
                           width="100px"
                           rounded
-                          class="primary"
+                          class="brown darken-1"
+                          dark
                           ><v-icon>mdi-plus </v-icon>add</v-btn
                         >
                       </div>
@@ -291,7 +305,7 @@
                   </v-btn>
                 </v-col>
                 <v-col class="text-right">
-                  <v-btn color="primary" @click="(step = 3), addDetail()">
+                  <v-btn color="orange darken-1" dark @click="(step = 3), addDetail()">
                     Next step <v-icon>mdi-menu-right</v-icon></v-btn
                   >
                 </v-col>
@@ -361,7 +375,8 @@
                           @click="add4"
                           width="100px"
                           rounded
-                          class="primary"
+                          class="brown darken-1"
+                          dark
                           ><v-icon>mdi-plus </v-icon>add</v-btn
                         >
                       </div>
@@ -373,7 +388,7 @@
                 <h3>Choose your Foodtag</h3>
                 <v-row>
                   <v-col cols="12">
-                    <v-combobox
+                    <v-combobox class="ma-2"
                       label="Maximum of 5 tags"
                       multiple
                       outlined
@@ -403,7 +418,7 @@
                         elevation="2"
                         color="success"
                         fab
-                        dark
+                        
                         v-bind="attrs"
                         v-on="on"
                         @click="
@@ -411,7 +426,8 @@
                             addsIngredient(),
                             addflavoring(),
                             selectFoodTag(),
-                            addProcess()
+                            addProcess(),
+                            addImage()
                         "
                       >
                         <v-icon> mdi-content-save </v-icon>
@@ -435,7 +451,7 @@
                         </v-btn>
                         <v-spacer></v-spacer>
                         <v-btn
-                          color="green darken-1"
+                          color="green en-1"
                           text
                           @click="dialog = false"
                           to="/"
@@ -491,8 +507,6 @@ export default {
       console.log("url : " + this.url);
     },
     addDetail() {
-      const fd = new FormData();
-      fd.append("file", this.selectedFile);
       let recipe = {
         recipeName: this.recipeName,
         description: this.description,
@@ -503,7 +517,15 @@ export default {
 
       this.$store.dispatch("createRecipe/StoreUserID", this.currentUser.userID);
       this.$store.dispatch("createRecipe/CreateDetail", recipe);
-      this.$store.dispatch("createRecipe/addRecipeImage", fd);
+    },
+    addImage() {
+      if (this.selectedFile == null) {
+        this.$store.dispatch("createRecipe/addRecipeDefaultImage");
+      } else {
+        const fd = new FormData();
+        fd.append("file", this.selectedFile, this.selectedFile.name);
+        this.$store.dispatch("createRecipe/addRecipeImage", fd);
+      }
     },
     add() {
       this.mIngredients.push({

@@ -29,7 +29,7 @@
             <br />
 
             <v-col class="text-right">
-              <v-btn color="primary" @click="step = 2">
+              <v-btn color="orange darken-1" dark @click="step = 2">
                 Next step <v-icon>mdi-menu-right</v-icon>
               </v-btn>
             </v-col>
@@ -89,7 +89,7 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <v-btn @click="add" width="100px" rounded class="primary"
+                      <v-btn @click="add" width="100px" rounded class="brown darken-1" dark
                         ><v-icon>mdi-plus </v-icon>add</v-btn
                       >
                     </div>
@@ -155,7 +155,7 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <v-btn @click="add2" width="100px" rounded class="primary"
+                      <v-btn @click="add2" width="100px" rounded class="brown darken-1" dark
                         ><v-icon>mdi-plus </v-icon>add</v-btn
                       >
                     </div>
@@ -222,7 +222,7 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <v-btn @click="add3" width="100px" rounded class="primary"
+                      <v-btn @click="add3" width="100px" rounded class="brown darken-1" dark
                         ><v-icon>mdi-plus </v-icon>add</v-btn
                       >
                     </div>
@@ -250,7 +250,7 @@
                 </v-btn>
               </v-col>
               <v-col class="text-right">
-                <v-btn color="primary" @click="step = 3">
+                <v-btn color="orange darken-1" dark @click="step = 3">
                   Next step <v-icon>mdi-menu-right</v-icon></v-btn
                 >
               </v-col>
@@ -321,7 +321,7 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <v-btn @click="add4" width="100px" rounded class="primary"
+                      <v-btn @click="add4" width="100px" rounded class="brown darken-1" dark
                         ><v-icon>mdi-plus </v-icon>add</v-btn
                       >
                     </div>
@@ -349,7 +349,7 @@
                   <h3>Choose your Foodtag</h3>
                   <v-row>
                     <v-col cols="12">
-                      <v-combobox
+                      <v-combobox class="ma-2"
                         label="Maximum of 5 tags"
                         multiple
                         outlined
@@ -416,6 +416,7 @@
                     <v-card-actions>
                       <v-btn
                         color="primary"
+                        dark
                         text
                         @click="(dialog = false), reloadPage()"
                       >

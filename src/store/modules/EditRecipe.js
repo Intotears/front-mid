@@ -6,7 +6,6 @@ const editRecipe = {
   state: {
     ID: "",
     recipe: [],
-    image: [],
     mIngredients: [],
     sIngredients: [],
     flavoring: [],
@@ -37,9 +36,6 @@ const editRecipe = {
     //Load
     LOAD_DETAIL: (state, detail) => {
       state.recipe = detail;
-    },
-    LOAD_IMAGE: (state, img) => {
-      state.image = img;
     },
     LOAD_MAIN_INGRE: (state, mIngre) => {
       state.mIngredients = mIngre;
@@ -121,9 +117,7 @@ const editRecipe = {
       // state.cookingProcess.splice(index, 1)
     },
 
-    UPLOAD_RECIPE_IMAGE: () => {
-
-    }
+    UPLOAD_RECIPE_IMAGE: () => {},
   },
 
   actions: {
@@ -285,7 +279,7 @@ const editRecipe = {
       await axios
         .post(
           `${process.env.VUE_APP_BACKEND}/api/cookingProcess/createProcessFormEdit/${id}`,
-            payload  
+          payload
         )
         .then((response) => {
           // commit("SET_cookingprocess", response.data);
@@ -294,20 +288,18 @@ const editRecipe = {
         .catch((error) => console.log(error.response.data));
     },
     //upload image
-    async uploadRecipeImage({ commit },image) {
-      console.log("UPLOAD_RECIPE_IMAGE",image);
+    async uploadRecipeImage({ commit, getters }, image) {
+      const id = getters.findThisRecipeID;
+      console.log("UPLOAD_RECIPE_IMAGE", image);
       await axios
-        .post(
-          `${process.env.VUE_APP_BACKEND}/upload`,
-          image
-        )
+        .post(`${process.env.VUE_APP_BACKEND}/api/recipe/create/image/${id}`, image)
         .then((response) => {
           commit("UPLOAD_RECIPE_IMAGE", response.data);
-          console.log("UPLOAD_RECIPE_IMAGE",response.data);
+          console.log("UPLOAD_RECIPE_IMAGE", response.data);
         })
         .catch((error) => console.log(error.response.data));
     },
-
+    
     //GET
     async loadDetailByID({ commit }, id) {
       // const id = getters.findRecipeID;
@@ -320,7 +312,6 @@ const editRecipe = {
         .catch((error) => console.log(error));
     },
     async loadImage({ commit }, id) {
-      // const id = getters.findRecipeID;
       await axios
         .get(`${process.env.VUE_APP_BACKEND}/api/find/image/` + id)
         .then((response) => {
