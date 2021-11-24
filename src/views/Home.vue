@@ -1,7 +1,6 @@
 <template>
   <v-container>
-    <popular-recipe />
-    <v-row class="justify-space-around">
+        <v-row class="justify-space-around">
       <v-col xs="12" sm="12" md="12" lg="12">
         <v-carousel
           cycle
@@ -18,6 +17,9 @@
         </v-carousel>
       </v-col>
     </v-row>
+    <br /><br /><br />
+    <popular-recipe />
+
 
     <br /><br /><br />
     <catagory-recipe  />

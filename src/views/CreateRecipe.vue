@@ -119,6 +119,7 @@
                 <v-btn color="orange darken-1" dark @click="step = 2">
                   Next step <v-icon>mdi-menu-right</v-icon>
                 </v-btn>
+                 <div class="alert" style="color: #ef5350">****Please give Recipe name****</div>
               </v-col>
             </v-stepper-content>
 
@@ -507,6 +508,7 @@ export default {
       console.log("url : " + this.url);
     },
     addDetail() {
+<<<<<<< HEAD
       let recipe = {
         recipeName: this.recipeName,
         description: this.description,
@@ -524,6 +526,27 @@ export default {
       } else {
         const fd = new FormData();
         fd.append("file", this.selectedFile, this.selectedFile.name);
+=======
+      const fd = new FormData();
+      fd.append("file", this.selectedFile);
+      if (this.recipeName === "") {
+        console.log("Name Cannot be null");
+      }
+      if (this.recipeName != "") {
+        let recipe = {
+          recipeName: this.recipeName,
+          description: this.description,
+          time: this.time,
+          serveNumber: this.serveNumber,
+          shareOption: this.shareOption,
+        };
+
+        this.$store.dispatch(
+          "createRecipe/StoreUserID",
+          this.currentUser.userID
+        );
+        this.$store.dispatch("createRecipe/CreateDetail", recipe);
+>>>>>>> 9b7a84647ff328f7b1a11a4b9633988024106be0
         this.$store.dispatch("createRecipe/addRecipeImage", fd);
       }
     },
@@ -614,10 +637,8 @@ export default {
       const text = hasValue(itemText);
       const query = hasValue(queryText);
       return (
-        text
-          .toString()
-          .toLowerCase()
-          .indexOf(query.toString().toLowerCase()) > -1
+        text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) >
+        -1
       );
     },
     EditRecipe(id) {
