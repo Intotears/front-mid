@@ -3,57 +3,44 @@
     <v-container>
       <h2 class="font-weight-bold">{{ recipe.recipeName }}</h2>
       <v-container>
-        <span>สูตรโดยคุณ</span>
-        <v-avatar class="ma-3" size="25">
-          <v-img></v-img>
-        </v-avatar>
-        <span
-          v-if="recipe.userID != currentUser.userID"
-          class="text-decoration-none"
-          style="margin-left: -10px"
-        >
-          <router-link
-            :to="{ path: '/userProfile/' + recipe.userID }"
-            class="text-decoration-none black--text"
+        <v-row>
+          <v-col cols="12" xs="8" sm="8" md="8" lg="10">
+            <div
+              v-if="recipe.userID != currentUser.userID"
+              class="text-decoration-none"
+            >
+              <p>
+                สูตรโดยคุณ
+                <v-avatar class="ma-3" size="25">
+                  <v-img :src="recipe.user.image.imgLink"></v-img>
+                </v-avatar>
+                <router-link
+                  :to="{ path: '/userProfile/' + recipe.userID }"
+                  class="text-decoration-none black--text"
+                >
+                  {{ recipe.user ? recipe.user.username : "-" }}
+                </router-link>
+              </p>
+            </div>
+            <div v-else class="text-decoration-none">
+              <p>
+                สูตรโดยคุณ
+                <v-avatar class="ma-3" size="25">
+                  <v-img :src="recipe.user.image.imgLink"></v-img>
+                </v-avatar>
+                <router-link
+                  :to="{ path: '/profile/' }"
+                  class="text-decoration-none black--text"
+                >
+                  {{ recipe.user.username }}
+                </router-link>
+              </p>
+            </div></v-col
           >
-            {{ recipe.user ? recipe.user.username : "-" }}
-          </router-link>
-        </span>
-        <span
-          v-else
-          span
-          class="text-decoration-none"
-          style="margin-left: -10px"
-        >
-          <router-link
-            :to="{ path: '/profile/' }"
-            class="text-decoration-none black--text"
-          >
-            {{ recipe.user.username }}
-          </router-link>
-        </span>
-      </v-container>
-      <v-row>
-        <v-col col="5"></v-col>
-        <v-col col="2">
-          <v-img max-height="350" max-width="550" aspect-ratio="16/9"></v-img>
-        </v-col>
-        <v-col col="5"></v-col>
-      </v-row>
-    </v-container>
-
-    <v-container>
-      <v-row>
-        <v-col col="9" md="9"></v-col>
-        <!-- Rating -->
-        <!-- Collection -->
-        <v-col cols="3" md="3">
-          Rating :
-          <span class="text-caption"> ({{ recipe.rating.ratingStars }}) </span>
-          <span class="mr-1"></span>
-          <v-icon color="red darken-4" size="18">mdi-star</v-icon>
-          <span class="mr-1"> | </span>
-          Collection :
+          <v-col cols="12" xs="4" sm="4" md="4" lg="2">
+            Rating ({{ recipe.rating.ratingStars }})
+            <v-icon color="red darken-4" size="18">mdi-star</v-icon> |
+         
           <v-btn
             v-if="collection"
             icon
@@ -63,8 +50,29 @@
           </v-btn>
           <v-btn v-else icon @click="removeFromCollection(recipe.recipeID)">
             <v-icon>mdi-bookmark-check</v-icon>
-          </v-btn>
+          </v-btn> </v-col>
+        </v-row>
+
+        <v-spacer></v-spacer>
+      </v-container>
+      <v-row justify-center>
+         <v-col col="5"></v-col>
+        <v-col col="2">
+          <v-img
+            :src="recipe.image.imgLink"
+            max-height="350"
+            max-width="550"
+          ></v-img>
         </v-col>
+         <v-col col="5"></v-col>
+      </v-row>
+    </v-container>
+
+    <v-container>
+      <v-row>
+        <v-col col="9" md="9"></v-col>
+        <!-- Rating -->
+        <!-- Collection -->
       </v-row>
     </v-container>
 

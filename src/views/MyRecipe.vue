@@ -3,7 +3,7 @@
     <p class="text-h3 font-weight-medium">My recipes</p>
     <div>
       <v-container>
-        <v-card>
+        <v-card >
           <v-simple-table style="cursor: pointer;">
             <template v-slot:default>
               <tbody>
@@ -12,11 +12,14 @@
                     class="text-right"
                     v-on:click.stop="ViewRecipe(myRecipes.recipeID)"
                   >
-                    <v-avatar class="ma-3" size="200" tile>
-                      <v-img :src="myRecipes.img"></v-img>
-                    </v-avatar>
+                    <v-img
+                      class="ma-2"
+                      :src="myRecipes.image.imgLink"
+                      max-height="250"
+                      max-width="450"
+                    ></v-img>
                   </td>
-                  <td v-on:click.stop="ViewRecipe(myRecipes.recipeID)">
+                  <td  v-on:click.stop="ViewRecipe(myRecipes.recipeID)">
                     <p class="text-h5 font-weight-medium">
                       {{ myRecipes.recipeName }}
                     </p>

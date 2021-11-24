@@ -5,22 +5,21 @@
       <v-row>
         <v-col col="5"></v-col>
         <v-col col="2">
-           <v-img
-                        src="https://storage.googleapis.com/download/storage/v1/b/yummyyum-project/o/recipe-default-image.png?generation=1637744933088326&alt=media"
-                        v-if="!isImageUpload"
-                        max-height="350"
-                        max-width="550"
-                     
-                      ></v-img>
-                      <v-img
-                        :src="url"
-                        v-else
-                        max-height="350"
-                        max-width="550"
-                        aspect-ratio="16/9"
-                      ></v-img>
+          <v-img
+            src="https://storage.googleapis.com/download/storage/v1/b/yummyyum-project/o/recipe-default-image.png?generation=1637744933088326&alt=media"
+            v-if="!isImageUpload"
+            max-height="350"
+            max-width="550"
+          ></v-img>
+          <v-img
+            :src="url"
+            v-else
+            max-height="350"
+            max-width="550"
+            aspect-ratio="16/9"
+          ></v-img>
 
-                      <input class="ma-2" type="file" @change="onSelectedFile" />
+          <input class="ma-2" type="file" @change="onSelectedFile" />
         </v-col>
         <v-col col="5"></v-col>
       </v-row>
@@ -77,7 +76,7 @@
     <v-container>
       <h3>Share option</h3>
       <v-switch
-      inset
+        inset
         v-model="thisRecipe.shareOption"
         flat
         label="กดเพื่อเปิดเผยสูตรต่อสาธารณะ"
@@ -103,7 +102,7 @@ export default {
     };
   },
   methods: {
-     onSelectedFile(event) {
+    onSelectedFile(event) {
       this.selectedFile = event.target.files[0];
       console.log(this.selectedFile);
       this.url = URL.createObjectURL(this.selectedFile);
@@ -115,7 +114,7 @@ export default {
       if (this.thisRecipe.recipeName != "") {
         console.log("editdetail recipe", this.thisRecipe);
         this.$store.dispatch("editRecipe/storeRecipeID", this.$route.params.id),
-        this.$store.dispatch("editRecipe/EditDetail", this.thisRecipe);
+          this.$store.dispatch("editRecipe/EditDetail", this.thisRecipe);
       }
       //uploadRecipeImage
       // this.$store.dispatch("editRecipe/uploadRecipeImage",  this.image);
