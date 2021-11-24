@@ -508,7 +508,6 @@ export default {
       console.log("url : " + this.url);
     },
     addDetail() {
-<<<<<<< HEAD
       let recipe = {
         recipeName: this.recipeName,
         description: this.description,
@@ -526,27 +525,6 @@ export default {
       } else {
         const fd = new FormData();
         fd.append("file", this.selectedFile, this.selectedFile.name);
-=======
-      const fd = new FormData();
-      fd.append("file", this.selectedFile);
-      if (this.recipeName === "") {
-        console.log("Name Cannot be null");
-      }
-      if (this.recipeName != "") {
-        let recipe = {
-          recipeName: this.recipeName,
-          description: this.description,
-          time: this.time,
-          serveNumber: this.serveNumber,
-          shareOption: this.shareOption,
-        };
-
-        this.$store.dispatch(
-          "createRecipe/StoreUserID",
-          this.currentUser.userID
-        );
-        this.$store.dispatch("createRecipe/CreateDetail", recipe);
->>>>>>> 9b7a84647ff328f7b1a11a4b9633988024106be0
         this.$store.dispatch("createRecipe/addRecipeImage", fd);
       }
     },
