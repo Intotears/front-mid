@@ -95,7 +95,7 @@
                 <v-container>
                   <h3>Share option</h3>
                   <v-switch
-                  inset
+                    inset
                     v-model="shareOption"
                     flat
                     label="กดเพื่อเปิดเผยสูตรต่อสาธารณะ"
@@ -104,7 +104,15 @@
               </div>
               <br />
 
-              <v-col class="text-right">
+              <v-col class="text-right" v-if="this.recipeName === ''">
+                <!-- <h4 style="color: #ef5350">****Please give Recipe name****</h4> -->
+                <v-btn color="primary" @click="step = 1">
+                  Next step <v-icon>mdi-menu-right</v-icon>
+                </v-btn>
+                <div class="alert" style="color: #ef5350">****Please give Recipe name****</div>
+              </v-col>
+
+              <v-col class="text-right" v-else>
                 <v-btn color="primary" @click="step = 2">
                   Next step <v-icon>mdi-menu-right</v-icon>
                 </v-btn>
@@ -493,17 +501,25 @@ export default {
     addDetail() {
       const fd = new FormData();
       fd.append("file", this.selectedFile);
-      let recipe = {
-        recipeName: this.recipeName,
-        description: this.description,
-        time: this.time,
-        serveNumber: this.serveNumber,
-        shareOption: this.shareOption,
-      };
+      if (this.recipeName === "") {
+        console.log("Name Cannot be null");
+      }
+      if (this.recipeName != "") {
+        let recipe = {
+          recipeName: this.recipeName,
+          description: this.description,
+          time: this.time,
+          serveNumber: this.serveNumber,
+          shareOption: this.shareOption,
+        };
 
-      this.$store.dispatch("createRecipe/StoreUserID", this.currentUser.userID);
-      this.$store.dispatch("createRecipe/CreateDetail", recipe);
-      this.$store.dispatch("createRecipe/addRecipeImage", fd);
+        this.$store.dispatch(
+          "createRecipe/StoreUserID",
+          this.currentUser.userID
+        );
+        this.$store.dispatch("createRecipe/CreateDetail", recipe);
+        this.$store.dispatch("createRecipe/addRecipeImage", fd);
+      }
     },
     add() {
       this.mIngredients.push({
@@ -592,10 +608,8 @@ export default {
       const text = hasValue(itemText);
       const query = hasValue(queryText);
       return (
-        text
-          .toString()
-          .toLowerCase()
-          .indexOf(query.toString().toLowerCase()) > -1
+        text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) >
+        -1
       );
     },
     EditRecipe(id) {
