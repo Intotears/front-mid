@@ -16,8 +16,9 @@
             :elevation="hover ? 12 : 2"
             :class="{ 'on-hover': hover }"
             color="orange lighten-1"
+            height="450"
+            width="400"
             dark
-            max-width="400"
           >
             <v-card-actions>
               <v-list-item class="grow">
@@ -27,7 +28,7 @@
                     alt=""
                     :src="all.user.image.imgLink"
                   ></v-img>
-                   <!-- :src="all.user.Image.imgLink" -->
+                  <!-- :src="all.user.Image.imgLink" -->
                 </v-list-item-avatar>
 
                 <v-list-item-content>
@@ -50,11 +51,10 @@
                 </v-list-item-content>
 
                 <v-row align="center" justify="end">
-                  <span class="text-caption">
-                    Rating : ({{ all.rating.ratingStars }})
-                  </span>
+                  <v-icon color="red darken-4" size="18">mdi-star</v-icon
+                  ><span> ({{ all.rating.ratingStars }}) </span>
                   <span class="mr-1"></span>
-                  <v-icon color="red darken-4" size="18">mdi-star</v-icon>
+
                   <span class="mr-1"></span>
                 </v-row>
               </v-list-item>

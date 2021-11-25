@@ -29,12 +29,12 @@
             <br />
 
             <v-col class="text-right">
-              <v-btn color="orange darken-1" dark @click="step = 2">
+              <v-btn color="orange darken-1" dark @click="checkValue()">
                 Next step <v-icon>mdi-menu-right</v-icon>
               </v-btn>
-              <div class="alert" style="color: #ef5350">
-                  ****Please give Recipe name****
-                </div>
+              <div v-if="message2" class="alert " color="red">
+                {{ message2 }}
+              </div>
             </v-col>
           </v-stepper-content>
 
@@ -535,6 +535,14 @@ export default {
     },
   },
   methods: {
+    checkValue() {
+      this.message2 = "";
+      if (this.recipeName == "") {
+        this.message2 = "Please enter recipe's name";
+      } else {
+        this.step = 2;
+      }
+    },
     //editMainingre
     add() {
       this.thisMIngredients.push({

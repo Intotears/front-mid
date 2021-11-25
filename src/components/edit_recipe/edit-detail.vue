@@ -136,10 +136,19 @@ export default {
       youtubeURL: "",
       result: "",
       message: "",
+      message2: "",
       addVideoURL: "",
     };
   },
   methods: {
+    checkValue() {
+      this.message2 = "";
+      if (this.recipeName == "") {
+        this.message2 = "Please enter recipe's name";
+      } else {
+        this.step = 2;
+      }
+    },
     onSelectedFile(event) {
       this.selectedFile = event.target.files[0];
       console.log(this.selectedFile);
@@ -208,10 +217,6 @@ export default {
   async created() {
     await this.$store.dispatch(
       "editRecipe/loadDetailByID",
-      router.currentRoute.params.id
-    );
-    await this.$store.dispatch(
-      "editRecipe/loadImage",
       router.currentRoute.params.id
     );
     await this.checkURL();

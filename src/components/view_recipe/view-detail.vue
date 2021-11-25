@@ -59,11 +59,11 @@
       <v-row justify-center>
         <v-col col="5"></v-col>
         <v-col col="2">
-          <!-- <v-img
+          <v-img
             :src="recipe.image.imgLink"
             max-height="350"
             max-width="550"
-          ></v-img> -->
+          ></v-img>
         </v-col>
         <v-col col="5"></v-col>
       </v-row>

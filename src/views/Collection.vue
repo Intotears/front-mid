@@ -6,27 +6,27 @@
         <v-card>
           <v-simple-table align-self="center" style="cursor: pointer;">
             <template v-slot:default>
-              <tbody
-        
-              >
+              <tbody  v-for="collectionBook in collectionSam"
+                  :key="collectionBook.recipeID">
                 <tr
-                  v-for="recipeCol in collectionSam.recipes"
+                  v-for="recipeCol in collectionBook.recipes"
                   :key="recipeCol.recipeID"
                 >
                   <td
                     class="text-right"
                     v-on:click.stop="ViewRecipe(recipeCol.recipeID)"
                   >
-                    <v-avatar class="ma-3" size="200" tile>
-                      <v-img :src="recipeCol.imgLink"></v-img>
-                    </v-avatar>
+                 
+                      <v-img class="ma-2" :src="recipeCol.image.imgLink"   max-height="250"
+                      max-width="450"></v-img>
+
                   </td>
                   <td v-on:click.stop="ViewRecipe(recipeCol.recipeID)">
                     <p class="text-h5 font-weight-medium">
                       {{ recipeCol.recipeName }}
                     </p>
                     <p class="text-h5 font-weight-medium">
-                      By {{ collectionSam.user.username }}
+                      By {{ recipeCol.user.username }}
                     </p>
                     <p class="text-subtitle-1 font-weight-regular ">
                       {{ recipeCol.description ? recipeCol.description : "" }}

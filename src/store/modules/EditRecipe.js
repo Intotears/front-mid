@@ -312,15 +312,6 @@ const editRecipe = {
         })
         .catch((error) => console.log(error));
     },
-    async loadImage({ commit }, id) {
-      await axios
-        .get(`${process.env.VUE_APP_BACKEND}/api/find/image/` + id)
-        .then((response) => {
-          commit("LOAD_IMAGE", response.data);
-          console.log(response.data);
-        })
-        .catch((error) => console.log(error));
-    },
     async loadMainIngre({ commit }, id) {
       await axios
         .get(`${process.env.VUE_APP_BACKEND}/api/find/MainIngre/` + id)

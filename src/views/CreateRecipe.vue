@@ -123,7 +123,7 @@
                         v-model="youtubeURL"
                         @keypress.native.enter="loadURL()"
                       ></v-text-field>
-                      <v-btn color="success" @click="loadURL()"
+                      <v-btn color="brown darken-1" dark @click="loadURL()"
                         >Add this URL.</v-btn
                       >
                     </v-col>
@@ -133,33 +133,39 @@
                   </v-row>
                   <br />
                   <v-row v-if="message == 'Success!!'">
-                    <v-col>Link: {{ result }}</v-col>
-                    <v-container class="text-center">
-                      <iframe
-                        width="560"
-                        height="315"
-                        :src="result"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen
-                      ></iframe>
-                      <span>
-                        <v-btn icon @click="DeleteVideo()"
-                          ><v-icon>mdi-close </v-icon></v-btn
-                        ></span
-                      >
-                    </v-container>
+                    <v-col cols="12" xs="10" sm="8" md="8" lg="8"
+                      >Link: {{ result }}</v-col
+                    >
+                  </v-row>
+                  <v-row v-if="message == 'Success!!'"
+                    ><v-col>
+                      <v-container class="text-center">
+                        <iframe
+                          width="560"
+                          height="315"
+                          :src="result"
+                          frameborder="0"
+                          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                          allowfullscreen
+                        ></iframe>
+                      </v-container>
+                    </v-col>
+                  </v-row>
+                  <v-row v-if="message == 'Success!!'" justify="center">
+                    <v-btn @click="DeleteVideo()" color="red" dark
+                      >Delete <v-icon>mdi-close </v-icon>
+                    </v-btn>
                   </v-row>
                 </v-container>
               </div>
               <br />
 
               <v-col class="text-right">
-                <v-btn color="orange darken-1" dark @click="step = 2">
+                <v-btn color="orange darken-1" dark @click="checkValue()">
                   Next step <v-icon>mdi-menu-right</v-icon>
                 </v-btn>
-                <div class="alert" style="color: #ef5350">
-                  ****Please give Recipe name****
+                <div v-if="message2" class="alert " style="color:red">
+                  {{ message2 }}
                 </div>
               </v-col>
             </v-stepper-content>
@@ -535,6 +541,7 @@ export default {
       youtubeURL: "",
       result: "",
       message: "",
+      message2: "",
 
       urlImg: null,
       url_process: null,
@@ -547,6 +554,14 @@ export default {
     };
   },
   methods: {
+    checkValue() {
+      this.message2 = "";
+      if (this.recipeName == "") {
+        this.message2 = "Please enter recipe's name";
+      } else {
+        this.step = 2;
+      }
+    },
     onSelectedFile(event) {
       this.selectedFile = event.target.files[0];
       console.log(this.selectedFile);
@@ -690,8 +705,10 @@ export default {
       const text = hasValue(itemText);
       const query = hasValue(queryText);
       return (
-        text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) >
-        -1
+        text
+          .toString()
+          .toLowerCase()
+          .indexOf(query.toString().toLowerCase()) > -1
       );
     },
     EditRecipe(id) {

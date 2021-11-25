@@ -44,9 +44,12 @@
                 v-on:click.stop="ViewRecipe(myRecipes.recipeID)"
               >
                 <td class="text-center">
-                  <v-avatar class="ma-3" size="200" rounded>
-                    <v-img :src="myRecipes.img"></v-img>
-                  </v-avatar>
+                  <v-img
+                    class="ma-2"
+                    :src="myRecipes.image.imgLink"
+                    max-height="200"
+                    max-width="250"
+                  ></v-img>
                 </td>
                 <td class="text-left">
                   <p class="font-weight-regular text-h5 ">
@@ -73,9 +76,13 @@
         <v-card-text>
           <v-row justify-content="center">
             <v-col cols="12" xs="12" sm="8" md="6" lg="4 ">
-              <v-img :src="userIMG" v-if="!isImageUpload" aspect-ratio="1"></v-img>
+              <v-img
+                :src="userIMG"
+                v-if="!isImageUpload"
+                aspect-ratio="1"
+              ></v-img>
               <v-img :src="url" v-else></v-img>
-            
+
               <input class="ma-2" type="file" @change="onSelectedFile" />
             </v-col>
             <v-col cols="12" xs="12" sm="4" md="6" lg="6">
@@ -90,7 +97,9 @@
                 :rules="passwordRules"
               >
               </v-text-field>
-              <v-btn dark @click="dialog = true" color="red"  class="ma-2">Discard</v-btn>
+              <v-btn dark @click="dialog = true" color="red" class="ma-2"
+                >Discard</v-btn
+              >
               <v-btn
                 dark
                 @click="[editProfile(), reloadingPage()]"
@@ -99,7 +108,7 @@
                 class="ma-2"
                 >Done</v-btn
               >
-              <div v-if="message" class="alert " color="red">
+              <div v-if="message" class="alert " style="color:red">
                 {{ message }}
               </div>
               <v-dialog v-model="dialog" persistent max-width="350">
