@@ -94,25 +94,32 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col>{{ message }} {{ result }}</v-col>
+        <v-col>{{ message }}</v-col>
       </v-row>
       <br />
-      <v-row v-if="message == 'URL: '">
-        <v-container class="text-center">
-          <iframe
-            width="560"
-            height="315"
-            :src="result"
-            frameborder="0"
-            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen
-          ></iframe>
-          <span>
-            <v-btn icon @click="DeleteVideo()"
-              ><v-icon>mdi-close </v-icon></v-btn
-            ></span
-          >
-        </v-container>
+      <v-row v-if="message == 'Success!!'">
+        <v-col cols="12" xs="10" sm="8" md="8" lg="8">Link: {{ result }}</v-col>
+      </v-row>
+      <v-row v-if="message == 'Success!!'">
+        <v-col>
+          <v-container class="text-center">
+            <iframe
+              width="560"
+              height="315"
+              :src="result"
+              frameborder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+            ></iframe
+          ></v-container>
+        </v-col>
+      </v-row>
+      <v-row v-if="message == 'Success!!'" justify="center" >
+        <span>
+          <v-btn @click="DeleteVideo()" color="red" dark>
+            <v-icon>mdi-close </v-icon>
+          </v-btn>
+        </span>
       </v-row>
     </v-container>
     <br />
@@ -180,7 +187,7 @@ export default {
         this.result = "";
         this.message = "Not a youtube link!!";
       } else {
-        this.message = "URL: ";
+        this.message = "Success!!";
 
         const topOfQueue = youtubeEmbedTemplate.concat(YId);
         console.log("topOfQueue", topOfQueue);
@@ -202,7 +209,7 @@ export default {
         (this.message = ""),
         (this.addVideoURL = ""),
         (this.thisRecipe.videoLink = null);
-        console.log("DeleteVideo",this.thisRecipe)
+      console.log("DeleteVideo", this.thisRecipe);
     },
   },
   computed: {
