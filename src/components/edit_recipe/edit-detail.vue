@@ -90,7 +90,7 @@
             v-model="addVideoURL"
             @keypress.native.enter="loadURL()"
           ></v-text-field>
-          <v-btn color="success" @click="loadURL()">Add this URL.</v-btn>
+          <v-btn color="brown darken-1" dark @click="loadURL()">Add this URL.</v-btn>
         </v-col>
       </v-row>
       <v-row>

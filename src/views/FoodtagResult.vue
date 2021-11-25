@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <p class="text-h3 font-weight-medium">Result of</p>
+    <p class="text-h3 font-weight-medium">Result of {{searchingWord}}</p>
     <!-- foodtag -->
     <v-card flat>
       <div v-for="searched in searchedRecipeFoodtag" :key="searched.recipeID">
@@ -17,7 +17,7 @@
                  Rating : ({{ searched.rating.ratingStars }})
               </span>
               <span class="mr-1"></span>
-              <v-icon color="red darken-4" size="18">mdi-star</v-icon>
+              <v-icon color="white" size="20">mdi-star</v-icon>
               <span class="mr-1"></span>
             </v-row>
           </v-card-actions>
@@ -127,7 +127,8 @@ export default {
   },
   computed: {
     ...mapState("searchRecipes", ["searchedRecipeFoodtag"]),
-
+    ...mapState("searchRecipes", ["searchingWord"]),
+    
     currentUser() {
       return this.$store.state.auth.user;
     },

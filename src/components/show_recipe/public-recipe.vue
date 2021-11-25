@@ -51,7 +51,7 @@
                 </v-list-item-content>
 
                 <v-row align="center" justify="end">
-                  <v-icon color="red darken-4" size="18">mdi-star</v-icon
+                  <v-icon color="white" size="20">mdi-star</v-icon
                   ><span> ({{ all.rating.ratingStars }}) </span>
                   <span class="mr-1"></span>
 

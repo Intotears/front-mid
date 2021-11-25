@@ -50,6 +50,8 @@ export default {
       this.$store.dispatch("searchRecipes/loadSearchedIngredient", this.search);
       this.$store.dispatch("searchRecipes/loadSearchedRecipe", this.search);
       this.$store.dispatch("searchRecipes/searchRecipeByFoodtag", this.search);
+      this.$store.dispatch("searchRecipes/loadSearchedAllIngredient", this.search);
+      this.$store.dispatch("searchRecipes/storeWords", this.search);
       this.$router.push(this.searchRoute).catch(()=>{})
     },
   },

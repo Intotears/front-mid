@@ -60,6 +60,7 @@ export default {
         "searchRecipes/searchRecipeByFoodtag",
         foodtag
       );
+      await this.$store.dispatch("searchRecipes/storeWords", this.search);
       await this.$router.push(this.searchRoute).catch(() => {});
     },
   },

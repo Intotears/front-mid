@@ -39,7 +39,7 @@
           >
           <v-col cols="12" xs="4" sm="4" md="4" lg="2">
             Rating ({{ recipe.rating.ratingStars }})
-            <v-icon color="red darken-4" size="18">mdi-star</v-icon> |
+            <v-icon color="white" size="20">mdi-star</v-icon> |
 
             <v-btn
               v-if="collection"
@@ -144,7 +144,7 @@ export default {
     checkURL() {
       if (this.recipe.videoLink != null) {
         this.thisVideoLink = this.recipe.videoLink;
-      } 
+      }
     },
     addToCollection(id) {
       this.$store.dispatch("mycollection/StoreUserID", this.currentUser.userID);
@@ -157,10 +157,15 @@ export default {
       this.collection = true;
     },
     async isCollected() {
-      for (var i in await this.recipeCollection.recipes) {
-        if (this.recipe.recipeID == this.recipeCollection.recipes[i].recipeID) {
-          this.collection = false;
-          console.log("มีใน collection");
+      for (var n in await this.recipeCollection) {
+        for (var i in await this.recipeCollection[n].recipes) {
+          if (
+            this.recipe.recipeID == this.recipeCollection[n].recipes[i].recipeID
+          ) {
+            this.collection = false;
+            console.log("มีใน collection");
+          }
+          console.log("//// ", this.recipeCollection[n].recipes[i].recipeID);
         }
       }
 

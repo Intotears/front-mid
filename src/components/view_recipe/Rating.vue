@@ -18,7 +18,7 @@
             dark
             v-bind="attrs"
             v-on="on"
-            @click="saveRating()"
+            @click="saveRating() "
           >
             Rate
           </v-btn>
@@ -33,7 +33,7 @@
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="orange" text @click="dialog = false" >
+          <v-btn color="orange" text @click="reloadPage()" >
             OK
           </v-btn>
         </v-card-actions>
@@ -91,6 +91,11 @@ export default {
   },
 
   methods: {
+    //reload
+    async reloadPage() {
+       this.dialog = await false;
+      await window.location.reload();
+    },
     showRating(){
       this.rating = this.thisUserRating.rate
     },
