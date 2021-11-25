@@ -40,31 +40,32 @@
           <v-col cols="12" xs="4" sm="4" md="4" lg="2">
             Rating ({{ recipe.rating.ratingStars }})
             <v-icon color="red darken-4" size="18">mdi-star</v-icon> |
-         
-          <v-btn
-            v-if="collection"
-            icon
-            @click="addToCollection(recipe.recipeID)"
-          >
-            <v-icon>mdi-bookmark-outline</v-icon>
-          </v-btn>
-          <v-btn v-else icon @click="removeFromCollection(recipe.recipeID)">
-            <v-icon>mdi-bookmark-check</v-icon>
-          </v-btn> </v-col>
+
+            <v-btn
+              v-if="collection"
+              icon
+              @click="addToCollection(recipe.recipeID)"
+            >
+              <v-icon>mdi-bookmark-outline</v-icon>
+            </v-btn>
+            <v-btn v-else icon @click="removeFromCollection(recipe.recipeID)">
+              <v-icon>mdi-bookmark-check</v-icon>
+            </v-btn>
+          </v-col>
         </v-row>
 
         <v-spacer></v-spacer>
       </v-container>
       <v-row justify-center>
-         <v-col col="5"></v-col>
+        <v-col col="5"></v-col>
         <v-col col="2">
-          <v-img
+          <!-- <v-img
             :src="recipe.image.imgLink"
             max-height="350"
             max-width="550"
-          ></v-img>
+          ></v-img> -->
         </v-col>
-         <v-col col="5"></v-col>
+        <v-col col="5"></v-col>
       </v-row>
     </v-container>
 
@@ -102,6 +103,20 @@
     <v-container>
       <foodtag />
     </v-container>
+    <!-- video -->
+    <v-container v-if="thisVideoLink != ''">
+      <h3>Recipe video</h3>
+      <v-container class="text-center">
+        <iframe
+          width="560"
+          height="315"
+          :src="thisVideoLink"
+          frameborder="0"
+          allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </v-container>
+    </v-container>
   </div>
 </template>
 
@@ -116,6 +131,7 @@ export default {
       url: null,
       image: null,
       collection: null,
+      thisVideoLink: "",
     };
   },
   components: {
@@ -124,6 +140,11 @@ export default {
   methods: {
     Preview_image() {
       this.url = URL.createObjectURL(this.image);
+    },
+    checkURL() {
+      if (this.recipe.videoLink != null) {
+        this.thisVideoLink = this.recipe.videoLink;
+      } 
     },
     addToCollection(id) {
       this.$store.dispatch("mycollection/StoreUserID", this.currentUser.userID);
@@ -168,6 +189,8 @@ export default {
     );
 
     await this.isCollected();
+
+    await this.checkURL();
   },
 };
 </script>

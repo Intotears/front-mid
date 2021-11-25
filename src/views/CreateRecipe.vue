@@ -2,7 +2,7 @@
   <v-row>
     <v-col xs12 sm12 md12 lg12 shrink>
       <v-container>
-        <v-stepper v-model="step" >
+        <v-stepper v-model="step">
           <v-stepper-header>
             <v-stepper-step :complete="step > 1" step="1">
               Recipe detail
@@ -40,7 +40,6 @@
                         v-if="!isImageUpload"
                         max-height="350"
                         max-width="550"
-                     
                       ></v-img>
                       <v-img
                         :src="url"
@@ -50,7 +49,11 @@
                         aspect-ratio="16/9"
                       ></v-img>
 
-                      <input class="ma-2" type="file" @change="onSelectedFile" />
+                      <input
+                        class="ma-2"
+                        type="file"
+                        @change="onSelectedFile"
+                      />
                     </v-col>
                     <v-col col="5"></v-col>
                   </v-row>
@@ -112,6 +115,42 @@
                     label="กดเพื่อเปิดเผยสูตรต่อสาธารณะ"
                   ></v-switch>
                 </v-container>
+                <v-container>
+                  <v-row text-xs-center>
+                    <v-col>
+                      <v-text-field
+                        placeholder="Enter a YouTube URL"
+                        v-model="youtubeURL"
+                        @keypress.native.enter="loadURL()"
+                      ></v-text-field>
+                      <v-btn color="success" @click="loadURL()"
+                        >Add this URL.</v-btn
+                      >
+                    </v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>{{ message }} </v-col>
+                  </v-row>
+                  <br />
+                  <v-row v-if="message == 'Success!!'">
+                    <v-col>Link: {{ result }}</v-col>
+                    <v-container class="text-center">
+                      <iframe
+                        width="560"
+                        height="315"
+                        :src="result"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                      ></iframe>
+                      <span>
+                        <v-btn icon @click="DeleteVideo()"
+                          ><v-icon>mdi-close </v-icon></v-btn
+                        ></span
+                      >
+                    </v-container>
+                  </v-row>
+                </v-container>
               </div>
               <br />
 
@@ -119,7 +158,9 @@
                 <v-btn color="orange darken-1" dark @click="step = 2">
                   Next step <v-icon>mdi-menu-right</v-icon>
                 </v-btn>
-                 <div class="alert" style="color: #ef5350">****Please give Recipe name****</div>
+                <div class="alert" style="color: #ef5350">
+                  ****Please give Recipe name****
+                </div>
               </v-col>
             </v-stepper-content>
 
@@ -306,7 +347,11 @@
                   </v-btn>
                 </v-col>
                 <v-col class="text-right">
-                  <v-btn color="orange darken-1" dark @click="(step = 3), addDetail()">
+                  <v-btn
+                    color="orange darken-1"
+                    dark
+                    @click="(step = 3), addDetail()"
+                  >
                     Next step <v-icon>mdi-menu-right</v-icon></v-btn
                   >
                 </v-col>
@@ -389,7 +434,8 @@
                 <h3>Choose your Foodtag</h3>
                 <v-row>
                   <v-col cols="12">
-                    <v-combobox class="ma-2"
+                    <v-combobox
+                      class="ma-2"
                       label="Maximum of 5 tags"
                       multiple
                       outlined
@@ -419,7 +465,6 @@
                         elevation="2"
                         color="success"
                         fab
-                        
                         v-bind="attrs"
                         v-on="on"
                         @click="
@@ -487,6 +532,9 @@ export default {
       time: "",
       serveNumber: "",
       shareOption: "true",
+      youtubeURL: "",
+      result: "",
+      message: "",
 
       urlImg: null,
       url_process: null,
@@ -514,6 +562,7 @@ export default {
         time: this.time,
         serveNumber: this.serveNumber,
         shareOption: this.shareOption,
+        videoLink: this.result,
       };
 
       this.$store.dispatch("createRecipe/StoreUserID", this.currentUser.userID);
@@ -527,6 +576,32 @@ export default {
         fd.append("file", this.selectedFile, this.selectedFile.name);
         this.$store.dispatch("createRecipe/addRecipeImage", fd);
       }
+    },
+    loadURL() {
+      const youtubeEmbedTemplate = "https://www.youtube.com/embed/";
+      const url = this.youtubeURL.split(
+        /(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/
+      );
+      console.log("url", url);
+      const YId =
+        undefined !== url[2] ? url[2].split(/[^0-9a-z_/\\-]/i)[0] : url[0];
+      console.log("YId", YId);
+      if (YId === url[0]) {
+        this.message = "Not a youtube link!!";
+      } else {
+        this.message = "Success!!";
+
+        const topOfQueue = youtubeEmbedTemplate.concat(YId);
+        console.log("topOfQueue", topOfQueue);
+        this.result = topOfQueue;
+        this.youtubeURL = "";
+      }
+    },
+    DeleteVideo() {
+      (this.youtubeURL = ""),
+        (this.result = null),
+        (this.message = ""),
+        (this.addVideoURL = "");
     },
     add() {
       this.mIngredients.push({

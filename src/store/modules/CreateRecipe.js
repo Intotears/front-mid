@@ -70,6 +70,7 @@ const createRecipe = {
           description: recipe.description,
           time: recipe.time,
           serveNumber: recipe.serveNumber,
+          videoLink: recipe.videoLink,
         })
         .then((response) => {
           commit("SET_Detail", response.data);

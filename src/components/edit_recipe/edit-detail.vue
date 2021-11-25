@@ -82,6 +82,40 @@
         label="กดเพื่อเปิดเผยสูตรต่อสาธารณะ"
       ></v-switch>
     </v-container>
+    <v-container>
+      <v-row text-xs-center>
+        <v-col>
+          <v-text-field
+            placeholder="Enter a YouTube URL"
+            v-model="addVideoURL"
+            @keypress.native.enter="loadURL()"
+          ></v-text-field>
+          <v-btn color="success" @click="loadURL()">Add this URL.</v-btn>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>{{ message }} {{ result }}</v-col>
+      </v-row>
+      <br />
+      <v-row v-if="message == 'URL: '">
+        <v-container class="text-center">
+          <iframe
+            width="560"
+            height="315"
+            :src="result"
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+          <span>
+            <v-btn icon @click="DeleteVideo()"
+              ><v-icon>mdi-close </v-icon></v-btn
+            ></span
+          >
+        </v-container>
+      </v-row>
+    </v-container>
+    <br />
     <v-btn elevation="2" color="success" fab dark @click="addDetail()">
       <v-icon> mdi-content-save </v-icon>
     </v-btn>
@@ -99,6 +133,10 @@ export default {
       image: null,
       isImageUpload: false,
       isRecipeName: [(v) => !!v || "Recipe name is required"],
+      youtubeURL: "",
+      result: "",
+      message: "",
+      addVideoURL: "",
     };
   },
   methods: {
@@ -119,6 +157,44 @@ export default {
       //uploadRecipeImage
       // this.$store.dispatch("editRecipe/uploadRecipeImage",  this.image);
     },
+    loadURL() {
+      this.youtubeURL = this.addVideoURL;
+      const youtubeEmbedTemplate = "https://www.youtube.com/embed/";
+      const url = this.youtubeURL.split(
+        /(vi\/|v%3D|v=|\/v\/|youtu\.be\/|\/embed\/)/
+      );
+      console.log("url", url);
+      const YId =
+        undefined !== url[2] ? url[2].split(/[^0-9a-z_/\\-]/i)[0] : url[0];
+      console.log("YId", YId);
+      if (YId === url[0]) {
+        this.result = "";
+        this.message = "Not a youtube link!!";
+      } else {
+        this.message = "URL: ";
+
+        const topOfQueue = youtubeEmbedTemplate.concat(YId);
+        console.log("topOfQueue", topOfQueue);
+        this.result = topOfQueue;
+        this.youtubeURL = "";
+        this.addVideoURL = "";
+        this.thisRecipe.videoLink = this.result;
+      }
+    },
+    checkURL() {
+      if (this.thisRecipe.videoLink != null) {
+        this.addVideoURL = this.thisRecipe.videoLink;
+        this.loadURL();
+      }
+    },
+    DeleteVideo() {
+      (this.youtubeURL = ""),
+        (this.result = ""),
+        (this.message = ""),
+        (this.addVideoURL = ""),
+        (this.thisRecipe.videoLink = null);
+        console.log("DeleteVideo",this.thisRecipe)
+    },
   },
   computed: {
     ...mapState("editRecipe", ["recipe"]),
@@ -129,12 +205,16 @@ export default {
       return this.$store.state.editRecipe.Image;
     },
   },
-  created() {
-    this.$store.dispatch(
+  async created() {
+    await this.$store.dispatch(
       "editRecipe/loadDetailByID",
       router.currentRoute.params.id
     );
-    this.$store.dispatch("editRecipe/loadImage", router.currentRoute.params.id);
+    await this.$store.dispatch(
+      "editRecipe/loadImage",
+      router.currentRoute.params.id
+    );
+    await this.checkURL();
   },
 };
 </script>

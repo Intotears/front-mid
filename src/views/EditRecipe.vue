@@ -32,6 +32,9 @@
               <v-btn color="orange darken-1" dark @click="step = 2">
                 Next step <v-icon>mdi-menu-right</v-icon>
               </v-btn>
+              <div class="alert" style="color: #ef5350">
+                  ****Please give Recipe name****
+                </div>
             </v-col>
           </v-stepper-content>
 

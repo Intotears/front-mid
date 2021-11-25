@@ -12,12 +12,12 @@
                     class="text-right"
                     v-on:click.stop="ViewRecipe(myRecipes.recipeID)"
                   >
-                    <v-img
+                    <!-- <v-img
                       class="ma-2"
                       :src="myRecipes.image.imgLink"
                       max-height="250"
                       max-width="450"
-                    ></v-img>
+                    ></v-img> -->
                   </td>
                   <td  v-on:click.stop="ViewRecipe(myRecipes.recipeID)">
                     <p class="text-h5 font-weight-medium">

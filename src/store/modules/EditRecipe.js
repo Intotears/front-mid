@@ -130,7 +130,7 @@ const editRecipe = {
     //   // vm.$router.push({ path: `/EditRecipe/${id}` });
     // },
 
-    //PATCH
+    //PUT
     async EditDetail({ commit, getters }, recipe) {
       const id = getters.findRecipeID;
       console.log("recipeID", id);
@@ -142,6 +142,7 @@ const editRecipe = {
           description: recipe.description,
           time: recipe.time,
           serveNumber: recipe.serveNumber,
+          videoLink: recipe.videoLink,
         })
         .then((response) => {
           commit("EDIT_DETAIL", response.data);
@@ -307,7 +308,7 @@ const editRecipe = {
         .get(`${process.env.VUE_APP_BACKEND}/api/find/recipe/` + id)
         .then((response) => {
           commit("LOAD_DETAIL", response.data);
-          console.log(response.data);
+          console.log("LOAD_DETAIL",response.data);
         })
         .catch((error) => console.log(error));
     },
