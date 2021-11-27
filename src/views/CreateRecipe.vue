@@ -35,6 +35,7 @@
                   <v-row>
                     <v-col col="5"></v-col>
                     <v-col col="2">
+          
                       <v-img
                         src="https://storage.googleapis.com/download/storage/v1/b/yummyyum-project/o/recipe-default-image.png?generation=1637744933088326&alt=media"
                         v-if="!isImageUpload"
@@ -53,7 +54,10 @@
                         class="ma-2"
                         type="file"
                         @change="onSelectedFile"
-                      />
+                      /> 
+                      <br>
+                      <body-2>**กรุณาใช้รูปภาพอาหารของตนเอง</body-2>
+                     
                     </v-col>
                     <v-col col="5"></v-col>
                   </v-row>
@@ -61,8 +65,8 @@
                 <v-container>
                   <h3>Recipe name</h3>
                   <v-text-field
-                    label="Name"
-                    placeholder="Name your recipe"
+                    label="Name your recipe"
+                    placeholder="ex. ต้มยำกุ้ง"
                     solo
                     type="input"
                     v-model="recipeName"
@@ -72,6 +76,7 @@
                 <v-container>
                   <h3>Recipe description</h3>
                   <v-textarea
+                    placeholder="ex. ต้มยำกุ้งเครื่องแน่น หอม รสชาติจัดจ้าน"
                     solo
                     counter
                     label="Descript your recipe"
@@ -85,8 +90,8 @@
                     <v-col cols="12" md="6">
                       <h3>Time</h3>
                       <v-text-field
-                        label="Time"
-                        placeholder="time cooking"
+                        label="Cooking time"
+                        placeholder="ex. 20 นาที, 1 ชั่วโมง"
                         solo
                         class="mx-2"
                         type="input"
@@ -97,7 +102,7 @@
                       <h3>Serving</h3>
                       <v-text-field
                         label="Serving"
-                        placeholder="For ... person"
+                        placeholder="ex. 1 จาน, 2 ท่าน"
                         solo
                         class="mx-2"
                         type="input"
@@ -123,6 +128,9 @@
                         v-model="youtubeURL"
                         @keypress.native.enter="loadURL()"
                       ></v-text-field>
+            
+                      <body-2>**กรุณาใช้วิดีโอสูตรอาหารของตนเอง</body-2>
+                      <br><br>
                       <v-btn color="brown darken-1" dark @click="loadURL()"
                         >Add this URL.</v-btn
                       >
@@ -180,6 +188,7 @@
                   <div>
                     <v-container>
                       <h4>Main ingredient</h4>
+                       <body-2>**วัตถุดิบหลัก เป็นวัตถุดิบที่จำเป็นต้องมีในสูตร</body-2>
                     </v-container>
                     <v-container class="ma-2">
                       <div id="Mainingredient" class="text-center">
@@ -200,6 +209,8 @@
                             <v-text-field
                               v-model="mIngredient.ingredientName"
                               label="วัตถุดิบหลัก"
+                              placeholder="ex. กุ้งแม่น้ำ"
+                              :rules="isIngreName"
                             >
                             </v-text-field>
                           </v-col>
@@ -208,6 +219,7 @@
                             <v-text-field
                               v-model="mIngredient.quantityValue"
                               label="ปริมาณ"
+                              placeholder="ex. 10 ตัว"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="1" lg="1" md="1" sm="1">
@@ -236,6 +248,7 @@
                   <div>
                     <v-container>
                       <h4>Sub ingredient</h4>
+                      <body-2>**วัตถุดิบรอง เป็นวัตถุดิบที่จะมีหรือไม่มีในสูตรก็ได้ จะใส่หรือไม่ก็ได้</body-2>
                     </v-container>
                     <v-container class="ma-2">
                       <div id="Subingredient" class="text-center">
@@ -256,6 +269,8 @@
                             <v-text-field
                               v-model="sIngredient.ingredientName"
                               label="วัตถุดิบรอง"
+                              placeholder="ex. เห็ด"
+                              :rules="isIngreName"
                             >
                             </v-text-field>
                           </v-col>
@@ -263,6 +278,7 @@
                             <v-text-field
                               v-model="sIngredient.quantityValue"
                               label="ปริมาณ"
+                              placeholder="ex. ตามชอบ"
                             ></v-text-field>
                           </v-col>
                           <v-col cols="1" sm="1">
@@ -291,6 +307,7 @@
                   <div>
                     <v-container>
                       <h4>Flavoring</h4>
+                      <body-2>**เครื่องปรุง เครื่องปรุงทั่วไปที่ช่วยเพิ่มรสชาติแก่อาหาร</body-2>
                     </v-container>
                     <v-container class="ma-2">
                       <div id="Flavoring" class="text-center">
@@ -311,6 +328,8 @@
                             <v-text-field
                               v-model="flavoring.ingredientName"
                               label="เครื่องปรุง"
+                              placeholder="ex. น้ำปลา"
+                              :rules="isIngreName"
                             >
                             </v-text-field>
                           </v-col>
@@ -318,6 +337,7 @@
                             <v-text-field
                               v-model="flavoring.quantityValue"
                               label="ปริมาณ"
+                              placeholder="ex. 1 ช้อนโต๊ะ"
                             ></v-text-field>
                           </v-col>
 
@@ -409,7 +429,8 @@
                             <v-textarea
                               solo
                               counter
-                              label="Descript cooking process ex. 1. Boil water"
+                              label="Descript cooking process"
+                              placeholder="ex. ต้มน้ำปริมาณ 300 มิลลิลิตร ให้เดือด"
                               maxlength="500"
                               v-model="process.processDescription"
                             ></v-textarea>
@@ -450,6 +471,7 @@
                       :items="thisFoodtag"
                       item-text="tagName"
                       name="selectTag"
+                  
                     >
                     </v-combobox>
                   </v-col>
@@ -551,6 +573,9 @@ export default {
 
       nameRules: [(v) => !!v || "Recipe name cannot be null"],
       isImageUpload: false,
+
+      isIngreName: [(v) => !!v || "Ingredient name is required"],
+      isProcess: [(v) => !!v || "Cooking process description is required"],
     };
   },
   methods: {

@@ -32,7 +32,7 @@
               <v-btn color="orange darken-1" dark @click="checkValue()">
                 Next step <v-icon>mdi-menu-right</v-icon>
               </v-btn>
-              <div v-if="message2" class="alert " color="red">
+              <div v-if="message2" class="alert" color="red">
                 {{ message2 }}
               </div>
             </v-col>
@@ -49,6 +49,9 @@
                 <div>
                   <v-container>
                     <h4>Main ingredient</h4>
+                    <body-2
+                      >**วัตถุดิบหลัก เป็นวัตถุดิบที่จำเป็นต้องมีในสูตร</body-2
+                    >
                   </v-container>
                   <v-container class="ma-2">
                     <div id="Mainingredient" class="text-center">
@@ -68,6 +71,7 @@
                           <v-text-field
                             v-model="mIngredient.ingredientName"
                             label="วัตถุดิบหลัก"
+                            placeholder="ex. กุ้งแม่น้ำ"
                             required
                             :rules="isIngreName"
                           >
@@ -78,6 +82,7 @@
                           <v-text-field
                             v-model="mIngredient.quantityValue"
                             label="ปริมาณ"
+                            placeholder="ex. 10 ตัว"
                           ></v-text-field>
                         </v-col>
 
@@ -92,20 +97,16 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <v-btn @click="add" width="100px" rounded class="brown darken-1" dark
+                      <v-btn
+                        @click="add"
+                        width="100px"
+                        rounded
+                        class="brown darken-1"
+                        dark
                         ><v-icon>mdi-plus </v-icon>add</v-btn
                       >
                     </div>
                   </v-container>
-                  <!-- <v-btn
-                    elevation="2"
-                    color="success"
-                    fab
-                    dark
-                    @click="saveMIngredient()"
-                  >
-                    <v-icon> mdi-content-save </v-icon>
-                  </v-btn> -->
                 </div>
                 <!-- <editMainingre /> -->
 
@@ -115,6 +116,10 @@
                 <div>
                   <v-container>
                     <h4>Sub ingredient</h4>
+                    <body-2
+                      >**วัตถุดิบรอง เป็นวัตถุดิบที่จะมีหรือไม่มีในสูตรก็ได้
+                      จะใส่หรือไม่ก็ได้</body-2
+                    >
                   </v-container>
                   <v-container class="ma-2">
                     <div id="Subingredient" class="text-center">
@@ -135,6 +140,7 @@
                           <v-text-field
                             v-model="sIngredient.ingredientName"
                             label="วัตถุดิบรอง"
+                            placeholder="ex. เห็ด"
                             required
                             :rules="isIngreName"
                           >
@@ -144,6 +150,7 @@
                           <v-text-field
                             v-model="sIngredient.quantityValue"
                             label="ปริมาณ"
+                            placeholder="ex. ตามชอบ"
                           ></v-text-field>
                         </v-col>
 
@@ -158,20 +165,16 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <v-btn @click="add2" width="100px" rounded class="brown darken-1" dark
+                      <v-btn
+                        @click="add2"
+                        width="100px"
+                        rounded
+                        class="brown darken-1"
+                        dark
                         ><v-icon>mdi-plus </v-icon>add</v-btn
                       >
                     </div>
                   </v-container>
-                  <!-- <v-btn
-                    elevation="2"
-                    color="success"
-                    fab
-                    dark
-                    @click="saveSIngredient()"
-                  >
-                    <v-icon> mdi-content-save </v-icon>
-                  </v-btn> -->
                 </div>
                 <!-- <editSubingre /> -->
 
@@ -181,6 +184,10 @@
                 <div>
                   <v-container>
                     <h4>Flavoring</h4>
+                    <body-2
+                      >**เครื่องปรุง
+                      เครื่องปรุงทั่วไปที่ช่วยเพิ่มรสชาติแก่อาหาร</body-2
+                    >
                   </v-container>
                   <v-container class="ma-2">
                     <div id="Flavoring" class="text-center">
@@ -201,6 +208,7 @@
                           <v-text-field
                             v-model="flavoring.ingredientName"
                             label="เครื่องปรุง"
+                            placeholder="ex. น้ำปลา"
                             required
                             :rules="isIngreName"
                           >
@@ -211,6 +219,7 @@
                           <v-text-field
                             v-model="flavoring.quantityValue"
                             label="ปริมาณ"
+                            placeholder="ex. 1 ช้อนโต๊ะ"
                           ></v-text-field>
                         </v-col>
 
@@ -225,20 +234,16 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <v-btn @click="add3" width="100px" rounded class="brown darken-1" dark
+                      <v-btn
+                        @click="add3"
+                        width="100px"
+                        rounded
+                        class="brown darken-1"
+                        dark
                         ><v-icon>mdi-plus </v-icon>add</v-btn
                       >
                     </div>
                   </v-container>
-                  <!-- <v-btn
-                    elevation="2"
-                    color="success"
-                    fab
-                    dark
-                    @click="saveFlavoring()"
-                  >
-                    <v-icon> mdi-content-save </v-icon>
-                  </v-btn> -->
                 </div>
                 <!-- <editFlavoring /> -->
               </v-container>
@@ -306,7 +311,8 @@
                           <v-textarea
                             solo
                             counter
-                            label="Descript cooking process ex. Boil water"
+                            label="Descript cooking process"
+                            placeholder="ex. ต้มน้ำปริมาณ 300 มิลลิลิตร ให้เดือด"
                             maxlength="500"
                             v-model="process.processDescription"
                             required
@@ -324,7 +330,12 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <v-btn @click="add4" width="100px" rounded class="brown darken-1" dark
+                      <v-btn
+                        @click="add4"
+                        width="100px"
+                        rounded
+                        class="brown darken-1"
+                        dark
                         ><v-icon>mdi-plus </v-icon>add</v-btn
                       >
                     </div>
@@ -352,7 +363,8 @@
                   <h3>Choose your Foodtag</h3>
                   <v-row>
                     <v-col cols="12">
-                      <v-combobox class="ma-2"
+                      <v-combobox
+                        class="ma-2"
                         label="Maximum of 5 tags"
                         multiple
                         outlined
@@ -365,15 +377,6 @@
                       </v-combobox>
                     </v-col>
                   </v-row>
-                  <!-- <v-btn
-                    elevation="2"
-                    color="success"
-                    fab
-                    dark
-                    @click="saveFoodTag()"
-                  >
-                    <v-icon> mdi-content-save </v-icon>
-                  </v-btn> -->
                 </v-container>
               </v-container>
             </div>
@@ -455,7 +458,7 @@ export default {
   data() {
     return {
       step: 1,
-      message2:"",
+      message2: "",
 
       //editMainingre
       deleteID: [],
@@ -740,7 +743,7 @@ export default {
             console.log("ใน if ", cookingProcess[i]);
           } else {
             const count = i + 1;
-            const payload = {process : cookingProcess[i], thisCount: count};
+            const payload = { process: cookingProcess[i], thisCount: count };
             this.$store.dispatch(
               "editRecipe/storeRecipeID",
               this.$route.params.id
