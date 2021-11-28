@@ -72,6 +72,15 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
+
+            <v-col class="text-right">
+              <v-btn color="orange darken-1" dark @click="checkValue()">
+                Next step <v-icon>mdi-menu-right</v-icon>
+              </v-btn>
+              <div v-if="message2" class="alert" color="red">
+                {{ message2 }}
+              </div>
+            </v-col>
           </v-stepper-content>
 
           <v-stepper-content step="2">
@@ -85,6 +94,9 @@
                 <div>
                   <v-container>
                     <h4>Main ingredient</h4>
+                    <body-2
+                      >**วัตถุดิบหลัก เป็นวัตถุดิบที่จำเป็นต้องมีในสูตร</body-2
+                    >
                   </v-container>
                   <v-container class="ma-2">
                     <div id="Mainingredient" class="text-center">
@@ -104,6 +116,7 @@
                           <v-text-field
                             v-model="mIngredient.ingredientName"
                             label="วัตถุดิบหลัก"
+                            placeholder="ex. กุ้งแม่น้ำ"
                             required
                             :rules="isIngreName"
                           >
@@ -114,6 +127,7 @@
                           <v-text-field
                             v-model="mIngredient.quantityValue"
                             label="ปริมาณ"
+                            placeholder="ex. 10 ตัว"
                           ></v-text-field>
                         </v-col>
 
@@ -138,15 +152,6 @@
                       >
                     </div>
                   </v-container>
-                  <!-- <v-btn
-                    elevation="2"
-                    color="success"
-                    fab
-                    dark
-                    @click="saveMIngredient()"
-                  >
-                    <v-icon> mdi-content-save </v-icon>
-                  </v-btn> -->
                 </div>
                 <!-- <editMainingre /> -->
 
@@ -156,6 +161,10 @@
                 <div>
                   <v-container>
                     <h4>Sub ingredient</h4>
+                    <body-2
+                      >**วัตถุดิบรอง เป็นวัตถุดิบที่จะมีหรือไม่มีในสูตรก็ได้
+                      จะใส่หรือไม่ก็ได้</body-2
+                    >
                   </v-container>
                   <v-container class="ma-2">
                     <div id="Subingredient" class="text-center">
@@ -176,6 +185,7 @@
                           <v-text-field
                             v-model="sIngredient.ingredientName"
                             label="วัตถุดิบรอง"
+                            placeholder="ex. เห็ด"
                             required
                             :rules="isIngreName"
                           >
@@ -185,6 +195,7 @@
                           <v-text-field
                             v-model="sIngredient.quantityValue"
                             label="ปริมาณ"
+                            placeholder="ex. ตามชอบ"
                           ></v-text-field>
                         </v-col>
 
@@ -209,15 +220,6 @@
                       >
                     </div>
                   </v-container>
-                  <!-- <v-btn
-                    elevation="2"
-                    color="success"
-                    fab
-                    dark
-                    @click="saveSIngredient()"
-                  >
-                    <v-icon> mdi-content-save </v-icon>
-                  </v-btn> -->
                 </div>
                 <!-- <editSubingre /> -->
 
@@ -227,6 +229,10 @@
                 <div>
                   <v-container>
                     <h4>Flavoring</h4>
+                    <body-2
+                      >**เครื่องปรุง
+                      เครื่องปรุงทั่วไปที่ช่วยเพิ่มรสชาติแก่อาหาร</body-2
+                    >
                   </v-container>
                   <v-container class="ma-2">
                     <div id="Flavoring" class="text-center">
@@ -247,6 +253,7 @@
                           <v-text-field
                             v-model="flavoring.ingredientName"
                             label="เครื่องปรุง"
+                            placeholder="ex. น้ำปลา"
                             required
                             :rules="isIngreName"
                           >
@@ -257,6 +264,7 @@
                           <v-text-field
                             v-model="flavoring.quantityValue"
                             label="ปริมาณ"
+                            placeholder="ex. 1 ช้อนโต๊ะ"
                           ></v-text-field>
                         </v-col>
 
@@ -281,15 +289,6 @@
                       >
                     </div>
                   </v-container>
-                  <!-- <v-btn
-                    elevation="2"
-                    color="success"
-                    fab
-                    dark
-                    @click="saveFlavoring()"
-                  >
-                    <v-icon> mdi-content-save </v-icon>
-                  </v-btn> -->
                 </div>
                 <!-- <editFlavoring /> -->
               </v-container>
@@ -357,7 +356,8 @@
                           <v-textarea
                             solo
                             counter
-                            label="Descript cooking process ex. Boil water"
+                            label="Descript cooking process"
+                            placeholder="ex. ต้มน้ำปริมาณ 300 มิลลิลิตร ให้เดือด"
                             maxlength="500"
                             v-model="process.processDescription"
                             required
@@ -422,15 +422,6 @@
                       </v-combobox>
                     </v-col>
                   </v-row>
-                  <!-- <v-btn
-                    elevation="2"
-                    color="success"
-                    fab
-                    dark
-                    @click="saveFoodTag()"
-                  >
-                    <v-icon> mdi-content-save </v-icon>
-                  </v-btn> -->
                 </v-container>
               </v-container>
             </div>
@@ -513,7 +504,10 @@ export default {
     return {
       step: 1,
       message2: "",
+<<<<<<< HEAD
       dialogDiscard: false,
+=======
+>>>>>>> 5d22caf07e1f0007f5986e30ac174131a1399496
 
       //editMainingre
       deleteID: [],

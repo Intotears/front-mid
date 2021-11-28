@@ -1,8 +1,6 @@
 <template>
   <v-container>
-    <p class="text-h3 font-weight-medium">
-      Result of {{searchingWord}}
-    </p>
+    <p class="text-h3 font-weight-medium">Result of {{ searchingWord }}</p>
     <!-- แบ่งหน้า -->
     <v-toolbar color="orange" dark max-height="100" :class="`rounded`">
       <v-tabs v-model="tabs" centered>
@@ -96,7 +94,9 @@
                         v-for="(ingredient, i) in searched.recipeIngredients"
                         :key="i"
                       >
-                        {{ ingredient.ingredientName }}
+                
+                          {{ ingredient.ingredientName }}
+                    
                       </span>
                     </div>
                     <br />
@@ -292,12 +292,14 @@
                   <v-card-text>
                     <p>{{ searched.description }}</p>
                     <div>
-                      <span>วัตถุดิบ : </span>
+                      <span>วัตถุดิบหลัก : </span>
                       <span
                         v-for="(ingredient, i) in searched.recipeIngredients"
                         :key="i"
                       >
-                        {{ ingredient.ingredientName }}
+                       <span v-if="ingredient.categoryID == 'ic001'">
+                          {{ ingredient.ingredientName }}
+                        </span>
                       </span>
                     </div>
                     <br />
@@ -453,7 +455,6 @@ export default {
     ...mapState("searchRecipes", ["searchedRecipeFoodtag"]),
     ...mapState("searchRecipes", ["searchedRecipeAllIngre"]),
     ...mapState("searchRecipes", ["searchingWord"]),
-    
 
     currentUser() {
       return this.$store.state.auth.user;

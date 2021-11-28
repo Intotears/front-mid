@@ -37,6 +37,9 @@
           <v-btn v-if="!setDefaultImage" @click="DeleteImage" color="red" dark
             >Delete <v-icon>mdi-close </v-icon>
           </v-btn>
+          <input class="ma-2" type="file" @change="onSelectedFile" />
+          <br />
+          <body-2>**กรุณาใช้รูปภาพอาหารของตนเอง</body-2>
         </v-col>
         <v-col col="5"></v-col>
       </v-row>
@@ -44,8 +47,8 @@
     <v-container>
       <h3>Recipe name</h3>
       <v-text-field
-        label="Name"
-        placeholder="Name your recipe"
+        label="Name your recipe"
+        placeholder="ex. ต้มยำกุ้ง"
         solo
         type="input"
         v-model="thisRecipe.recipeName"
@@ -59,6 +62,7 @@
         solo
         counter
         label="Descript your recipe"
+        placeholder="ex. ต้มยำกุ้งเครื่องแน่น หอม รสชาติจัดจ้าน"
         maxlength="250"
         type="input"
         v-model="thisRecipe.description"
@@ -69,8 +73,8 @@
         <v-col cols="12" md="6">
           <h3>Time</h3>
           <v-text-field
-            label="Time"
-            placeholder="time cooking"
+            label="Cooking time"
+            placeholder="ex. 20 นาที, 1 ชั่วโมง"
             solo
             class="mx-2"
             type="input"
@@ -81,7 +85,7 @@
           <h3>Serving</h3>
           <v-text-field
             label="Serving"
-            placeholder="For ... person"
+                        placeholder="ex. 1 จาน, 2 ท่าน"
             solo
             class="mx-2"
             type="input"
@@ -107,6 +111,9 @@
             v-model="addVideoURL"
             @keypress.native.enter="loadURL()"
           ></v-text-field>
+
+          <body-2>**กรุณาใช้วิดีโอสูตรอาหารของตนเอง</body-2>
+          <br><br>
           <v-btn color="brown darken-1" dark @click="loadURL()"
             >Add this URL.</v-btn
           >
@@ -248,7 +255,7 @@ export default {
       }
     },
     checkURL() {
-      if (this.thisRecipe.videoLink != null) {
+      if (this.thisRecipe.videoLink != null && this.thisRecipe.videoLink != '') {
         this.addVideoURL = this.thisRecipe.videoLink;
         this.loadURL();
       }
