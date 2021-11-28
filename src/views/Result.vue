@@ -18,9 +18,10 @@
           <v-hover v-slot="{ hover }" open-delay="100">
             <v-card
               class="mx-auto ma-5 elevation-5"
+              flat
               color="orange"
               dark
-              style="width: 750px"
+              style="width: 600px"
               :elevation="hover ? 12 : 2"
               :class="{ 'on-hover': hover }"
             >
@@ -43,15 +44,15 @@
                   :to="{ path: `/ViewRecipe/${searched.recipeID}` }"
                   class="text-decoration-none white--text"
                 ></router-link>
-                  <v-col cols="12" xs="12" sm="12" md="4" lg="4">
+                  <v-col cols="12" xs="4" sm="6" md="6" lg="6">
                     <v-img
                       class="ma-2"
-                      widht="450"
+                      max-widht="300"
                       :src="searched.image.imgLink"
                     ></v-img>
                   </v-col>
                
-                <v-col cols="12" xs="12" sm="12" md="4" lg="4">
+                <v-col cols="12" xs="2" sm="4" md="4" lg="4">
                   <v-card-title>
                     <div>
                       <div>
@@ -124,7 +125,7 @@
               class="mx-auto ma-5 elevation-5"
               color="orange"
               dark
-              style="max-width: 550px"
+              style="max-width: 600px"
             >
               <v-card-actions class="pa-4">
                 <v-spacer></v-spacer>
@@ -140,22 +141,20 @@
               </v-card-actions>
               <v-divider dark class="mb-2"></v-divider>
 
-              <v-row justify="space-between">
+              <v-row>
                 <router-link
                   :to="{ path: `/ViewRecipe/${searched.recipeID}` }"
                   class="text-decoration-none white--text"
-                >
-                  <v-col cols="4">
-                    <v-img
+                ></router-link>
+                  <v-col cols="12" xs="4" sm="6" md="6" lg="6">
+                     <v-img
                       class="ma-2"
-                      height="200"
-                      :src="searched.img"
-                      style="flex-basis: 200px"
-                      tile
+                      widht="300"
+                      :src="searched.image.imgLink"
                     ></v-img>
                   </v-col>
-                </router-link>
-                <v-col cols="7">
+                
+                <v-col cols="12" xs="2" sm="4" md="4" lg="4">
                   <v-card-title>
                     <div>
                       <div>
@@ -223,7 +222,7 @@
               class="mx-auto ma-5 elevation-5"
               color="orange"
               dark
-              style="max-width: 550px"
+              style="max-width: 600px"
             >
               <v-card-actions class="pa-4">
                 <v-spacer></v-spacer>
@@ -244,17 +243,15 @@
                   :to="{ path: `/ViewRecipe/${searched.recipeID}` }"
                   class="text-decoration-none white--text"
                 >
-                  <v-col cols="4">
-                    <v-img
+                  <v-col cols="12" xs="4" sm="6" md="6" lg="6">
+                      <v-img
                       class="ma-2"
-                      height="200"
-                      :src="searched.img"
-                      style="flex-basis: 200px"
-                      tile
+                      widht="300"
+                      :src="searched.image.imgLink"
                     ></v-img>
                   </v-col>
                 </router-link>
-                <v-col cols="7">
+                <v-col cols="12" xs="2" sm="4" md="4" lg="4">
                   <v-card-title>
                     <div>
                       <div>
@@ -327,7 +324,7 @@
               class="mx-auto ma-5 elevation-5"
               color="orange"
               dark
-              style="max-width: 550px"
+              style="width: 600px"
             >
               <v-card-actions class="pa-4">
                 <v-spacer></v-spacer>
@@ -343,22 +340,20 @@
               </v-card-actions>
               <v-divider dark class="mb-2"></v-divider>
 
-              <v-row justify="space-between">
+              <v-row >
                 <router-link
                   :to="{ path: `/ViewRecipe/${searched.recipeID}` }"
                   class="text-decoration-none white--text"
-                >
-                  <v-col cols="4">
-                    <v-img
+                ></router-link>
+                 <v-col cols="12" xs="4" sm="6" md="6" lg="6">
+                     <v-img
                       class="ma-2"
-                      height="200"
-                      :src="searched.img"
-                      style="flex-basis: 200px"
-                      tile
+                      widht="300"
+                      :src="searched.image.imgLink"
                     ></v-img>
                   </v-col>
-                </router-link>
-                <v-col cols="7">
+                
+                <v-col cols="12" xs="2" sm="4" md="4" lg="4">
                   <v-card-title>
                     <div>
                       <div>

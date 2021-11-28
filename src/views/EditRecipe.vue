@@ -73,7 +73,9 @@
                       >Delete <v-icon>mdi-close </v-icon>
                     </v-btn>
                     <br />
-                    <p class="text-body-2 font-weight-light">**กรุณาใช้รูปภาพอาหารของตนเอง</p>
+                    <p class="text-body-2 font-weight-light">
+                      **กรุณาใช้รูปภาพอาหารของตนเอง
+                    </p>
                   </v-col>
                   <v-col col="5"></v-col>
                 </v-row>
@@ -146,7 +148,9 @@
                       @keypress.native.enter="loadURL()"
                     ></v-text-field>
 
-                    <p class="text-body-2 font-weight-light">**กรุณาใช้วิดีโอสูตรอาหารของตนเอง</p>
+                    <p class="text-body-2 font-weight-light">
+                      **กรุณาใช้วิดีโอสูตรอาหารของตนเอง
+                    </p>
                     <br /><br />
                     <v-btn color="brown darken-1" dark @click="loadURL()"
                       >Add this URL.</v-btn
@@ -185,7 +189,6 @@
                 </v-row>
               </v-container>
               <br />
-              
             </div>
             <!-- <editDetail /> -->
 
@@ -243,9 +246,9 @@
                 <div>
                   <v-container>
                     <h4>Main ingredient</h4>
-                    <p class="text-body-2 font-weight-light"
-                      >**วัตถุดิบหลัก เป็นวัตถุดิบที่จำเป็นต้องมีในสูตร</p
-                    >
+                    <p class="text-body-2 font-weight-light">
+                      **วัตถุดิบหลัก เป็นวัตถุดิบที่จำเป็นต้องมีในสูตร
+                    </p>
                   </v-container>
                   <v-container class="ma-2">
                     <div id="Mainingredient" class="text-center">
@@ -310,10 +313,10 @@
                 <div>
                   <v-container>
                     <h4>Sub ingredient</h4>
-                    <p class="text-body-2 font-weight-light"
-                      >**วัตถุดิบรอง เป็นวัตถุดิบที่จะมีหรือไม่มีในสูตรก็ได้
-                      จะใส่หรือไม่ก็ได้</p
-                    >
+                    <p class="text-body-2 font-weight-light">
+                      **วัตถุดิบรอง เป็นวัตถุดิบที่จะมีหรือไม่มีในสูตรก็ได้
+                      จะใส่หรือไม่ก็ได้
+                    </p>
                   </v-container>
                   <v-container class="ma-2">
                     <div id="Subingredient" class="text-center">
@@ -378,10 +381,9 @@
                 <div>
                   <v-container>
                     <h4>Flavoring</h4>
-                    <p class="text-body-2 font-weight-light"
-                      >**เครื่องปรุง
-                      เครื่องปรุงทั่วไปที่ช่วยเพิ่มรสชาติแก่อาหาร</p
-                    >
+                    <p class="text-body-2 font-weight-light">
+                      **เครื่องปรุง เครื่องปรุงทั่วไปที่ช่วยเพิ่มรสชาติแก่อาหาร
+                    </p>
                   </v-container>
                   <v-container class="ma-2">
                     <div id="Flavoring" class="text-center">
@@ -595,7 +597,7 @@
                       v-bind="attrs"
                       v-on="on"
                       @click="
-                          saveDetail(),
+                        saveDetail(),
                           saveImage(),
                           saveMIngredient(),
                           saveSIngredient(),
@@ -657,7 +659,7 @@ export default {
       dialogDiscard: false,
 
       //editDetail
-       url: null,
+      url: null,
       isImageUpload: false,
       isRecipeName: [(v) => !!v || "Recipe name is required"],
       youtubeURL: "",
@@ -687,7 +689,7 @@ export default {
   },
   async created() {
     //editDetai
-     await this.$store.dispatch(
+    await this.$store.dispatch(
       "editRecipe/loadDetailByID",
       router.currentRoute.params.id
     );
@@ -728,7 +730,7 @@ export default {
   },
   computed: {
     //editDetail
-     ...mapState("editRecipe", ["recipe"]),
+    ...mapState("editRecipe", ["recipe"]),
     ...mapState("editRecipe", ["recipeIMG"]),
     thisRecipe() {
       return this.recipe.find((v) => v.recipeID == this.$route.params.id);
@@ -790,12 +792,11 @@ export default {
       console.log("url : " + this.url);
     },
     saveImage() {
-      if (this.selectedFile == null) {
-        console.log("No change recipe image");
-      }else if (this.setDefaultImage === true && this.selectedFile == null){
+      if (this.setDefaultImage === true) {
         this.$store.dispatch("editRecipe/resetDefaultImage");
-      }
-      else {
+      } else if (this.selectedFile == null) {
+        console.log("No change recipe image");
+      } else {
         const fd = new FormData();
         fd.append("file", this.selectedFile, this.selectedFile.name);
         this.$store.dispatch("editRecipe/uploadRecipeImage", fd);
@@ -835,7 +836,10 @@ export default {
       }
     },
     checkURL() {
-      if (this.thisRecipe.videoLink != null && this.thisRecipe.videoLink != '') {
+      if (
+        this.thisRecipe.videoLink != null &&
+        this.thisRecipe.videoLink != ""
+      ) {
         this.addVideoURL = this.thisRecipe.videoLink;
         this.loadURL();
       }
@@ -1106,8 +1110,10 @@ export default {
       const text = hasValue(itemText);
       const query = hasValue(queryText);
       return (
-        text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) >
-        -1
+        text
+          .toString()
+          .toLowerCase()
+          .indexOf(query.toString().toLowerCase()) > -1
       );
     },
 

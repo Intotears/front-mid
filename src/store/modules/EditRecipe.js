@@ -303,18 +303,18 @@ const editRecipe = {
         })
         .catch((error) => console.log(error.response.data));
     },
-    async resetDefaultImage({ commit, getters }, image) {
+    async resetDefaultImage({ commit, getters }) {
       const id = getters.findRecipeID;
+      console.log("THERE WE ARE", id)
       await axios
-        .post(`${process.env.VUE_APP_BACKEND}/api/recipe/reset/image/${id}`, image)
+        .get(`${process.env.VUE_APP_BACKEND}/api/recipe/reset/image/${id}`)
         .then((response) => {
           commit("RESET_RECIPE_IMAGE", response.data);
           console.log("RESET_RECIPE_IMAGE", response.data);
         })
         .catch((error) => console.log(error.response.data));
     },
-    
-    
+
     //GET
     async loadDetailByID({ commit }, id) {
       // const id = getters.findRecipeID;
