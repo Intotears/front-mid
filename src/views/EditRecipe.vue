@@ -504,10 +504,7 @@ export default {
     return {
       step: 1,
       message2: "",
-<<<<<<< HEAD
       dialogDiscard: false,
-=======
->>>>>>> 5d22caf07e1f0007f5986e30ac174131a1399496
 
       //editMainingre
       deleteID: [],
