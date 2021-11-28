@@ -13,7 +13,7 @@
             <v-col class="ma-3" cols="12" xs="12" sm="6" md="6" lg="6">
               <v-row>
                 <v-col>
-                  <h1>@{{ currentUser.name }}</h1>
+                  <h1>@{{ currentUser.username }}</h1>
                 </v-col>
                 <v-col
                   ><v-btn icon @click="statusEditFunc()">
@@ -25,7 +25,7 @@
               </v-row>
               <v-row>
                 <v-col>
-                  <h3>Name: {{ currentUser.username }}</h3>
+                  <h3>Name: {{ currentUser.name }}</h3>
                 </v-col>
               </v-row>
             </v-col>
@@ -49,7 +49,7 @@
                     :src="myRecipes.image.imgLink"
                     height="200"
                     width="250"
-                    :aspect-ratio="16/10"
+                    :aspect-ratio="16 / 10"
                   ></v-img>
                 </td>
                 <td class="text-left">
@@ -73,7 +73,6 @@
         <v-card-title>
           Edit Profile
         </v-card-title>
-
         <v-card-text>
           <v-row justify-content="center">
             <v-col cols="12" xs="12" sm="8" md="6" lg="4 ">
@@ -103,7 +102,7 @@
               >
               <v-btn
                 dark
-                @click="[editProfile(), reloadingPage()]"
+                @click="[editProfile()]"
                 color="success"
                 @keyup.enter="editProfile()"
                 class="ma-2"
@@ -183,26 +182,24 @@ export default {
       this.message = "";
       console.log("WTF", this.currentUser.password);
       if (this.currentUser.password != null) {
-        if (this.currentUser.name != null) {
+        if (this.currentUser.name != null && this.currentUser.username != null) {
           console.log("edit name", this.currentUser);
           this.$store.dispatch("auth/editIdentity", this.currentUser);
         }
-
-        if (this.currentUser.username != null) {
-          console.log("edit username", this.currentUser);
-          this.$store.dispatch("auth/editUsername", this.currentUser);
+        if (this.selectedFile != null) {
+          const fd = new FormData();
+          fd.append("file", this.selectedFile);
+          this.$store.dispatch("userimage/editImage", fd, {
+            onUploadProges: (uploadEvent) => {
+              console.log(
+                "Upload Prosgres: " +
+                  Math.round((uploadEvent.loaded / uploadEvent.total) * 100) +
+                  "%"
+              );
+            },
+          });
         }
-        const fd = new FormData();
-        fd.append("file", this.selectedFile, this.selectedFile.name);
-        this.$store.dispatch("userimage/editImage", fd, {
-          onUploadProges: (uploadEvent) => {
-            console.log(
-              "Upload Prosgres: " +
-                Math.round((uploadEvent.loaded / uploadEvent.total) * 100) +
-                "%"
-            );
-          },
-        });
+
         this.canEdit = !this.canEdit;
       } else {
         this.message = "Enter your password";

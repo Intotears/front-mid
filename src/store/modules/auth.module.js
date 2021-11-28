@@ -81,28 +81,7 @@ const auth = {
           }
         );
     },
-    async editUsername({commit, getters}, user) {
-      const id = getters.currentUserID
-      console.log("Profile of ", getters.currentUserID);
-      await axios
-        .put(`${process.env.VUE_APP_BACKEND}/api/auth/profile/username/${id}`, {
-          userPassword: user.password,
-          username: user.username
-        })
-        .then(
-          (response) => {
-            if (localStorage.getItem("user")) {
-              localStorage.removeItem("user");
-            }
-            localStorage.setItem("user", JSON.stringify(response.data));
-            commit("editSuccess");
-            return Promise.resolve(response.data);
-          },
-          (error) => {
-            return Promise.reject(error);
-          }
-        );
-    },
+
   },
   mutations: {
     loginSuccess(state, user) {
