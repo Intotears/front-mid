@@ -72,15 +72,6 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
-
-            <v-col class="text-right">
-              <v-btn color="orange darken-1" dark @click="checkValue()">
-                Next step <v-icon>mdi-menu-right</v-icon>
-              </v-btn>
-              <div v-if="message2" class="alert" color="red">
-                {{ message2 }}
-              </div>
-            </v-col>
           </v-stepper-content>
 
           <v-stepper-content step="2">

@@ -35,7 +35,7 @@
           class="ma-2 "
         >
           <v-card-title>
-            <p class="text-h4">ชื่อ: {{ myRecipes.recipeName }}</p>
+            <p class="text-h5">ชื่อ: {{ myRecipes.recipeName }}</p>
           </v-card-title>
           <v-card-text>
             <p class="text-body-1">

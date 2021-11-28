@@ -20,7 +20,7 @@
               class="mx-auto ma-5 elevation-5"
               color="orange"
               dark
-              style="max-width: 550px"
+              style="width: 750px"
               :elevation="hover ? 12 : 2"
               :class="{ 'on-hover': hover }"
             >
@@ -38,22 +38,20 @@
               </v-card-actions>
               <v-divider dark class="mb-2"></v-divider>
 
-              <v-row justify="space-between">
+              <v-row>
                 <router-link
                   :to="{ path: `/ViewRecipe/${searched.recipeID}` }"
                   class="text-decoration-none white--text"
-                >
-                  <v-col cols="4">
+                ></router-link>
+                  <v-col cols="12" xs="12" sm="12" md="4" lg="4">
                     <v-img
                       class="ma-2"
-                      height="200"
-                      :src="searched.img"
-                      style="flex-basis: 200px"
-                      tile
+                      widht="450"
+                      :src="searched.image.imgLink"
                     ></v-img>
                   </v-col>
-                </router-link>
-                <v-col cols="7">
+               
+                <v-col cols="12" xs="12" sm="12" md="4" lg="4">
                   <v-card-title>
                     <div>
                       <div>
@@ -61,12 +59,12 @@
                           :to="{ path: `/ViewRecipe/${searched.recipeID}` }"
                           class="text-decoration-none white--text"
                         >
-                          <p>{{ searched.recipeName }}</p>
+                          <p class="text-h5">{{ searched.recipeName }}</p>
                         </router-link>
                       </div>
                     </div>
                   </v-card-title>
-
+ 
                   <v-card-subtitle>
                     <p class="text-overline">
                       <router-link
@@ -89,14 +87,12 @@
                   <v-card-text>
                     <p>{{ searched.description }}</p>
                     <div>
-                      <span>วัตถุดิบ : </span>
+                      <span >วัตถุดิบ : </span>
                       <span
                         v-for="(ingredient, i) in searched.recipeIngredients"
                         :key="i"
                       >
-                
-                          {{ ingredient.ingredientName }}
-                    
+                        {{ ingredient.ingredientName }}
                       </span>
                     </div>
                     <br />
@@ -297,7 +293,7 @@
                         v-for="(ingredient, i) in searched.recipeIngredients"
                         :key="i"
                       >
-                       <span v-if="ingredient.categoryID == 'ic001'">
+                        <span v-if="ingredient.categoryID == 'ic001'">
                           {{ ingredient.ingredientName }}
                         </span>
                       </span>

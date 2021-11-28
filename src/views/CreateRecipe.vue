@@ -64,7 +64,7 @@
                         dark
                         >Delete <v-icon>mdi-close </v-icon>
                       </v-btn>
-                      /> 
+                      
                       <br>
                       <body-2>**กรุณาใช้รูปภาพอาหารของตนเอง</body-2>
                      
