@@ -43,12 +43,13 @@
                 :key="myRecipes.recipeID"
                 v-on:click.stop="ViewRecipe(myRecipes.recipeID)"
               >
-                <td class="text-center">
+                <td class="content-center">
                   <v-img
                     class="ma-2"
                     :src="myRecipes.image.imgLink"
-                    max-height="200"
-                    max-width="250"
+                    height="200"
+                    width="250"
+                    :aspect-ratio="16/10"
                   ></v-img>
                 </td>
                 <td class="text-left">
@@ -81,7 +82,7 @@
                 v-if="!isImageUpload"
                 aspect-ratio="1"
               ></v-img>
-              <v-img :src="url" v-else></v-img>
+              <v-img :src="url" v-else aspect-ratio="1"></v-img>
 
               <input class="ma-2" type="file" @change="onSelectedFile" />
             </v-col>

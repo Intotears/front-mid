@@ -27,15 +27,51 @@
             <editDetail />
 
             <br />
-
-            <v-col class="text-right">
-              <v-btn color="orange darken-1" dark @click="checkValue()">
-                Next step <v-icon>mdi-menu-right</v-icon>
-              </v-btn>
-              <div v-if="message2" class="alert " color="red">
-                {{ message2 }}
-              </div>
-            </v-col>
+            <v-row>
+              <v-col class="text-left">
+                <v-btn color="error" @click="dialogDiscard = true"
+                  ><v-icon>mdi-menu-left</v-icon> Discard
+                </v-btn>
+              </v-col>
+              <v-col class="text-right">
+                <v-btn color="orange darken-1" dark @click="checkValue()">
+                  Next step <v-icon>mdi-menu-right</v-icon>
+                </v-btn>
+                <div v-if="message2" class="alert " color="red">
+                  {{ message2 }}
+                </div>
+              </v-col>
+            </v-row>
+            <v-dialog v-model="dialogDiscard" persistent max-width="350">
+              <v-card>
+                <v-card-title class="headline">
+                 Discard all change?.
+                </v-card-title>
+                <v-card-text
+                  >Are you sure to discard all change?.
+                  <v-icon> mdi-emoticon </v-icon></v-card-text
+                >
+                <v-card-actions>
+                  <v-btn
+                    color="green darken-1"
+                    dark
+                    text
+                    @click="(dialog = false)"
+                  >
+                    Back
+                  </v-btn>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="error"
+                    text
+                    @click="dialog = false"
+                    to="/"
+                  >
+                    Sure
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
           </v-stepper-content>
 
           <v-stepper-content step="2">
@@ -92,7 +128,12 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <v-btn @click="add" width="100px" rounded class="brown darken-1" dark
+                      <v-btn
+                        @click="add"
+                        width="100px"
+                        rounded
+                        class="brown darken-1"
+                        dark
                         ><v-icon>mdi-plus </v-icon>add</v-btn
                       >
                     </div>
@@ -158,7 +199,12 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <v-btn @click="add2" width="100px" rounded class="brown darken-1" dark
+                      <v-btn
+                        @click="add2"
+                        width="100px"
+                        rounded
+                        class="brown darken-1"
+                        dark
                         ><v-icon>mdi-plus </v-icon>add</v-btn
                       >
                     </div>
@@ -225,7 +271,12 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <v-btn @click="add3" width="100px" rounded class="brown darken-1" dark
+                      <v-btn
+                        @click="add3"
+                        width="100px"
+                        rounded
+                        class="brown darken-1"
+                        dark
                         ><v-icon>mdi-plus </v-icon>add</v-btn
                       >
                     </div>
@@ -324,7 +375,12 @@
                       <br />
                     </div>
                     <div class="text-center">
-                      <v-btn @click="add4" width="100px" rounded class="brown darken-1" dark
+                      <v-btn
+                        @click="add4"
+                        width="100px"
+                        rounded
+                        class="brown darken-1"
+                        dark
                         ><v-icon>mdi-plus </v-icon>add</v-btn
                       >
                     </div>
@@ -352,7 +408,8 @@
                   <h3>Choose your Foodtag</h3>
                   <v-row>
                     <v-col cols="12">
-                      <v-combobox class="ma-2"
+                      <v-combobox
+                        class="ma-2"
                         label="Maximum of 5 tags"
                         multiple
                         outlined
@@ -455,7 +512,8 @@ export default {
   data() {
     return {
       step: 1,
-      message2:"",
+      message2: "",
+      dialogDiscard: false,
 
       //editMainingre
       deleteID: [],
@@ -740,7 +798,7 @@ export default {
             console.log("ใน if ", cookingProcess[i]);
           } else {
             const count = i + 1;
-            const payload = {process : cookingProcess[i], thisCount: count};
+            const payload = { process: cookingProcess[i], thisCount: count };
             this.$store.dispatch(
               "editRecipe/storeRecipeID",
               this.$route.params.id
@@ -801,8 +859,10 @@ export default {
       const text = hasValue(itemText);
       const query = hasValue(queryText);
       return (
-        text.toString().toLowerCase().indexOf(query.toString().toLowerCase()) >
-        -1
+        text
+          .toString()
+          .toLowerCase()
+          .indexOf(query.toString().toLowerCase()) > -1
       );
     },
 
@@ -848,5 +908,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

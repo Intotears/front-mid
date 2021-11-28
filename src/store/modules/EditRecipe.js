@@ -15,6 +15,7 @@ const editRecipe = {
     sIngredientsID: "",
     flavoringID: "",
     cookingProcessID: "",
+
     //deleteIngredientsID:[]
   },
 
@@ -118,6 +119,7 @@ const editRecipe = {
     },
 
     UPLOAD_RECIPE_IMAGE: () => {},
+    RESET_RECIPE_IMAGE: () => {}
   },
 
   actions: {
@@ -131,6 +133,7 @@ const editRecipe = {
     // },
 
     //PUT
+
     async EditDetail({ commit, getters }, recipe) {
       const id = getters.findRecipeID;
       console.log("recipeID", id);
@@ -290,16 +293,27 @@ const editRecipe = {
     },
     //upload image
     async uploadRecipeImage({ commit, getters }, image) {
-      const id = getters.findThisRecipeID;
+      const id = getters.findRecipeID;
       console.log("UPLOAD_RECIPE_IMAGE", image);
       await axios
-        .post(`${process.env.VUE_APP_BACKEND}/api/recipe/create/image/${id}`, image)
+        .post(`${process.env.VUE_APP_BACKEND}/api/recipe/edit/image/${id}`, image)
         .then((response) => {
           commit("UPLOAD_RECIPE_IMAGE", response.data);
           console.log("UPLOAD_RECIPE_IMAGE", response.data);
         })
         .catch((error) => console.log(error.response.data));
     },
+    async resetDefaultImage({ commit, getters }, image) {
+      const id = getters.findRecipeID;
+      await axios
+        .post(`${process.env.VUE_APP_BACKEND}/api/recipe/reset/image/${id}`, image)
+        .then((response) => {
+          commit("RESET_RECIPE_IMAGE", response.data);
+          console.log("RESET_RECIPE_IMAGE", response.data);
+        })
+        .catch((error) => console.log(error.response.data));
+    },
+    
     
     //GET
     async loadDetailByID({ commit }, id) {

@@ -25,7 +25,7 @@
                   <v-list-item-avatar color="grey darken-3">
                     <v-img
                       class="elevation-5"
-                      alt=""
+
                       :src="popRecipes.recipe.user.image.imgLink"
                     ></v-img>
                   </v-list-item-avatar>
@@ -75,6 +75,7 @@
                 @click="ViewRecipe(popRecipes.recipeID)"
                 :src="popRecipes.recipe.image.imgLink"
                 height="200px"
+                 :aspect-ratio="16 / 10"
               ></v-img>
               <v-card-title class="text-h5">
                 <span>{{ popRecipes.recipe.recipeName }}</span>

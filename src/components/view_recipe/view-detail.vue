@@ -61,8 +61,9 @@
         <v-col col="2">
           <v-img
             :src="recipe.image.imgLink"
-            max-height="350"
-            max-width="550"
+            height="350"
+            width="550"
+            :aspect-ratio="16 / 10"
           ></v-img>
         </v-col>
         <v-col col="5"></v-col>

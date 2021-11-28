@@ -1,88 +1,103 @@
 <template>
   <v-container>
     <p class="text-h3 font-weight-medium">My recipes</p>
-    <div>
-      <v-container>
-        <v-card >
-          <v-simple-table style="cursor: pointer;">
-            <template v-slot:default>
-              <tbody>
-                <tr v-for="myRecipes in recipe" :key="myRecipes.recipeID">
-                  <td
-                    class="text-right"
-                    v-on:click.stop="ViewRecipe(myRecipes.recipeID)"
-                  >
-                    <v-img
-                      class="ma-2"
-                      :src="myRecipes.image.imgLink"
-                      max-height="250"
-                      max-width="450"
-                    ></v-img>
-                  </td>
-                  <td  v-on:click.stop="ViewRecipe(myRecipes.recipeID)">
-                    <p class="text-h5 font-weight-medium">
-                      {{ myRecipes.recipeName }}
-                    </p>
-                    <p class="text-subtitle-1 font-weight-regular ">
-                      {{ myRecipes.description }}
-                    </p>
-                  </td>
-                  <td class="text-left">
-                    <v-btn
-                      elevation="2"
-                      color="orange darken-1"
-                      @click="EditRecipe(myRecipes.recipeID)"
-                      class="ma-2"
-                      icon
-                      dark
-                    >
-                      <v-icon>
-                        mdi-pencil
-                      </v-icon>
-                    </v-btn>
-                    &nbsp;
+    <v-card
+      max-height="600"
+      class="mx-auto"
+      v-for="myRecipes in recipe"
+      :key="myRecipes.recipeID"
+    >
+      <v-row justify="start">
+        <v-col
+          cols="12"
+          xs="12"
+          sm="4"
+          md="5"
+          lg="5"
+          align-self="center"
+          class="d-flex"
+        >
+          <v-img
+            class="ma-2"
+            :src="myRecipes.image ? myRecipes.image.imgLink : 'null'"
+            max-width="400"
+            :aspect-ratio="16 / 9"
+          ></v-img>
+        </v-col>
 
-                    <v-btn
-                      elevation="2"
-                      color="error"
-                      dark
-                      @click="
-                        dialog = true;
-                        recipeIDToDelete = myRecipes.recipeID;
-                      "
-                      icon
-                      class="ma-2"
-                    >
-                      <v-icon> mdi-delete</v-icon>
-                    </v-btn>
-                  </td>
-                </tr>
-              </tbody>
-              <v-dialog v-model="dialog" persistent max-width="350">
-                <v-card>
-                  <v-card-title class="headline">
-                    Are you sure to delete this recipe?
-                  </v-card-title>
-                  <v-card-text
-                    >If you delete it, you cannot restore this recipe.
-                    <v-icon> mdi-emoticon </v-icon></v-card-text
-                  >
-                  <v-card-actions>
-                    <v-btn color="green darken-1" text @click="dialog = false">
-                      Cancel
-                    </v-btn>
-                    <v-spacer></v-spacer>
-                    <v-btn color="error" text @click="DeleteRecipe">
-                      Delete
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </template>
-          </v-simple-table>
-        </v-card>
-      </v-container>
-    </div>
+        <v-col
+          cols="12"
+          xs="12"
+          sm="6"
+          md="4"
+          lg="4"
+          align-self="center"
+          class="ma-2 "
+        >
+          <v-card-title>
+            <p class="text-h4">ชื่อ: {{ myRecipes.recipeName }}</p>
+          </v-card-title>
+          <v-card-text>
+            <p class="text-body-1">
+              {{ myRecipes.description }}
+            </p>
+          </v-card-text>
+          <v-card-actions>
+            <v-btn
+              text
+              class="ma-2"
+              color="orange darken-1"
+              @click="ViewRecipe(myRecipes.recipeID)"
+            >
+              See more
+            </v-btn>
+      
+              <v-btn
+                color="orange darken-1"
+                @click="EditRecipe(myRecipes.recipeID)"
+                class="ma-2"
+                dark
+              >
+                Edit
+                <v-icon right>
+                  mdi-pencil
+                </v-icon>
+              </v-btn>
+              <v-btn
+                color="error"
+                dark
+                @click="
+                  dialog = true;
+                  recipeIDToDelete = myRecipes.recipeID;
+                "
+                class="ma-2"
+                >Delete <v-icon right> mdi-delete</v-icon></v-btn
+              >
+
+          </v-card-actions>
+        </v-col>
+      </v-row>
+    </v-card>
+    <v-dialog v-model="dialog" persistent max-width="300">
+      <v-card>
+        <v-card-title class="headline">
+          Are you sure to delete this recipe?
+        </v-card-title>
+        <v-card-text
+          >If you delete it, you cannot restore this recipe.
+          <v-icon> mdi-emoticon </v-icon></v-card-text
+        >
+        <v-card-actions>
+          <v-btn color="green darken-1" text @click="dialog = false">
+            Cancel
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn color="error" text @click="DeleteRecipe">
+            Delete
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 

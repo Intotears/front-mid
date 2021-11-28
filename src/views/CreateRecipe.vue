@@ -38,22 +38,31 @@
                       <v-img
                         src="https://storage.googleapis.com/download/storage/v1/b/yummyyum-project/o/recipe-default-image.png?generation=1637744933088326&alt=media"
                         v-if="!isImageUpload"
-                        max-height="350"
-                        max-width="550"
+                        height="350"
+                        width="550"
+                        :aspect-ratio="16 / 10"
                       ></v-img>
                       <v-img
                         :src="url"
                         v-else
-                        max-height="350"
-                        max-width="550"
-                        aspect-ratio="16/9"
+                        height="350"
+                        width="550"
+                        :aspect-ratio="16 / 10"
                       ></v-img>
 
                       <input
+                        ref="file"
                         class="ma-2"
                         type="file"
                         @change="onSelectedFile"
                       />
+                      <v-btn
+                        v-if="isImageUpload"
+                        @click="DeleteImage"
+                        color="red"
+                        dark
+                        >Delete <v-icon>mdi-close </v-icon>
+                      </v-btn>
                     </v-col>
                     <v-col col="5"></v-col>
                   </v-row>
@@ -554,6 +563,11 @@ export default {
     };
   },
   methods: {
+    DeleteImage() {
+      this.isImageUpload = false;
+      this.selectedFile = null;
+      this.$refs.file.value = null;
+    },
     checkValue() {
       this.message2 = "";
       if (this.recipeName == "") {

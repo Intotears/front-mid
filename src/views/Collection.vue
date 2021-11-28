@@ -1,74 +1,94 @@
 <template>
   <v-container>
     <p class="text-h3 font-weight-medium">Collection</p>
-    <div>
-      <v-container>
+    <div v-for="collectionBook in collectionSam" :key="collectionBook.recipeID">
+      <v-card
+        max-height="600"
+        class="mx-auto"
+        v-for="recipeCol in collectionBook.recipes"
+        :key="recipeCol.recipeID"
+      >
+        <v-row justify="start">
+          <v-col
+            cols="12"
+            xs="12"
+            sm="4"
+            md="5"
+            lg="5"
+            align-self="center"
+            class="d-flex"
+          >
+            <v-img
+              class="ma-2"
+              :src="recipeCol.image ? recipeCol.image.imgLink : 'null'"
+              max-width="400"
+              :aspect-ratio="16 / 9"
+            ></v-img>
+          </v-col>
+
+          <v-col
+            cols="12"
+            xs="12"
+            sm="6"
+            md="4"
+            lg="4"
+            align-self="center"
+            class="ma-2 "
+          >
+            <v-card-title>
+              <p class="text-h4 font-weight-bold"> {{ recipeCol.recipeName }}</p>
+            </v-card-title>
+
+            <v-card-text>
+              <div class="text--primary">By {{ recipeCol.user.username }}</div>
+              <p class="text-body-1 my-2">
+                {{ recipeCol.description ? recipeCol.description : "" }}
+              </p>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn
+                text
+                class="ma-2"
+                color="orange darken-1"
+                @click="ViewRecipe(recipeCol.recipeID)"
+              >
+                See more
+              </v-btn>
+
+              <v-btn
+                color="error"
+                dark
+                @click="
+                  dialog = true;
+                  recipeIDToRemove = recipeCol ? recipeCol.recipeID : '';
+                "
+                class="ma-2"
+                >Remove <v-icon right> mdi-delete</v-icon></v-btn
+              >
+            </v-card-actions>
+          </v-col>
+        </v-row>
+      </v-card>
+      <v-dialog v-model="dialog" persistent max-width="300">
         <v-card>
-          <v-simple-table align-self="center" style="cursor: pointer;">
-            <template v-slot:default>
-              <tbody  v-for="collectionBook in collectionSam"
-                  :key="collectionBook.recipeID">
-                <tr
-                  v-for="recipeCol in collectionBook.recipes"
-                  :key="recipeCol.recipeID"
-                >
-                  <td
-                    class="text-right"
-                    v-on:click.stop="ViewRecipe(recipeCol.recipeID)"
-                  >
-                 
-                      <v-img class="ma-2" :src="recipeCol.image.imgLink"   max-height="250"
-                      max-width="450"></v-img>
-
-                  </td>
-                  <td v-on:click.stop="ViewRecipe(recipeCol.recipeID)">
-                    <p class="text-h5 font-weight-medium">
-                      {{ recipeCol.recipeName }}
-                    </p>
-                    <p class="text-h5 font-weight-medium">
-                      By {{ recipeCol.user.username }}
-                    </p>
-                    <p class="text-subtitle-1 font-weight-regular ">
-                      {{ recipeCol.description ? recipeCol.description : "" }}
-                    </p>
-                  </td>
-
-                  <td>
-                    <v-btn
-                      elevation="2"
-                      color="error"
-                      dark
-                      @click="
-                        dialog = true;
-                        recipeIDToRemove = recipeCol ? recipeCol.recipeID : '';
-                      "
-                    >
-                      Remove
-                    </v-btn>
-                  </td>
-                </tr>
-              </tbody>
-              <v-dialog v-model="dialog" persistent max-width="290">
-                <v-card>
-                  <v-card-title class="headline">
-                    Are you sure to remove this recipe from the collection?
-                  </v-card-title>
-
-                  <v-card-actions>
-                    <v-btn color="green darken-1" text @click="dialog = false">
-                      Cancel
-                    </v-btn>
-                    <v-spacer></v-spacer>
-                    <v-btn color="error" text @click="removeFromCollection">
-                      Remove
-                    </v-btn>
-                  </v-card-actions>
-                </v-card>
-              </v-dialog>
-            </template>
-          </v-simple-table>
+          <v-card-title class="headline">
+            Are you sure to delete this recipe?
+          </v-card-title>
+          <v-card-text
+            >If you remove it, you can add this recipe to your collection again.
+            <v-icon> mdi-emoticon </v-icon></v-card-text
+          >
+          <v-card-actions>
+            <v-btn color="green darken-1" text @click="dialog = false">
+              Cancel
+            </v-btn>
+            <v-spacer></v-spacer>
+            <v-btn color="error" text @click="removeFromCollection">
+              Remove
+            </v-btn>
+          </v-card-actions>
         </v-card>
-      </v-container>
+      </v-dialog>
     </div>
   </v-container>
 </template>
@@ -116,7 +136,6 @@ export default {
       );
       this.dialog = false;
       // window.location.reload();
-      
     },
   },
   mounted() {
@@ -124,6 +143,5 @@ export default {
       this.$router.push("/login");
     }
   },
-
 };
 </script>

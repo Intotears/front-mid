@@ -2,7 +2,7 @@
   <div>
     <p class="text-h3 font-weight-medium">Homepage</p>
     <v-row cols-12>
-      <v-col
+      <v-col cols="12"
         xs="12"
         sm="12"
         md="4"
@@ -16,8 +16,8 @@
             :elevation="hover ? 12 : 2"
             :class="{ 'on-hover': hover }"
             color="orange lighten-1"
-            height="450"
-            width="400"
+            height="380"
+            width="310"
             dark
           >
             <v-card-actions>
@@ -25,10 +25,8 @@
                 <v-list-item-avatar color="grey darken-3">
                   <v-img
                     class="elevation-6"
-                    alt=""
                     :src="all.user.image.imgLink"
                   ></v-img>
-                  <!-- :src="all.user.Image.imgLink" -->
                 </v-list-item-avatar>
 
                 <v-list-item-content>
@@ -62,7 +60,8 @@
             <v-img
               @click="ViewRecipe(all.recipeID)"
               :src="all.image.imgLink"
-              height="250px"
+              height="200px"
+              :aspect-ratio="16 / 10"
             ></v-img>
             <v-card-title class="text-h5">
               <span>{{ all.recipeName }}</span>

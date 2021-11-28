@@ -5,21 +5,38 @@
       <v-row>
         <v-col col="5"></v-col>
         <v-col col="2">
-          <v-img
-            src="https://storage.googleapis.com/download/storage/v1/b/yummyyum-project/o/recipe-default-image.png?generation=1637744933088326&alt=media"
-            v-if="!isImageUpload"
-            max-height="350"
-            max-width="550"
-          ></v-img>
-          <v-img
-            :src="url"
-            v-else
-            max-height="350"
-            max-width="550"
-            aspect-ratio="16/9"
-          ></v-img>
+          <div v-if="!setDefaultImage">
+            <v-img
+              :src="thisRecipe.image.imgLink"
+              v-if="!isImageUpload"
+              height="350"
+              width="550"
+              :aspect-ratio="16 / 10"
+            >
+            </v-img>
+            <v-img
+              :src="url"
+              v-else
+              height="350"
+              width="550"
+              :aspect-ratio="16 / 10"
+            ></v-img>
+          </div>
+          <div v-else>
+            <v-img
+              src="https://storage.googleapis.com/download/storage/v1/b/yummyyum-project/o/recipe-default-image.png?generation=1637744933088326&alt=media"
+              height="350"
+              width="550"
+              :aspect-ratio="16 / 10"
+            >
+            </v-img>
+          </div>
 
-          <input class="ma-2" type="file" @change="onSelectedFile" />
+          <input class="ma-2" type="file" ref="file" @change="onSelectedFile" />
+
+          <v-btn v-if="!setDefaultImage" @click="DeleteImage" color="red" dark
+            >Delete <v-icon>mdi-close </v-icon>
+          </v-btn>
         </v-col>
         <v-col col="5"></v-col>
       </v-row>
@@ -90,7 +107,9 @@
             v-model="addVideoURL"
             @keypress.native.enter="loadURL()"
           ></v-text-field>
-          <v-btn color="brown darken-1" dark @click="loadURL()">Add this URL.</v-btn>
+          <v-btn color="brown darken-1" dark @click="loadURL()"
+            >Add this URL.</v-btn
+          >
         </v-col>
       </v-row>
       <v-row>
@@ -114,16 +133,22 @@
           ></v-container>
         </v-col>
       </v-row>
-      <v-row v-if="message == 'Success!!'" justify="center" >
+      <v-row v-if="message == 'Success!!'" justify="center">
         <span>
           <v-btn @click="DeleteVideo()" color="red" dark>
-            <v-icon>mdi-close </v-icon>
+            <v-icon right>mdi-close </v-icon>
           </v-btn>
         </span>
       </v-row>
     </v-container>
     <br />
-    <v-btn elevation="2" color="success" fab dark @click="addDetail()">
+    <v-btn
+      elevation="2"
+      color="success"
+      fab
+      dark
+      @click="addDetail(), addImage()"
+    >
       <v-icon> mdi-content-save </v-icon>
     </v-btn>
   </div>
@@ -137,7 +162,6 @@ export default {
   data() {
     return {
       url: null,
-      image: null,
       isImageUpload: false,
       isRecipeName: [(v) => !!v || "Recipe name is required"],
       youtubeURL: "",
@@ -145,9 +169,22 @@ export default {
       message: "",
       message2: "",
       addVideoURL: "",
+      selectedFile: null,
+      setDefaultImage: false,
+      defualtImage: null,
     };
   },
   methods: {
+    DeleteImage() {
+      if (!this.isImageUpload) {
+        this.setDefaultImage = true;
+      } else {
+        this.selectedFile = null;
+        this.$refs.file.value = null;
+        this.setDefaultImage = true;
+
+      }
+    },
     checkValue() {
       this.message2 = "";
       if (this.recipeName == "") {
@@ -157,12 +194,25 @@ export default {
       }
     },
     onSelectedFile(event) {
+      this.setDefaultImage = false;
       this.selectedFile = event.target.files[0];
       console.log(this.selectedFile);
       this.url = URL.createObjectURL(this.selectedFile);
       this.isImageUpload = true;
 
       console.log("url : " + this.url);
+    },
+    addImage() {
+      if (this.selectedFile == null) {
+        console.log("No change recipe image");
+      }else if (this.setDefaultImage === true && this.selectedFile == null){
+        this.$store.dispatch("editRecipe/resetDefaultImage");
+      }
+      else {
+        const fd = new FormData();
+        fd.append("file", this.selectedFile, this.selectedFile.name);
+        this.$store.dispatch("editRecipe/uploadRecipeImage", fd);
+      }
     },
     addDetail() {
       if (this.thisRecipe.recipeName != "") {
@@ -214,11 +264,9 @@ export default {
   },
   computed: {
     ...mapState("editRecipe", ["recipe"]),
+    ...mapState("editRecipe", ["recipeIMG"]),
     thisRecipe() {
       return this.recipe.find((v) => v.recipeID == this.$route.params.id);
-    },
-    thisIMG() {
-      return this.$store.state.editRecipe.Image;
     },
   },
   async created() {
