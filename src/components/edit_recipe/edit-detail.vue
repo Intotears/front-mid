@@ -37,7 +37,6 @@
           <v-btn v-if="!setDefaultImage" @click="DeleteImage" color="red" dark
             >Delete <v-icon>mdi-close </v-icon>
           </v-btn>
-          <input class="ma-2" type="file" @change="onSelectedFile" />
           <br />
           <body-2>**กรุณาใช้รูปภาพอาหารของตนเอง</body-2>
         </v-col>
@@ -143,7 +142,7 @@
       <v-row v-if="message == 'Success!!'" justify="center">
         <span>
           <v-btn @click="DeleteVideo()" color="red" dark>
-            <v-icon right>mdi-close </v-icon>
+            <v-icon>mdi-close </v-icon>
           </v-btn>
         </span>
       </v-row>
