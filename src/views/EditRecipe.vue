@@ -10,7 +10,7 @@
           <v-divider></v-divider>
 
           <v-stepper-step :complete="step > 2" step="2">
-            Ingredients
+            Ingredients 
           </v-stepper-step>
 
           <v-divider></v-divider>
