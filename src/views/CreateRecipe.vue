@@ -66,7 +66,7 @@
                       </v-btn>
                       
                       <br>
-                      <body-2>**กรุณาใช้รูปภาพอาหารของตนเอง</body-2>
+                      <p class="text-body-2 font-weight-light">**กรุณาใช้รูปภาพอาหารของตนเอง</p>
                      
                     </v-col>
                     <v-col col="5"></v-col>
@@ -139,7 +139,7 @@
                         @keypress.native.enter="loadURL()"
                       ></v-text-field>
             
-                      <body-2>**กรุณาใช้วิดีโอสูตรอาหารของตนเอง</body-2>
+                      <p class="text-body-2 font-weight-light">**กรุณาใช้วิดีโอสูตรอาหารของตนเอง</p>
                       <br><br>
                       <v-btn color="brown darken-1" dark @click="loadURL()"
                         >Add this URL.</v-btn
@@ -198,7 +198,7 @@
                   <div>
                     <v-container>
                       <h4>Main ingredient</h4>
-                       <body-2>**วัตถุดิบหลัก เป็นวัตถุดิบที่จำเป็นต้องมีในสูตร</body-2>
+                       <p class="text-body-2 font-weight-light">**วัตถุดิบหลัก เป็นวัตถุดิบที่จำเป็นต้องมีในสูตร</p>
                     </v-container>
                     <v-container class="ma-2">
                       <div id="Mainingredient" class="text-center">
@@ -258,7 +258,7 @@
                   <div>
                     <v-container>
                       <h4>Sub ingredient</h4>
-                      <body-2>**วัตถุดิบรอง เป็นวัตถุดิบที่จะมีหรือไม่มีในสูตรก็ได้ จะใส่หรือไม่ก็ได้</body-2>
+                      <p class="text-body-2 font-weight-light">**วัตถุดิบรอง เป็นวัตถุดิบที่จะมีหรือไม่มีในสูตรก็ได้ จะใส่หรือไม่ก็ได้</p>
                     </v-container>
                     <v-container class="ma-2">
                       <div id="Subingredient" class="text-center">
@@ -317,7 +317,7 @@
                   <div>
                     <v-container>
                       <h4>Flavoring</h4>
-                      <body-2>**เครื่องปรุง เครื่องปรุงทั่วไปที่ช่วยเพิ่มรสชาติแก่อาหาร</body-2>
+                      <p class="text-body-2 font-weight-light">**เครื่องปรุง เครื่องปรุงทั่วไปที่ช่วยเพิ่มรสชาติแก่อาหาร</p>
                     </v-container>
                     <v-container class="ma-2">
                       <div id="Flavoring" class="text-center">
