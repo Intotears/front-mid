@@ -102,7 +102,7 @@
               >
               <v-btn
                 dark
-                @click="[editProfile()]"
+                @click="[editProfile(), reloadingPage()]"
                 color="success"
                 @keyup.enter="editProfile()"
                 class="ma-2"
