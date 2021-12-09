@@ -366,7 +366,7 @@ const editRecipe = {
     },
     async loadFoodtag({ commit }) {
       await axios
-        .get("http://localhost:3000/api/findAll/foodtag")
+        .get(`${process.env.VUE_APP_BACKEND}/api/findAll/foodtag`)
         .then((response) => {
           commit("LOAD_foodtag", response.data);
           console.log(response.data);
