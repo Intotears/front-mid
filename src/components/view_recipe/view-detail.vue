@@ -40,7 +40,8 @@
           <v-col cols="12" xs="4" sm="4" md="4" lg="2">
             Rating ({{ recipe.rating.ratingStars }})
             <v-icon color="white" size="20">mdi-star</v-icon> |
-
+          
+          <span v-if="recipe.userID != currentUser.userID">
             <v-btn
               v-if="collection"
               icon
@@ -51,6 +52,12 @@
             <v-btn v-else icon @click="removeFromCollection(recipe.recipeID)">
               <v-icon>mdi-bookmark-check</v-icon>
             </v-btn>
+          </span>
+          <span v-else>
+             <v-btn icon disabled>
+              <v-icon>mdi-bookmark</v-icon>
+            </v-btn>
+          </span>
           </v-col>
         </v-row>
 

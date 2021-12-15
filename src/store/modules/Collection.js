@@ -15,8 +15,9 @@ const mycollection = {
       state.recipeCollection = collection;
     },
     REMOVE_RECIPE: (state, id) =>{
-      const index = state.recipeCollection.recipes.findIndex(r => r.recipeID == id)
-      state.recipeCollection.recipes.splice(index, 1)
+      const index = state.recipeCollection.findIndex(r => r.recipes.recipeID == id)
+      state.recipeCollection.splice(index, 1)
+      console.log("splice", index)
     },
     ADD_RECIPE: (state, recipe) =>{
       state.recipeCollection = recipe;
