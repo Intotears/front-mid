@@ -52,7 +52,7 @@
                     ></v-img>
                   </v-col>
                
-                <v-col cols="12" xs="2" sm="4" md="4" lg="4">
+                <v-col cols="12" xs="2" sm="4" md="6" lg="6">
                   <v-card-title>
                     <div>
                       <div>
@@ -60,7 +60,7 @@
                           :to="{ path: `/ViewRecipe/${searched.recipeID}` }"
                           class="text-decoration-none white--text"
                         >
-                          <p class="text-h5">{{ searched.recipeName }}</p>
+                          <p class="text-h5">{{ searched.recipeName.substring(0, 15) }}...</p>
                         </router-link>
                       </div>
                     </div>
@@ -149,12 +149,12 @@
                   <v-col cols="12" xs="4" sm="6" md="6" lg="6">
                      <v-img
                       class="ma-2"
-                      widht="300"
+                      width="300"
                       :src="searched.image.imgLink"
                     ></v-img>
                   </v-col>
                 
-                <v-col cols="12" xs="2" sm="4" md="4" lg="4">
+                <v-col cols="12" xs="2" sm="4" md="6" lg="6">
                   <v-card-title>
                     <div>
                       <div>
@@ -162,7 +162,7 @@
                           :to="{ path: `/ViewRecipe/${searched.recipeID}` }"
                           class="text-decoration-none white--text"
                         >
-                          <p>{{ searched.recipeName }}</p>
+                          <p>{{ searched.recipeName.substring(0, 15) }}...</p>
                         </router-link>
                       </div>
                     </div>
@@ -238,20 +238,20 @@
               </v-card-actions>
               <v-divider dark class="mb-2"></v-divider>
 
-              <v-row justify="space-between">
+              <v-row>
                 <router-link
                   :to="{ path: `/ViewRecipe/${searched.recipeID}` }"
                   class="text-decoration-none white--text"
-                >
+                ></router-link>
                   <v-col cols="12" xs="4" sm="6" md="6" lg="6">
                       <v-img
                       class="ma-2"
-                      widht="300"
+                       width="300"
                       :src="searched.image.imgLink"
                     ></v-img>
                   </v-col>
-                </router-link>
-                <v-col cols="12" xs="2" sm="4" md="4" lg="4">
+                
+                <v-col cols="12" xs="2" sm="4" md="6" lg="6">
                   <v-card-title>
                     <div>
                       <div>
@@ -259,7 +259,7 @@
                           :to="{ path: `/ViewRecipe/${searched.recipeID}` }"
                           class="text-decoration-none white--text"
                         >
-                          <p>{{ searched.recipeName }}</p>
+                          <p>{{ searched.recipeName.substring(0, 15) }}...</p>
                         </router-link>
                       </div>
                     </div>
@@ -348,12 +348,12 @@
                  <v-col cols="12" xs="4" sm="6" md="6" lg="6">
                      <v-img
                       class="ma-2"
-                      widht="300"
+                       max-widht="300"
                       :src="searched.image.imgLink"
                     ></v-img>
                   </v-col>
                 
-                <v-col cols="12" xs="2" sm="4" md="4" lg="4">
+                <v-col cols="12" xs="2" sm="4" md="6" lg="6">
                   <v-card-title>
                     <div>
                       <div>
@@ -361,7 +361,7 @@
                           :to="{ path: `/ViewRecipe/${searched.recipeID}` }"
                           class="text-decoration-none white--text"
                         >
-                          <p>{{ searched.recipeName }}</p>
+                          <p>{{ searched.recipeName.substring(0, 15) }}...</p>
                         </router-link>
                       </div>
                     </div>
