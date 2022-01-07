@@ -64,11 +64,11 @@
               :aspect-ratio="16 / 10"
             ></v-img>
             <v-card-title class="text-h5">
-              <span>{{ all.recipeName }}</span>
+              <span>{{ all.recipeName.substring(0, 22) }}</span>
             </v-card-title>
 
             <v-card-text class="text-subtitle-1">
-              {{ all.description }}
+              {{ all.description.substring(0, 36) }}...
             </v-card-text>
           </v-card></v-hover
         >

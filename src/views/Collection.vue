@@ -36,7 +36,7 @@
             class="ma-2 "
           >
             <v-card-title>
-              <p class="text-h4 font-weight-bold"> {{ recipeCol.recipeName }}</p>
+              <p class="text-h4 font-weight-bold"> {{ recipeCol.recipeName.substring(0, 16) }}...</p>
             </v-card-title>
 
             <v-card-text>
