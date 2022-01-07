@@ -47,7 +47,7 @@
                   <v-col cols="12" xs="4" sm="6" md="6" lg="6">
                     <v-img
                       class="ma-2"
-                      max-widht="300"
+                      max-width="300"
                       :src="searched.image.imgLink"
                     ></v-img>
                   </v-col>
@@ -348,7 +348,7 @@
                  <v-col cols="12" xs="4" sm="6" md="6" lg="6">
                      <v-img
                       class="ma-2"
-                       max-widht="300"
+                       max-width="300"
                       :src="searched.image.imgLink"
                     ></v-img>
                   </v-col>
